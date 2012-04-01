@@ -1,4 +1,4 @@
-solution "Program1"
+solution "SDProject"
 
 	configurations {"Debug", "Release"}
 	defines {"_CRT_SECURE_NO_WARNINGS", "_CRT_SECURE_NO_DEPRECATE",
@@ -15,10 +15,10 @@ solution "Program1"
 
 	-- May need to clear configuration here
 
-	project "Program1"
+	project "SDProject"
 		language "C++"
 		
-		files {"src/*.cpp", "src/*.h"}
+		files {"src/*.cc", "src/*.h"}
 		
 		targetdir "bin"
 		objdir "obj"
@@ -45,4 +45,6 @@ solution "Program1"
 			links {"GL", "GLU"}
 
 		configuration "macosx"
-			links {"OpenGL.framework", "GLUT.framework"}
+			links {"OpenGL.framework", "SFML.framework",
+			"SFML-window.framework", "SFML-audio.framework",
+			"SFML-system.framework"}
