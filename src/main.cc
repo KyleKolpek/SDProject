@@ -7,6 +7,8 @@ float color[3] = {1, 0, 0};
 
 void rotate(bool dir);
 
+void init();
+
 int main()
 {
 	sf::WindowSettings Settings;
@@ -24,16 +26,7 @@ int main()
 	Sound.SetBuffer(Buffer);
 	Sound.SetVolume(50.0f);
 
-	//Set clear values.
-	glClearDepth(1.0f);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	
-	glEnable(GL_DEPTH_TEST);
-	glDepthMask(GL_TRUE);
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(90.0f, 1.0f, 1.0f, 500.0f);
+    init();
 
 	const sf::Input& Input = App.GetInput();
 	
@@ -85,48 +78,6 @@ int main()
 			Drawing goes below. Easily done in another function or the method
 			of render object! So that is pretty easy.
 		*/
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		glTranslatef(0.0f, 0.0f, -200.0f);
-		glRotatef(Clock.GetElapsedTime() * 50, 1.0f, 0.0f, 0.0f);
-		glRotatef(Clock.GetElapsedTime() * 30, 0.0f, 1.0f, 0.0f);
-		glRotatef(Clock.GetElapsedTime() * 90, 0.0f, 0.0f, 1.0f);
-
-		glColor3f(color[0], color[1], color[2]);
-		
-		glBegin(GL_QUADS);
-
-    		glVertex3f(-50.f, -50.f, -50.f);
-    		glVertex3f(-50.f,  50.f, -50.f);
-    		glVertex3f( 50.f,  50.f, -50.f);
-    		glVertex3f( 50.f, -50.f, -50.f);
-
-    		glVertex3f(-50.f, -50.f, 50.f);
-    		glVertex3f(-50.f,  50.f, 50.f);
-    		glVertex3f( 50.f,  50.f, 50.f);
-    		glVertex3f( 50.f, -50.f, 50.f);
-
-    		glVertex3f(-50.f, -50.f, -50.f);
-    		glVertex3f(-50.f,  50.f, -50.f);
-    		glVertex3f(-50.f,  50.f,  50.f);
-    		glVertex3f(-50.f, -50.f,  50.f);
-
-    		glVertex3f(50.f, -50.f, -50.f);
-    		glVertex3f(50.f,  50.f, -50.f);
-    		glVertex3f(50.f,  50.f,  50.f);
-    		glVertex3f(50.f, -50.f,  50.f);
-
-    		glVertex3f(-50.f, -50.f,  50.f);
-    		glVertex3f(-50.f, -50.f, -50.f);
-    		glVertex3f( 50.f, -50.f, -50.f);
-    		glVertex3f( 50.f, -50.f,  50.f);
-
-    		glVertex3f(-50.f, 50.f,  50.f);
-    		glVertex3f(-50.f, 50.f, -50.f);
-    		glVertex3f( 50.f, 50.f, -50.f);
-    		glVertex3f( 50.f, 50.f,  50.f);
-
-		glEnd();
 		
 		//Call to actually display the things.
 		App.Display();
@@ -135,21 +86,15 @@ int main()
 	return EXIT_SUCCESS;
 }
 
-//false for left movement and true for right
-void rotate(bool dir)
+void init()
 {
-	if(dir)
-	{
-		float temp = color[0];
-		color[0] = color[2];
-		color[2] = color[1];
-		color[1] = temp;
-	}
-	else
-	{
-		float temp = color[2];
-		color[2] = color[0];
-		color[0] = color[1];
-		color[1] = temp;
-	}
+	glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glDepthMask(GL_TRUE);
+    glDepthFunc(GL_LEQUAL);
+    glDepthRange(0.0f, 1.0f);
+
+	//Set clear values.
+	glClearDepth(1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 }
