@@ -8,10 +8,10 @@ solution "SDProject"
 		defines {"WIN32"}
 	
 	configuration "linux"
-		defines {"LOAD_X11"}
+		defines {"_NIX"}
 
 	configuration "macosx"
-		defines {"_NIX"}
+		defines {"MACOSX"}
 
 	-- May need to clear configuration here
 

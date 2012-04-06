@@ -1,6 +1,6 @@
 // Adapted source for ShaderLoader from
 // http://www.opengl.org/sdk/docs/tutorials/ClockworkCoders/loading.php
-#include <GL/gl.h>
+#include <stdgl.h>
 
 class ShaderLoader
 {
