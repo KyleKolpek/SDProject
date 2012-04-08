@@ -5,7 +5,7 @@
 
 /***************************************************************************//**
  * Allows an object to be drawn using OpenGL.
- * Provides two methods, draw() and setProgram(..) that are used to set up any
+ * Provides two methods, draw() and setProgram(..), that are used to set up any
  * given Drawable object so that it can subsequently be drawn.
  ******************************************************************************/
 class Drawable
