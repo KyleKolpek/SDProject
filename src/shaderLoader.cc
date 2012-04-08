@@ -5,64 +5,64 @@
 
 using namespace std;
 ShaderLoader::ShaderLoader():
-    stringCount(0)
+	stringCount(0)
 {
 }
 
 ShaderLoader::ShaderLoader(char const *const filename):
-    stringCount(0)
+	stringCount(0)
 {
-    loadShader(filename);
+	loadShader(filename);
 }
 
 ShaderLoader::~ShaderLoader()
 {
-    unloadShader();
+	unloadShader();
 }
 
 int ShaderLoader::loadShader(char const *const filename)
 {
-    ifstream file;
-    file.open(filename, ios::in); // opens as ASCII!
-    if(!file)
-    {
-        return -1;
-    }
+	ifstream file;
+	file.open(filename, ios::in); // opens as ASCII!
+	if(!file)
+	{
+		return -1;
+	}
 
-    // TODO: Check memory allocation success
-    int i;
-    shaderSource = new GLchar*[256];
-    for(i=0; file.good(); i++)
-    {
-        shaderSource[i] = new GLchar[256];
-        file.read(shaderSource[i], 255);
+	// TODO: Check memory allocation success
+	int i;
+	shaderSource = new GLchar*[256];
+	for(i=0; file.good(); i++)
+	{
+		shaderSource[i] = new GLchar[256];
+		file.read(shaderSource[i], 255);
 
-        // Terminate string with null character
-        shaderSource[i][file.gcount()] = '\0';
-    }
-    stringCount = i;
+		// Terminate string with null character
+		shaderSource[i][file.gcount()] = '\0';
+	}
+	stringCount = i;
 
-    file.close();
+	file.close();
 
-    return 0; // No Error
+	return 0; // No Error
 }
 
 
 void ShaderLoader::unloadShader()
 {
-    for(int i=0; i<stringCount; i++)
-    {
-        delete[] shaderSource[i];
-    }
-    delete[] shaderSource;
+	for(int i=0; i<stringCount; i++)
+	{
+		delete[] shaderSource[i];
+	}
+	delete[] shaderSource;
 }
 
 int ShaderLoader::getStringCount()
 {
-    return stringCount;
+	return stringCount;
 }
 
 const GLchar **ShaderLoader::getShaderSource()
 {
-    return (const GLchar **)shaderSource;
+	return (const GLchar **)shaderSource;
 }

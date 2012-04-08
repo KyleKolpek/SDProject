@@ -6,20 +6,20 @@ class ShaderLoader
 {
 public:
 
-    // Constructor
-    ShaderLoader();
-    ShaderLoader(char const *const filename);
+	// Constructor
+	ShaderLoader();
+	ShaderLoader(char const *const filename);
 
-    // Destructor
-    ~ShaderLoader();
+	// Destructor
+	~ShaderLoader();
 
-    int loadShader(char const *const filename);
+	int loadShader(char const *const filename);
 
-    void unloadShader();
-    int getStringCount();
-    const GLchar **getShaderSource();
+	void unloadShader();
+	int getStringCount();
+	const GLchar **getShaderSource();
 
 private:
-    GLchar **shaderSource;
-    int stringCount;
+	GLchar **shaderSource;
+	int stringCount;
 };

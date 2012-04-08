@@ -26,44 +26,44 @@ public:
 	/***********************************************************************//**
 	 * Copy constructor. 
 	 * \param[in] shaderManager
-	 *     The shader manager that is to be deep copied.
+	 *	 The shader manager that is to be deep copied.
 	 **************************************************************************/
 	ShaderManager(ShaderManager const &shaderManager);
 
 	/***********************************************************************//**
 	 * Creates a program based off the names of shaders passed in. 
 	 * \param[in] shaderFileCount
-	 *     The number of shader files to be used in a program.
+	 *	 The number of shader files to be used in a program.
 	 * \param[in] shaderFileNames
-	 *     Filenames of the shaders to be used in a program.
+	 *	 Filenames of the shaders to be used in a program.
 	 * \return
-	 *     A reference to a compiled program.
+	 *	 A reference to a compiled program.
 	 **************************************************************************/
 	GLuint getProgram(int shaderFileCount, ...);
 
 	/***********************************************************************//**
 	 * Creates a program based off the names of shaders passed in. 
 	 * \param[in] shaderFileCount
-	 *     The number of shader files to be used in a program.
+	 *	 The number of shader files to be used in a program.
 	 * \param[in] shaderFileNames
-	 *     Filenames of the shaders to be used in a program.
+	 *	 Filenames of the shaders to be used in a program.
 	 * \return
-	 *     A reference to a compiled program.
+	 *	 A reference to a compiled program.
 	 **************************************************************************/
 	GLuint getProgram(int shaderFileCount, va_list shaderFileNames);
 
 private:
-	std::map<std::string, GLuint> programMap;      /**< Associates keys to
-													    programs. */
+	std::map<std::string, GLuint> programMap;	  /**< Associates keys to
+														programs. */
 
 	/***********************************************************************//**
 	 * Creates a key by combining multiple strings. 
 	 * \param[in] stringCount
-	 *     The number of strings to be used in generating the key.
+	 *	 The number of strings to be used in generating the key.
 	 * \param[in] strings
-	 *     The strings to be concatenated into the key.
+	 *	 The strings to be concatenated into the key.
 	 * \return
-	 *     The key.
+	 *	 The key.
 	 **************************************************************************/
 	std::string genKey(int stringCount, va_list strings);
 };
