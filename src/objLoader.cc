@@ -16,9 +16,13 @@ void ObjLoader::load(char* filename)
 	delete data;
 	data = new ObjInfo();
 	std::ifstream objFile(filename);
-	while(!objFile.eof() && !objFile.bad())
+	std::string buffer;
+
+	// prime loop
+	getline(objFile, buffer);
+	// ifstream.good() is the same as !eof() && !fail() && !bad()
+	while(objFile.good())
 	{
-		std::string buffer;
 		getline(objFile, buffer);
 	}	
 }
