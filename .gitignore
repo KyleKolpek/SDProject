@@ -1,2 +1,5 @@
 Makefile
 SDProject.make
+bin/*
+obj/*
+
