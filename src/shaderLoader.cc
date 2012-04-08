@@ -9,7 +9,7 @@ ShaderLoader::ShaderLoader():
 {
 }
 
-ShaderLoader::ShaderLoader(char *filename):
+ShaderLoader::ShaderLoader(char const *const filename):
     stringCount(0)
 {
     loadShader(filename);
@@ -20,7 +20,7 @@ ShaderLoader::~ShaderLoader()
     unloadShader();
 }
 
-int ShaderLoader::loadShader(char *filename)
+int ShaderLoader::loadShader(char const *const filename)
 {
     ifstream file;
     file.open(filename, ios::in); // opens as ASCII!

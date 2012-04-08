@@ -8,14 +8,12 @@ public:
 
     // Constructor
     ShaderLoader();
-    ShaderLoader(
-        char *filename);
+    ShaderLoader(char const *const filename);
 
     // Destructor
     ~ShaderLoader();
 
-    int loadShader(
-        char *filename);
+    int loadShader(char const *const filename);
 
     void unloadShader();
     int getStringCount();

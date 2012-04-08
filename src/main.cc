@@ -2,10 +2,7 @@
 #include <SFML/Audio.hpp>
 #include <iomanip>
 #include <iostream>
-
-float color[3] = {1, 0, 0};
-
-void rotate(bool dir);
+#include "shaderManager.h"
 
 void init();
 
@@ -26,7 +23,7 @@ int main()
 	Sound.SetBuffer(Buffer);
 	Sound.SetVolume(50.0f);
 
-    init();
+	init();
 
 	const sf::Input& Input = App.GetInput();
 	
@@ -43,7 +40,7 @@ int main()
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Escape))
 				App.Close();
 
-			if((Event.Type == sf::Event::Resized))
+			if(Event.Type == sf::Event::Resized)
 				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
 			
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Left))
@@ -51,14 +48,12 @@ int main()
 				if(Sound.GetStatus() == sf::Sound::Playing)
 					Sound.Stop();
 				Sound.Play();
-				rotate(false);
 			}
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Right))
 			{
 				if(Sound.GetStatus() == sf::Sound::Playing)
 					Sound.Stop();
 				Sound.Play();
-				rotate(true);
 			}
 		}
 		
@@ -89,12 +84,17 @@ int main()
 void init()
 {
 	glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
-    glDepthMask(GL_TRUE);
-    glDepthFunc(GL_LEQUAL);
-    glDepthRange(0.0f, 1.0f);
+	glEnable(GL_CULL_FACE);
+	glDepthMask(GL_TRUE);
+	glDepthFunc(GL_LEQUAL);
+	glDepthRange(0.0f, 1.0f);
 
-	//Set clear values.
+	// Set clear values.
 	glClearDepth(1.0f);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	// Setup shaders
+	ShaderManager manager;
+	manager.getProgram(2, "../assets/shaders/simple.vert", "../assets/shaders/simple.frag");
+	manager.getProgram(2, "../assets/shaders/simple.vert", "../assets/shaders/simple.frag");
 }
