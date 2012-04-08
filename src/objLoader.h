@@ -2,6 +2,8 @@
 #include<fstream>
 #include<string>
 #include<vector>
+#include<sstream>
+#include<cstdlib>
 
 /*
 	For All:
@@ -11,9 +13,9 @@
 */
 struct Face
 {
-	int verts[3];
-	int normals[3];
-	int textures[3];
+	std::vector<int> verts;
+	std::vector<int> normals;
+	std::vector<int> textures;
 	
 	bool hasTex;
 	bool hasNorm;

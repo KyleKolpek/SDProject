@@ -24,6 +24,64 @@ void ObjLoader::load(char* filename)
 	while(objFile.good())
 	{
 		getline(objFile, buffer);
+		std::stringstream bufferReader(buffer);
+		std::string type;
+		std::vector<float> info;
+		std::vector<int> faceInfo;
+		Face face;
+
+		//Get the type
+		bufferReader >> type;
+		if(type[0] == 'v')
+		{
+			while(bufferReader.good())
+			{
+				float holder;
+				bufferReader >> holder;
+				info.push_back(holder);
+			}
+			if(type.size() == 1)
+			{
+				data->vertices.push_back(info);
+			}
+			else if(type[1] == 't')
+			{
+				data->texture.push_back(info);
+			}
+			else if(type[1] == 't')
+			{
+				data->normals.push_back(info);
+			}
+		}
+		else if(type[0] == 'f')
+		{
+			//Specific face stuff
+			while(bufferReader.good())
+			{
+				int index[3];
+				std::string holder;
+				bufferReader >> holder;
+				
+				for(int i = 0; i < 2; ++i)
+				{
+					int place;
+					std::string num;
+					place = holder.find('/');
+					num = holder.substr(0, place);
+					holder = holder.substr(place + 1);
+					
+					index[i] = atoi(num.c_str());
+				}
+				index[3] = atoi(holder.c_str());
+				face.verts.push_back(index[0]);
+				face.normals.push_back(index[1]);
+				face.textures.push_back(index[2]);
+				face.hasTex = true;
+				face.hasNorm = true;
+			}
+			data->faces.push_back(face);
+
+		}
 	}	
 }
 
