@@ -53,8 +53,10 @@ public:
 	GLuint getProgram(int shaderFileCount, va_list shaderFileNames);
 
 private:
-	std::map<std::string, GLuint> programMap;	  /**< Associates keys to
-														programs. */
+	/***********************************************************************//**
+	 * Associates keys to programs.
+	 **************************************************************************/
+	std::map<std::string, GLuint> programMap;
 
 	/***********************************************************************//**
 	 * Creates a key by combining multiple strings. 
