@@ -60,7 +60,7 @@ GLuint ShaderManager::getProgram(int shaderFileCount, va_list shaderFileNames)
 	GLuint shaders[shaderFileCount];
 	for(int i = 0; i < shaderFileCount; ++i)
 	{
-		string name(va_arg(shaderFileNames, char const *const));
+		string name(va_arg(shaderFileNames, char const *));
 
 		// Determine the shader type
 		// TODO: confirm that the .vert or .frag is at the end of the string
@@ -165,7 +165,7 @@ string ShaderManager::genKey(int stringCount, va_list strings)
 	// Generate the key
 	for(int i = 0; i < stringCount; ++i)
 	{	
-		key += va_arg(strings, char const *const);
+		key += va_arg(strings, char const *);
 		key += ';';
 	}
 	return key;
