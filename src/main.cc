@@ -3,8 +3,10 @@
 #include <iomanip>
 #include <iostream>
 #include "shaderManager.h"
+#include "objLoader.h"
 
 void init();
+void testObj();
 
 int main()
 {
@@ -24,6 +26,7 @@ int main()
 	Sound.SetVolume(50.0f);
 
 	init();
+	testObj();
 
 	const sf::Input& Input = App.GetInput();
 	
@@ -98,3 +101,14 @@ void init()
 	manager.getProgram(2, "../assets/shaders/simple.vert", "../assets/shaders/simple.frag");
 	manager.getProgram(2, "../assets/shaders/simple.vert", "../assets/shaders/simple.frag");
 }
+
+void testObj()
+{
+	ObjLoader loader;
+	float* vData;
+	int* iData;
+	GLuint type;
+	std::string filename = "/Users/mirza/Dropbox/cs499/assets-maybe/obj/Legoman/LegoMan.obj";
+	loader.getData(filename, vData, iData, type);
+}
+
