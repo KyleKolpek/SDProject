@@ -73,11 +73,11 @@ class ObjLoader
 		* Gets appropriated data, and returns the data with vertexData, indexData and type
 		* \param[in] filename
 		* 	  The filename of the obj file to load.
-		* \param[in] vertexData
+		* \param[out] vertexData
 		*     The complete vertex data in the form of pos1, norm1, tex1, ... , posN, normN, texN
-		* \param[in] indexData
+		* \param[out] indexData
 		*     The index face data. Probably not necessary.
-		* \param[in] type
+		* \param[out] type
 		* 	  GL type that tells the receiver what kind of shape the model is made of.
 		******************************************************************************/
 		void getData(std::string filename, 
