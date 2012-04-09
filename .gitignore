@@ -1,5 +1,1 @@
-Makefile
-SDProject.make
-bin/*
-obj/*
-
+child/
