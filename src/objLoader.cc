@@ -30,7 +30,7 @@ void ObjLoader::load(std::string filename)
 		//Grab a whole line.
 		getline(objFile, buffer);
 		
-		//Stick that bitch in a stringstream for parsing.
+		//Set it into a stringstream for parsing.
 		std::stringstream bufferReader(buffer);
 		
 		//Some temp values for holding data. 
@@ -104,7 +104,7 @@ void ObjLoader::load(std::string filename)
 				face.hasTex = true;
 				face.hasNorm = true;
 			}
-			//Add that motherfucker.
+			//Add temp data to a more permanent location.
 			data->faces.push_back(face);
 
 		}
