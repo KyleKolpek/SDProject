@@ -1,1 +1,5 @@
-child/
+pages/
+Makefile
+SDProject.make
+bin/*
+obj/*
