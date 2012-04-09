@@ -97,9 +97,11 @@ void init()
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	// Setup shaders
-	ShaderManager manager;
-	manager.getProgram(2, "../assets/shaders/simple.vert", "../assets/shaders/simple.frag");
-	manager.getProgram(2, "../assets/shaders/simple.vert", "../assets/shaders/simple.frag");
+	ShaderManager manager("../assets/shaders/");
+	manager.getProgram(2, "simple.vert",
+		"simple.frag");
+	manager.getProgram(2, "simple.vert",
+		"simple.frag");
 }
 
 void testObj()
@@ -108,7 +110,7 @@ void testObj()
 	float* vData;
 	int* iData;
 	GLuint type;
-	std::string filename = "/Users/mirza/Dropbox/cs499/assets-maybe/obj/Legoman/LegoMan.obj";
+	std::string filename = "../assets/models/Legoman/LegoMan.obj";
 	loader.getData(filename, vData, iData, type);
 }
 

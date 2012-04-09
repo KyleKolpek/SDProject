@@ -3,7 +3,13 @@
 
 using namespace std;
 
-ShaderManager::ShaderManager()
+ShaderManager::ShaderManager():
+	shaderDir("")
+{
+}
+
+ShaderManager::ShaderManager(string shaderDir):
+	shaderDir(shaderDir)
 {
 }
 
@@ -79,7 +85,7 @@ GLuint ShaderManager::getProgram(int shaderFileCount, va_list shaderFileNames)
 		
 		// Load the source
 		shaders[i] = glCreateShader(shaderType);
-		ShaderLoader loader(name.c_str());
+		ShaderLoader loader((shaderDir + "/" + name).c_str());
 #ifdef DEBUG_SHADERS
 		for(int j = 0; j < loader.getStringCount(); ++j)
 		{
