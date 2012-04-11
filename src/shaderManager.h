@@ -13,6 +13,8 @@
  * holds references to shader programs. When getProgram(..) is called the
  * ShaderManager first queries the map for an existing program. If one isn't
  * found then it creates the program and stores the reference in the map.
+ ****************************************************************************//*
+ * TODO: Check success of loader.
  ******************************************************************************/
 
 class ShaderManager
