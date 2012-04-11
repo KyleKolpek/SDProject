@@ -5,12 +5,14 @@
 
 using namespace std;
 ShaderLoader::ShaderLoader():
-	stringCount(0)
+	stringCount(0),
+	shaderSource(NULL)
 {
 }
 
 ShaderLoader::ShaderLoader(char const *const filename):
-	stringCount(0)
+	stringCount(0),
+	shaderSource(NULL)
 {
 	loadShader(filename);
 }
@@ -22,6 +24,12 @@ ShaderLoader::~ShaderLoader()
 
 int ShaderLoader::loadShader(char const *const filename)
 {
+	// Delete old shader
+	if(shaderSource)
+	{
+		unloadShader();
+	}
+
 	ifstream file;
 	file.open(filename, ios::in); // opens as ASCII!
 	if(!file)
@@ -55,6 +63,7 @@ void ShaderLoader::unloadShader()
 		delete[] shaderSource[i];
 	}
 	delete[] shaderSource;
+	shaderSource = NULL;
 }
 
 int ShaderLoader::getStringCount()
