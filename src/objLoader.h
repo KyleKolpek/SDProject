@@ -86,7 +86,8 @@ public:
 	void getData(std::string filename, 
 				float* vertexData, 
 				int* indexData,
-				GLuint &type);
+				GLuint &type,
+				GLsizei &count);
 
 private:
 	/***********************************************************************//**

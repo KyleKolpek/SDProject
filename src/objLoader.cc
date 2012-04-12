@@ -121,7 +121,8 @@ void ObjLoader::load(std::string filename)
 void ObjLoader::getData(std::string filename, 
 						float* vertexData, 
 						int* indexData,
-						GLuint &type)
+						GLuint &type,
+						GLsizei &count)
 {
 	//Load the data.
 	load(filename);
@@ -144,7 +145,7 @@ void ObjLoader::getData(std::string filename,
 	float* vertData = new float[size * 8];
 	int* indxData = new int[data->faces.size()];
 	size_t iCount = 0;
-	
+	count = size;	
 	//Go through everyface and added all the data in order.
 	for(size_t i = 0; i < data->faces.size(); ++i)
 	{
