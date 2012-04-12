@@ -121,7 +121,7 @@ void ObjLoader::load(std::string filename)
 void ObjLoader::getData(std::string filename, 
 						float* vertexData, 
 						int* indexData,
-						GLuint type)
+						GLuint &type)
 {
 	//Load the data.
 	load(filename);
