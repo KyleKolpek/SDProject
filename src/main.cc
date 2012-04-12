@@ -1,3 +1,4 @@
+#include "stdgl.h"
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <iomanip>
