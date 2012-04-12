@@ -8,15 +8,14 @@ class Camera
 public:
 	Camera();
 	glm::mat4 getViewMatrix();
-	void resetMatrix();
+	glm::mat4 getProjectionMatrix();
 	void lookAt(glm::vec3 eye, glm::vec3 center, glm::vec3 up);
-	void frustum(float left, float right
-				 float bottom, float top,
-				 float zNear, float zFar);
+	void perspective(float fov, float aspect, float zNear, float zFar);
 private:
 	void rotate(glm::vec3 axis, float radians);
 	void translate(glm::vec3 delta);
 	glm::mat4 viewMatrix;
+	glm::mat4 projMatrix;
 };
 
 #endif

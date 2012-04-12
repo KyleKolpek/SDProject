@@ -4,14 +4,14 @@ Camera::Camera():
 {
 }
 
-glm::mat4 getViewMatrix()
+glm::mat4 Camera::getViewMatrix()
 {
 	return viewMatrix;
 }
 
-void Camera::resetMatrix()
+glm::mat4 Camera::getProjectionMatrix()
 {
-	viewMatrix = glm::mat4(1.0);
+	return projMatrix;
 }
 
 void Camera::lookAt(glm::vec3 const eye,
@@ -32,14 +32,12 @@ void Camera::lookAt(glm::vec3 const eye,
 	M[2][0] =  s[2];
 	M[2][1] =  u[2];
 	M[2][2] = -f[2];*/
-	viewMatrix *= glm::lookAt(eye, at, up);
+	viewMatrix = glm::lookAt(eye, at, up);
 }
 
-void Camera::frustum(float left, float right
-					 float bottom, float top,
-					 float zNear, float zFar)
+void Camera::perspective(float fov, float aspect, float zNear, float zFar)
 {
-	viewMatrix *= glm::frustum(left, right, bottom, top, zNear, zFar);
+	projMatrix = glm::perspective(fov, aspect, zNear, zFar);
 }
 
 void Camera::rotate(glm::vec3 axis, float radians)
