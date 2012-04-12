@@ -14,8 +14,8 @@ varying vec3 position;
 void main( void )
 {
     vec4 p = modelView * vec4(vertexPosition, 1.0);
-    position = p * projection;
+    position = (p * projection).xyz;
 	
 	cameraSpacePos = p.xyz;
-	normal = normalize(normalModelView * vec4(vertexPosition, 0.0));
+	normal = normalize(normalModelView * vec4(vertexPosition, 0.0)).xyz;
 }

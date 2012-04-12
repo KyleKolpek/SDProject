@@ -23,7 +23,7 @@ void main(void)
     vec3 lightColor     = vec3(0.3, 0.3, 0.3);
     vec3 specularColor  = vec3(1.0, 1.0, 1.0);
 
-    vec3 n = normalize(vertexNormal);
+    vec3 n = normalize(normal);
     gl_FragColor = vec4(
                    ambientColor * objectColor +
                    calcDiffuse(-lightDirection, n, lightColor,

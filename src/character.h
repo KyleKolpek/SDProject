@@ -1,9 +1,10 @@
-#ifdef CHARACTER_H
+#ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "camera.h"
 #include "drawable.h"
 #include "GLM/glm.hpp"
+
+class Camera;
 
 class Character: Drawable
 {
@@ -13,14 +14,14 @@ public:
 
 	void draw();
 private:
-	int     x;
-	int     y;
-	int     z;
-	int     vertexCount;
-	float  *vertexData;
-	float  *indexData;
-	GLuint  vertexBuffer;
-	GLuint  dataType;
+	int x;
+	int y;
+	int z;
+	int vertexCount;
+	int *indexData;
+	float *vertexData;
+	GLuint vertexBuffer;
+	GLuint dataType;
 	Camera *camera;
 
 	glm::mat4 getModelMatrix();

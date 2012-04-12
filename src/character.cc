@@ -1,3 +1,5 @@
+#include "character.h"
+#include "camera.h"
 #include "objLoader.h"
 
 Character::Character(Camera *camera):
@@ -9,11 +11,11 @@ Character::Character(Camera *camera):
 	vertexBuffer(NULL),
 	camera(camera)
 {
-	ObjLoader loader();
+	ObjLoader loader;
 	loader.getData("../assets/models/Legoman/LegoMan.obj",
 				   vertexData,
 				   indexData,
-				   dataDype,
+				   dataType,
 				   vertexCount);
 
     // Prepare vertex buffer
@@ -26,6 +28,12 @@ Character::Character(Camera *camera):
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+Character::~Character()
+{
+	delete[] vertexData;
+	delete[] indexData;
+}
+
 void Character::draw()
 {
 	// TODO: Store a ShaderManager over a program
@@ -35,24 +43,24 @@ void Character::draw()
 	GLint nmvLoc = glGetUniformLocation(program, "normalModelView");
 	GLint projLoc = glGetUniformLocation(program, "projection");
 
-	glm::mat4 MV = getModelMatrix() * camera.getViewMatrix();
-	glm::mat4 proj = camera.getProjectionMatrix();
+	glm::mat4 MV = getModelMatrix() * camera->getViewMatrix();
+	glm::mat4 proj = camera->getProjectionMatrix();
 
 	// TODO: Error check here.
 	if(mvLoc != -1)
 	{
-		glUniformMatrix4v(mvLoc, 1, GL_FALSE, &MV[0][0]);
+		glUniformMatrix4fv(mvLoc, 1, GL_FALSE, &MV[0][0]);
 	}
 
 	if(nmvLoc != -1)
 	{
-		glUniformMatrix4v(nmvLoc, 1, GL_FALSE,
-			glm::transpose(glm::inverse(&MV[0][0])));
+		glUniformMatrix4fv(nmvLoc, 1, GL_FALSE,
+			&glm::transpose(glm::inverse(MV))[0][0]);
 	}
 
 	if(projLoc != -1)
 	{
-		glUniformMatrix4v(mvLoc, 1, GL_FALSE, &projection[0][0]);
+		glUniformMatrix4fv(mvLoc, 1, GL_FALSE, &proj[0][0]);
 	}
 
 	GLuint vertexPosLoc = glGetAttribLocation(program, "position");
@@ -64,13 +72,13 @@ void Character::draw()
 	glVertexAttribPointer(vertexNormalLoc, 3, GL_FLOAT, GL_FALSE,
 		8 * sizeof(float), (void *)(3 * sizeof(float)));
 
-	glDrawArray(GL_TRIANGLES, 0, vertexCount);
+	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 	glDisableVertexAttribArray(vertexPosLoc);
 	glDisableVertexAttribArray(vertexNormalLoc);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-glm::mat4 getModelMatrix()
+glm::mat4 Character::getModelMatrix()
 {
 	return glm::mat4(1.0, 0.0, 0.0, 0.0,
 					 0.0, 1.0, 0.0, 0.0,

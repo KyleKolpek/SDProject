@@ -5,9 +5,14 @@
 #include <iostream>
 #include "shaderManager.h"
 #include "objLoader.h"
+#include "character.h"
+#include "camera.h"
 
 void init();
-void testObj();
+
+Camera camera;
+Character character(&camera);
+
 
 int main()
 {
@@ -27,7 +32,6 @@ int main()
 	Sound.SetVolume(50.0f);
 
 	init();
-	testObj();
 
 	const sf::Input& Input = App.GetInput();
 	
@@ -79,6 +83,7 @@ int main()
 		*/
 		
 		//Call to actually display the things.
+		character.draw();
 		App.Display();
 	}
 
@@ -99,19 +104,11 @@ void init()
 
 	// Setup shaders
 	ShaderManager manager("../assets/shaders/");
-	manager.getProgram(2, "simple.vert",
-		"simple.frag");
-	manager.getProgram(2, "simple.vert",
-		"simple.frag");
-}
-
-void testObj()
-{
-	ObjLoader loader;
-	float* vData;
-	int* iData;
-	GLuint type;
-	std::string filename = "../assets/models/Legoman/LegoMan.obj";
-	loader.getData(filename, vData, iData, type);
+	manager.getProgram(2, "phong.vert",
+		"phong.frag");
+	camera.lookAt(glm::vec3(0.0, 0.0, 0.0),
+				  glm::vec3(0.0, 0.0, -1.0),
+				  glm::vec3(0.0, 1.0, 0.0));
+	camera.perspective(60.0, 800.0/600.0, 0.01, 100.0); 
 }
 

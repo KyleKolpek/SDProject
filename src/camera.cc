@@ -1,6 +1,9 @@
+#include "camera.h"
+#include "GLM/gtc/matrix_transform.hpp"
 
 Camera::Camera():
-	viewMatrix(1.0);
+	viewMatrix(1.0),
+	projMatrix(1.0)
 {
 }
 
