@@ -17,9 +17,9 @@ glm::mat4 Camera::getProjectionMatrix()
 	return projMatrix;
 }
 
-void Camera::lookAt(glm::vec3 const eye,
-					glm::vec3 const at,
-					glm::vec3 const up)
+void Camera::lookAt(glm::vec3 const &eye,
+					glm::vec3 const &at,
+					glm::vec3 const &up)
 {
 	/*glm::vec3 fN  = glm::normalize(at - eye);
 	glm::vec3 upN = glm::normalize(up);

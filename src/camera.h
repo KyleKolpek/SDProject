@@ -9,7 +9,9 @@ public:
 	Camera();
 	glm::mat4 getViewMatrix();
 	glm::mat4 getProjectionMatrix();
-	void lookAt(glm::vec3 eye, glm::vec3 center, glm::vec3 up);
+	void lookAt(glm::vec3 const &eye,
+				glm::vec3 const &center,
+				glm::vec3 const &up);
 	void perspective(float fov, float aspect, float zNear, float zFar);
 private:
 	void rotate(glm::vec3 axis, float radians);
