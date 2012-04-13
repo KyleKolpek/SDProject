@@ -1,7 +1,12 @@
+/*
+	Implementation
+	of class defined in
+	objLoader.h
+*/
+
 #include "objLoader.h"
 
 //Default Constructor
-//It doesn't actually need to create a new instance.
 ObjLoader::ObjLoader()
 {
 	data = new ObjInfo;	
@@ -13,13 +18,18 @@ ObjLoader::~ObjLoader()
 	delete data;
 }
 
-//Load function
-//Doesn't load the textures.
+/*
+	Load function
+	loads data stored in a give .obj file
+	and parses out the model data and 
+	saves it class member variables.
+*/
 void ObjLoader::load(std::string filename)
 {
 	//Delete old data and create a new one.
 	delete data;
 	data = new ObjInfo();
+
 	//Open file
 	std::ifstream objFile(filename.c_str());
 	std::string buffer;
@@ -39,8 +49,9 @@ void ObjLoader::load(std::string filename)
 		std::vector<int> faceInfo;
 		Face face;
 
-		//Get the type
+		//Get the type of data stored in the line.
 		bufferReader >> type;
+
 		//If it's "v" then it decribes vertex info.
 		if(type[0] == 'v')
 		{
@@ -113,7 +124,7 @@ void ObjLoader::load(std::string filename)
 
 /*
 * Loads a the obj at filename, and returns
-* vertexData, indexData and type.
+* vertexData, indexData, type, and count.
 * vertexData is in the following format:
 * {pos1x, pos1y, pos1z, norm1x, norm1y, norm1z, tex1x, tex1y, ...,
 * posNx, posNy, posNz, normNx, normNy, normNz, texNx, texNy}
@@ -145,7 +156,10 @@ void ObjLoader::getData(std::string filename,
 	float* vertData = new float[size * 8];
 	int* indxData = new int[data->faces.size()];
 	size_t iCount = 0;
+
+	//Set the amount of vertices stored in vertData
 	count = size;	
+
 	//Go through everyface and added all the data in order.
 	for(size_t i = 0; i < data->faces.size(); ++i)
 	{
@@ -158,6 +172,7 @@ void ObjLoader::getData(std::string filename,
 				iCount++;
 			}
 		}
+
 		//Add normals
 		for(size_t j = 0; j < data->faces[i].normals.size(); ++j)
 		{
@@ -167,6 +182,7 @@ void ObjLoader::getData(std::string filename,
 				iCount++;
 			}
 		}
+
 		//Add texture coordinates
 		for(size_t j = 0; j < data->faces[i].textures.size(); ++j)
 		{
