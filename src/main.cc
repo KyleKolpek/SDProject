@@ -37,6 +37,7 @@ int main()
 	ad.load("huh.wav");
 	ad.load("doorSqueak.wav");
 	ad.load("thunder.wav");
+	ad.load("wind.wav");
 	//init();
 
 	const sf::Input& Input = App.GetInput();
@@ -56,6 +57,8 @@ int main()
 
 			if(Event.Type == sf::Event::Resized)
 				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
+			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Down))
+				ad.play("wind");
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Up))
 				ad.play("thunder");
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Left))

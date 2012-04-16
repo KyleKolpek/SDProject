@@ -2,12 +2,24 @@
 
 AudioManager::AudioManager()
 {
-	//Just in case we need this later.
+	path = "../assets/sounds/";
 }
 
 AudioManager::~AudioManager()
 {
-	//Just in case we need this later.
+	//Deleting the SoundBuffer objects.
+	for(int i = 0; i < buffers.size(); ++i)
+	{
+		delete buffers[i];
+	}
+
+	//Deleting the Sound objects.
+	std::map<std::string, sf::Sound*>::iterator itr;
+	for(itr = sounds.begin(); itr != sounds.end(); itr++)
+	{
+		delete itr->second;
+	}
+	
 }
 
 void AudioManager::load(std::string filename)
@@ -15,12 +27,11 @@ void AudioManager::load(std::string filename)
 	//Variables Needed.
 	sf::Sound *sound = new sf::Sound;
 	sf::SoundBuffer *buffer = new sf::SoundBuffer;
-	std::string path = "../assets/sounds/" + filename;
+	std::string file = path + filename;
 	size_t dot;
-	std::cout << path + "\n";
 	
 	//Load sound from file.
-	if(!buffer->LoadFromFile(path))
+	if(!buffer->LoadFromFile(file))
 	{
 		std::cout << "Failure to load " + filename + "\n";
 		return;
