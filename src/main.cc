@@ -7,12 +7,12 @@
 #include "objLoader.h"
 #include "character.h"
 #include "camera.h"
+#include "testDrawable.h"
 
 void init();
 
 Camera camera;
-Character character(&camera);
-
+TestDrawable *test;
 
 int main()
 {
@@ -23,7 +23,7 @@ int main()
 	sf::SoundBuffer Buffer;
 	if(!Buffer.LoadFromFile("../assets/sounds/huh.wav"))
 	{
-		std::cout << "Failure to load sound filei\n";
+		std::cout << "Failure to load sound file\n";
 		return 0;
 	}
 	sf::Clock Clock;
@@ -43,13 +43,19 @@ int main()
 		while (App.GetEvent(Event))
 		{
 			if(Event.Type == sf::Event::Closed)
+			{
 				App.Close();
+			}
 			
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Escape))
+			{
 				App.Close();
+			}
 
 			if(Event.Type == sf::Event::Resized)
+			{
 				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
+			}
 			
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Left))
 			{
@@ -83,7 +89,7 @@ int main()
 		*/
 		
 		//Call to actually display the things.
-		character.draw();
+		test->draw();
 		App.Display();
 	}
 
@@ -93,22 +99,27 @@ int main()
 void init()
 {
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
+	glDisable(GL_CULL_FACE);
 	glDepthMask(GL_TRUE);
 	glDepthFunc(GL_LEQUAL);
 	glDepthRange(0.0f, 1.0f);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_VERTEX_ARRAY);
 
 	// Set clear values.
 	glClearDepth(1.0f);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+	glViewport(0, 0, 800, 600);
+
 	// Setup shaders
 	ShaderManager manager("../assets/shaders/");
-	manager.getProgram(2, "phong.vert",
-		"phong.frag");
+	test = new TestDrawable(&camera);
+	test->setProgram(manager.getProgram(2, "phong.vert", "phong.frag"));
 	camera.lookAt(glm::vec3(0.0, 0.0, 0.0),
 				  glm::vec3(0.0, 0.0, -1.0),
 				  glm::vec3(0.0, 1.0, 0.0));
-	camera.perspective(60.0, 800.0/600.0, 0.01, 100.0); 
+	camera.perspective(45.0, 4.0/3.0, 0.01, 100.0); 
 }
 

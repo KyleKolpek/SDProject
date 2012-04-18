@@ -71,9 +71,13 @@ GLuint ShaderManager::getProgram(int shaderFileCount, va_list shaderFileNames)
 		// Determine the shader type
 		// TODO: confirm that the .vert or .frag is at the end of the string
 		GLenum shaderType = 
+#ifdef GL_VERTEX_SHADER
 		(name.find(".vert") != string::npos) ?  GL_VERTEX_SHADER :
+#endif
+#ifdef  GL_FRAGMENT_SHADER
 		(name.find(".frag") != string::npos) ?  GL_FRAGMENT_SHADER :
-#ifdef GL_GEOMETRY_SHADER
+#endif
+#ifdef  GL_GEOMETRY_SHADER
 		(name.find(".geom") != string::npos) ?  GL_GEOMETRY_SHADER :
 #endif
 		0;
@@ -160,6 +164,9 @@ GLuint ShaderManager::getProgram(int shaderFileCount, va_list shaderFileNames)
 
 	// Add the program to the map
 	programMap[key] = program;
+
+	// NOTE: May not be needed
+	glUseProgram(0);
 
 	return program;
 }

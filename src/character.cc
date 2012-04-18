@@ -2,6 +2,8 @@
 #include "camera.h"
 #include "objLoader.h"
 
+using namespace std;
+
 Character::Character(Camera *camera):
 	x(0),
 	y(0),
@@ -23,7 +25,7 @@ Character::Character(Camera *camera):
     glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 
     // Add vertedData to a buffer
-    glBufferData(GL_ARRAY_BUFFER, vertexCount*sizeof(float), vertexData,
+    glBufferData(GL_ARRAY_BUFFER, vertexCount * 8 * sizeof(float), vertexData,
         GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -51,31 +53,47 @@ void Character::draw()
 	{
 		glUniformMatrix4fv(mvLoc, 1, GL_FALSE, &MV[0][0]);
 	}
+	else
+	{
+		cout << "Error" << endl;
+		return;
+	}
 
 	if(nmvLoc != -1)
 	{
 		glUniformMatrix4fv(nmvLoc, 1, GL_FALSE,
 			&glm::transpose(glm::inverse(MV))[0][0]);
 	}
-
+	else
+	{
+		cout << "Error" << endl;
+		return;
+	}
+	
 	if(projLoc != -1)
 	{
-		glUniformMatrix4fv(mvLoc, 1, GL_FALSE, &proj[0][0]);
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, &proj[0][0]);
+	}
+	else
+	{
+		cout << "Error" << endl;
+		return;
 	}
 
-	GLuint vertexPosLoc = glGetAttribLocation(program, "position");
-	GLuint vertexNormalLoc = glGetAttribLocation(program, "normal");
+	GLuint vertexPosLoc = glGetAttribLocation(program, "vertexPosition");
+	GLuint vertexNormalLoc = glGetAttribLocation(program, "vertexNormal");
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glVertexAttribPointer(vertexPosLoc, 3, GL_FLOAT, GL_FALSE,
 		8 * sizeof(float), 0);
-	glVertexAttribPointer(vertexNormalLoc, 3, GL_FLOAT, GL_FALSE,
+	glVertexAttribPointer(vertexNormalLoc, 3, GL_FLOAT, GL_TRUE,
 		8 * sizeof(float), (void *)(3 * sizeof(float)));
 
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 	glDisableVertexAttribArray(vertexPosLoc);
 	glDisableVertexAttribArray(vertexNormalLoc);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glUseProgram(0);
 }
 
 glm::mat4 Character::getModelMatrix()

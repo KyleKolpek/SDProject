@@ -6,7 +6,7 @@
 
 class Camera;
 
-class Character: Drawable
+class Character: public Drawable
 {
 public:
 	Character(Camera *camera);

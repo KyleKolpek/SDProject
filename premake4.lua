@@ -42,9 +42,10 @@ solution "SDProject"
 			links {"glu32", "opengl32", "gdi32", "winmm", "user32"}
 
 		configuration "linux"
-			links {"GLEW", "GL", "GLU", "sfml-graphics", "sfml-window", "sfml-audio", "sfml-system"}
+			links {"GLEW", "GL", "GLU", "sfml-graphics", "sfml-window",
+				   "sfml-audio", "sfml-system"}
 
 		configuration "macosx"
-			links {"OpenGL.framework", "SFML.framework",
-			"SFML-window.framework", "SFML-audio.framework",
+			links {"OpenGL.framework","SFML.framework",
+				   "SFML-window.framework", "SFML-audio.framework",
 			"SFML-system.framework"}

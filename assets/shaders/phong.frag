@@ -2,7 +2,6 @@
 
 varying vec3 normal;
 varying vec3 cameraSpacePos;
-varying vec3 position;
 
 vec3 calcSpecular(vec3 l, vec3 n, vec3 v, vec3 cL, vec3 cS, float p)
 {

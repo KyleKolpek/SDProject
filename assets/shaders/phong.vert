@@ -9,13 +9,12 @@ attribute vec3 vertexNormal;
 
 varying vec3 normal;
 varying vec3 cameraSpacePos;
-varying vec3 position;
 
-void main( void )
+void main(void)
 {
-    vec4 p = modelView * vec4(vertexPosition, 1.0);
-    position = (p * projection).xyz;
-	
+	vec4 p = modelView * vec4(vertexPosition, 1.0);
+	gl_Position = projection * p;
+
 	cameraSpacePos = p.xyz;
-	normal = normalize(normalModelView * vec4(vertexPosition, 0.0)).xyz;
+	normal = normalize(normalModelView * vec4(vertexNormal, 0.0)).xyz;
 }
