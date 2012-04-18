@@ -8,6 +8,7 @@
 #include "character.h"
 #include "camera.h"
 #include "testDrawable.h"
+#include "audioManager.h"
 
 void init();
 
@@ -20,6 +21,7 @@ int main()
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
 	sf::Window App(sf::VideoMode(800, 600, 32), "SFML Demo", sf::Style::Close, Settings);
+	/*
 	sf::SoundBuffer Buffer;
 	if(!Buffer.LoadFromFile("../assets/sounds/huh.wav"))
 	{
@@ -30,7 +32,12 @@ int main()
 	sf::Sound Sound;
 	Sound.SetBuffer(Buffer);
 	Sound.SetVolume(50.0f);
-
+	*/
+	AudioManager ad;
+	ad.load("huh.wav");
+	ad.load("doorSqueak.wav");
+	ad.load("thunder.wav");
+	ad.load("wind.wav");
 	init();
 
 	const sf::Input& Input = App.GetInput();
@@ -57,17 +64,35 @@ int main()
 				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
 			}
 			
+			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Down))
+			{
+				ad.play("wind");
+			}
+			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Up))
+			{
+				ad.play("thunder");
+			}
+
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Left))
 			{
+				ad.play("huh");
+				/*
+				sf::Sound Sound = ad.get("huh");
+				std::cout << Sound.GetBuffer()->GetDuration() << std::endl;
 				if(Sound.GetStatus() == sf::Sound::Playing)
 					Sound.Stop();
 				Sound.Play();
+				*/
 			}
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Right))
 			{
+				ad.play("doorSqueak");
+				/*
+				sf::Sound Sound = ad.get("huh");
 				if(Sound.GetStatus() == sf::Sound::Playing)
 					Sound.Stop();
 				Sound.Play();
+				*/
 			}
 		}
 		

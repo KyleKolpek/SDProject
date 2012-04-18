@@ -3,3 +3,5 @@ Makefile
 SDProject.make
 bin/*
 obj/*
+*.swp
+*.DS_Store
