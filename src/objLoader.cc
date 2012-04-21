@@ -185,26 +185,26 @@ void ObjLoader::getData(std::string filename,
 			for(size_t k = 0; k < data->vertices[data->faces[i].verts[j] -1].size(); ++k)
 			{
 				vertData[iCount] = data->vertices[data->faces[i].verts[j] - 1][k];
-				std::cout << vertData[iCount] << " " << k << " ";
+			//	std::cout << vertData[iCount] << " " << k << " ";
 				iCount++;
 			}
-			std::cout << "\n";
+			//std::cout << "\n";
 		//Add normals
 			for(size_t k = 0; k < data->normals[data->faces[i].normals[j] - 1].size(); ++k)
 			{
 				vertData[iCount] = data->normals[data->faces[i].normals[j] - 1][k];
-				std::cout << vertData[iCount] << " ";
+				//std::cout << vertData[iCount] << " ";
 				iCount++;
 			}
-			std::cout << "\n";
+			//std::cout << "\n";
 		//Add texture coordinates
 			for(size_t k = 0; k < data->texture[data->faces[i].textures[j] - 1].size(); ++k)
 			{
 				vertData[iCount] = data->texture[data->faces[i].textures[j] - 1][k];
-				std::cout << vertData[iCount] << "\n";
+			//	std::cout << vertData[iCount] << "\n";
 				iCount++;
 			}	
-			std::cout << "\n";
+			//std::cout << "\n";
 		}
 		indxData[i] = i;
 	}
