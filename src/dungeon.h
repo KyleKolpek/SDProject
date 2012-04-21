@@ -9,6 +9,8 @@
 #define ROOM_WIDTH 10
 #define ROM_HEIGHT 10
 
+#include "wall.h"
+
 struct Room
 {
 	int row, col;
@@ -16,7 +18,7 @@ struct Room
 	enum RoomType{ ONE, TWOA, TWOB, THREE, FOUR } roomType;
 
 	// TODO: Wall class
-	int walls[4];
+	std::vector<Wall> walls;
 
 	Room(int i, int j) { row = i; col = j; }
 };
