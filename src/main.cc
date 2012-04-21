@@ -146,9 +146,8 @@ void init()
 	glViewport(0, 0, 800, 600);
 
 	// Setup shaders
-	ShaderManager manager("../assets/shaders/");
 	test = new TestDrawable(&camera);
-	test->setProgram(manager.getProgram(2, "phong.vert", "phong.frag"));
+	test->setShaderManager(new ShaderManager("../assets/shaders/"));
 	camera.lookAt(glm::vec3(0.0, 0.0, 0.0),
 				  glm::vec3(0.0, 0.0, -1.0),
 				  glm::vec3(0.0, 1.0, 0.0));
