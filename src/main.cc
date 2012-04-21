@@ -9,6 +9,7 @@
 #include "camera.h"
 #include "testDrawable.h"
 #include "audioManager.h"
+#include "dungeon.h"
 
 void init();
 
@@ -17,6 +18,9 @@ TestDrawable *test;
 
 int main()
 {
+	// create dungeon
+	Dungeon dungeon(4, 4, 5);
+
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
