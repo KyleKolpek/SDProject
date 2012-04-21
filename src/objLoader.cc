@@ -93,23 +93,21 @@ void ObjLoader::load(std::string filename)
 		//If the first letter is "f" then we are talking about face values.
 		else if(type[0] == 'f')
 		{
+			std::string holder;
+			bufferReader >> holder;
 			//Parse out face information.
 			while(bufferReader.good())
 			{
 				//Some data temp data holders.
 				int index[3];
-				std::string holder;
-				bufferReader >> holder;
 				
 				//Go through and grab the data.
-				bool foundSlash = true;
+				//bool foundSlash = true;
 				for(int i = 0; i < 2; ++i)
 				{
 					int place;
 					std::string num;
 					place = holder.find('/');
-					if(place == std::string::npos)
-						foundSlash = false;
 					num = holder.substr(0, place);
 					holder = holder.substr(place + 1);
 					index[i] = atoi(num.c_str());
@@ -117,16 +115,15 @@ void ObjLoader::load(std::string filename)
 
 				//Last one is when there are no more slashes avaliable. 
 				index[2] = atoi(holder.c_str());
-				if(foundSlash)
-				{
 					
-					//Add the temp data to a more permanent home.
-					face.verts.push_back(index[0]);
-					face.normals.push_back(index[1]);
-					face.textures.push_back(index[2]);
-					face.hasTex = true;
-					face.hasNorm = true;
-				}
+				//Add the temp data to a more permanent home.
+				face.verts.push_back(index[0]);
+				face.normals.push_back(index[1]);
+				face.textures.push_back(index[2]);
+				face.hasTex = true;
+				face.hasNorm = true;
+				
+				bufferReader >> holder;
 			}
 			//Add temp data to a more permanent location.
 			data->faces.push_back(face);
@@ -156,7 +153,8 @@ void ObjLoader::getData(std::string filename,
 	//Figure out the size needed and what kind of shapes it uses
 	//to draw the model.
 	
-	if(data->faces[0].verts.size()-1 == 3)
+	std::cout << data->faces[0].verts.size() << "\n";
+	if(data->faces[0].verts.size() == 3)
 	{
 		type = GL_TRIANGLES;
 		size = data->faces.size() * 3;
