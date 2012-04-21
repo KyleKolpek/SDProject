@@ -1,4 +1,4 @@
-#include "TestDrawable.h"
+#include "testDrawable.h"
 #include "objLoader.h"
 
 using namespace std;
