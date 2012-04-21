@@ -50,16 +50,11 @@ GLuint ShaderManager::getProgram(int shaderFileCount, va_list shaderFileNames)
 	// If the key already exists in the map, return the value
 	if(programMap.count(key) != 0)
 	{
-#ifdef DEBUG_SHADERS
-		cout << "Key '" << key << "' found." << endl;
-#endif
 		return programMap[key];
 	}
+
 #ifdef DEBUG_SHADERS
-	else
-	{
-		cout << "Key '" << key << "' not found." << endl;
-	}
+	cout << "Key '" << key << "' not found." << endl;
 #endif
 
 	// Otherwise create the program and add it to the map
@@ -86,7 +81,7 @@ GLuint ShaderManager::getProgram(int shaderFileCount, va_list shaderFileNames)
 		{
 			return 0;
 		}
-		
+
 		// Load the source
 		shaders[i] = glCreateShader(shaderType);
 		ShaderLoader loader((shaderDir + "/" + name).c_str());
