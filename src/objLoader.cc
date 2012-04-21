@@ -138,8 +138,8 @@ void ObjLoader::load(std::string filename)
 * posNx, posNy, posNz, normNx, normNy, normNz, texNx, texNy}
 */
 void ObjLoader::getData(std::string filename, 
-						float* vertexData, 
-						int* indexData,
+						float* &vertexData, 
+						int* &indexData,
 						GLuint &type,
 						GLsizei &count)
 {
