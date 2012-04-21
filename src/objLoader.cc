@@ -3,7 +3,6 @@
 	of class defined in
 	objLoader.h
 */
-
 #include "objLoader.h"
 
 //Default Constructor
@@ -34,12 +33,20 @@ void ObjLoader::load(std::string filename)
 	std::ifstream objFile(filename.c_str());
 	std::string buffer;
 
+	if(!objFile.good())
+	{
+		if(objFile.eof())
+			std::cout << "EOF\n";
+		else if(objFile.fail())
+			std::cout << "FAIL\n";
+		std::cout << "LOLZ NOT GOOD\n";
+		return;
+	}
 	//Loop through all the lines in the file.
 	while(objFile.good())
 	{
 		//Grab a whole line.
 		getline(objFile, buffer);
-		
 		//Set it into a stringstream for parsing.
 		std::stringstream bufferReader(buffer);
 		
@@ -120,6 +127,7 @@ void ObjLoader::load(std::string filename)
 
 		}
 	}	
+	objFile.close();
 }
 
 /*
@@ -141,6 +149,7 @@ void ObjLoader::getData(std::string filename,
 
 	//Figure out the size needed and what kind of shapes it uses
 	//to draw the model.
+	
 	if(data->faces[0].verts.size() == 3)
 	{
 		type = GL_TRIANGLES;
@@ -163,6 +172,7 @@ void ObjLoader::getData(std::string filename,
 	//Go through everyface and added all the data in order.
 	for(size_t i = 0; i < data->faces.size(); ++i)
 	{
+
 		//Add positions
 		for(size_t j = 0; j < data->faces[i].verts.size(); ++j)
 		{
@@ -171,21 +181,15 @@ void ObjLoader::getData(std::string filename,
 				vertData[iCount] = data->vertices[data->faces[i].verts[j] - 1][k];
 				iCount++;
 			}
-		}
-
+		
 		//Add normals
-		for(size_t j = 0; j < data->faces[i].normals.size(); ++j)
-		{
 			for(size_t k = 0; k < data->normals[data->faces[i].normals[j] - 1].size(); ++k)
 			{
 				vertData[iCount] = data->normals[data->faces[i].normals[j] - 1][k];
 				iCount++;
 			}
-		}
 
 		//Add texture coordinates
-		for(size_t j = 0; j < data->faces[i].textures.size(); ++j)
-		{
 			for(size_t k = 0; k < data->texture[data->faces[i].textures[j] - 1].size(); ++k)
 			{
 				vertData[iCount] = data->texture[data->faces[i].textures[j] - 1][k];
@@ -193,8 +197,8 @@ void ObjLoader::getData(std::string filename,
 			}	
 		}
 		indxData[i] = i;
-	}	
-	
+	}
+
 	//Returns
 	vertexData = vertData;
 	indexData = indxData;
