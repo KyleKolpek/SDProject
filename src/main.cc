@@ -20,7 +20,12 @@ int main()
 {
 	// create dungeon
 	Dungeon dungeon(4, 4, 5);
-
+	ObjLoader ld;
+	float* l;
+	int* f;
+	GLuint in;
+	GLsizei s;
+	ld.getData("../assets/models/Legoman/LegoMan.obj", l, f, in, s);
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;

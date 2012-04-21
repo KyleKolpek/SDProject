@@ -102,11 +102,14 @@ void ObjLoader::load(std::string filename)
 				bufferReader >> holder;
 				
 				//Go through and grab the data.
+				bool foundSlash = true;
 				for(int i = 0; i < 2; ++i)
 				{
 					int place;
 					std::string num;
 					place = holder.find('/');
+					if(place == std::string::npos)
+						foundSlash = false;
 					num = holder.substr(0, place);
 					holder = holder.substr(place + 1);
 					index[i] = atoi(num.c_str());
@@ -114,13 +117,16 @@ void ObjLoader::load(std::string filename)
 
 				//Last one is when there are no more slashes avaliable. 
 				index[2] = atoi(holder.c_str());
-
-				//Add the temp data to a more permanent home.
-				face.verts.push_back(index[0]);
-				face.normals.push_back(index[1]);
-				face.textures.push_back(index[2]);
-				face.hasTex = true;
-				face.hasNorm = true;
+				if(foundSlash)
+				{
+					
+					//Add the temp data to a more permanent home.
+					face.verts.push_back(index[0]);
+					face.normals.push_back(index[1]);
+					face.textures.push_back(index[2]);
+					face.hasTex = true;
+					face.hasNorm = true;
+				}
 			}
 			//Add temp data to a more permanent location.
 			data->faces.push_back(face);
@@ -150,7 +156,7 @@ void ObjLoader::getData(std::string filename,
 	//Figure out the size needed and what kind of shapes it uses
 	//to draw the model.
 	
-	if(data->faces[0].verts.size() == 3)
+	if(data->faces[0].verts.size()-1 == 3)
 	{
 		type = GL_TRIANGLES;
 		size = data->faces.size() * 3;
@@ -179,13 +185,15 @@ void ObjLoader::getData(std::string filename,
 			for(size_t k = 0; k < data->vertices[data->faces[i].verts[j] -1].size(); ++k)
 			{
 				vertData[iCount] = data->vertices[data->faces[i].verts[j] - 1][k];
+				//std::cout << vertData[iCount] << " ";
 				iCount++;
 			}
-		
+			//std::cout << "\n";
 		//Add normals
 			for(size_t k = 0; k < data->normals[data->faces[i].normals[j] - 1].size(); ++k)
 			{
 				vertData[iCount] = data->normals[data->faces[i].normals[j] - 1][k];
+				//std::cout << vertData[iCount] << " ";
 				iCount++;
 			}
 
@@ -193,8 +201,10 @@ void ObjLoader::getData(std::string filename,
 			for(size_t k = 0; k < data->texture[data->faces[i].textures[j] - 1].size(); ++k)
 			{
 				vertData[iCount] = data->texture[data->faces[i].textures[j] - 1][k];
+				//std::cout << vertData[iCount] << "\n";
 				iCount++;
 			}	
+			//std::cout << "\n";
 		}
 		indxData[i] = i;
 	}
