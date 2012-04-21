@@ -32,8 +32,11 @@ int ShaderLoader::loadShader(char const *const filename)
 
 	ifstream file;
 	file.open(filename, ios::in); // opens as ASCII!
+
+	// Check for file opening success
 	if(!file)
 	{
+		cerr << "Error opening file '" << filename << "'" << endl;
 		return -1;
 	}
 
