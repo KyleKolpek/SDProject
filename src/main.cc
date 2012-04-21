@@ -17,28 +17,13 @@ TestDrawable *test;
 
 int main()
 {
-	ObjLoader ld;
-	float* sth;
-	int* els;
-	GLuint type;
-	GLsizei count;
-
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
 	sf::Window App(sf::VideoMode(800, 600, 32), "SFML Demo", sf::Style::Close, Settings);
-	/*
-	sf::SoundBuffer Buffer;
-	if(!Buffer.LoadFromFile("../assets/sounds/huh.wav"))
-	{
-		std::cout << "Failure to load sound file\n";
-		return 0;
-	}
+
 	sf::Clock Clock;
-	sf::Sound Sound;
-	Sound.SetBuffer(Buffer);
-	Sound.SetVolume(50.0f);
-	*/
+
 	AudioManager ad;
 	ad.load("huh.wav");
 	ad.load("doorSqueak.wav");
@@ -82,23 +67,10 @@ int main()
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Left))
 			{
 				ad.play("huh");
-				/*
-				sf::Sound Sound = ad.get("huh");
-				std::cout << Sound.GetBuffer()->GetDuration() << std::endl;
-				if(Sound.GetStatus() == sf::Sound::Playing)
-					Sound.Stop();
-				Sound.Play();
-				*/
 			}
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Right))
 			{
 				ad.play("doorSqueak");
-				/*
-				sf::Sound Sound = ad.get("huh");
-				if(Sound.GetStatus() == sf::Sound::Playing)
-					Sound.Stop();
-				Sound.Play();
-				*/
 			}
 		}
 		
@@ -144,8 +116,9 @@ void init()
 
 	glViewport(0, 0, 800, 600);
 
-	// Setup shaders
 	test = new TestDrawable(&camera);
+
+	// Setup shaders
 	test->setShaderManager(new ShaderManager("../assets/shaders/"));
 	camera.lookAt(glm::vec3(0.0, 0.0, 0.0),
 				  glm::vec3(0.0, 0.0, -1.0),
