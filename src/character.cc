@@ -39,7 +39,8 @@ Character::~Character()
 void Character::draw()
 {
 	// Store a ShaderManager over a program
-	glUseProgram(ShaderManager->getProgram(2, "phong.vert", "phong.frag"));
+	GLuint program = shaderManager->getProgram(2, "phong.vert", "phong.frag");
+	glUseProgram(program);
 
 	GLint mvLoc = glGetUniformLocation(program, "modelView");
 	GLint nmvLoc = glGetUniformLocation(program, "normalModelView");

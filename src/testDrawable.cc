@@ -36,7 +36,8 @@ TestDrawable::~TestDrawable()
 void TestDrawable::draw()
 {
 	// TODO: Store a ShaderManager over a program
-	glUseProgram(shaderManager->getProgram(2, "phong.vert", "phong.frag"));
+	GLuint program = shaderManager->getProgram(2, "phong.vert", "phong.frag");
+	glUseProgram(program);
 
 	// Set up uniforms
 	GLint mvLoc = glGetUniformLocation(program, "modelView");
