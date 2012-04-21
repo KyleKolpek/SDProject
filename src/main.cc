@@ -23,7 +23,6 @@ int main()
 	GLuint type;
 	GLsizei count;
 
-	ld.getData("../assets/models/Legoman/Legoman.obj", sth, els, type, count);
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
