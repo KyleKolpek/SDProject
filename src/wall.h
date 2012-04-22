@@ -13,27 +13,36 @@ class Wall : public Drawable
 public:
 	/***********************************************************************//**
 	 * Wall constructor.
-	 * \param[in] x_1 y_1
-	 *     The starting point of the wall.
-	 * \param[in] x_2 y_2
-	 *     The ending point of the wall.
+	 * \param[in] x1
+	 *     The starting x coord of the wall.
+	 * \param[in] y1
+	 *     The starting y coord of the wall.
+	 * \param[in] x2
+	 *     The ending x coord of the wall.
+	 * \param[in] y2
+	 *     The ending y coord of the wall.
 	 **************************************************************************/
-	Wall(float x_1, float y_1, float x_2, float y_2);
+	Wall(float x1, float y1, float x2, float y2);
 
 	/***********************************************************************//**
 	 * Wall destructor.
 	 * Currently empty.
 	 **************************************************************************/
 	~Wall();
-		
+
 	/***********************************************************************//**
 	 * Draws wall.
 	 **************************************************************************/
 	void draw();
-	
+
 private:
 	float x1, y1;	/** Starting point of wall. */
 	float x2, y2;	/** End point of wall. */
+	float width;
+	float height;
+	glm::vec3 normal;
+	GLuint vertexBuffer;
+	GLuint texture;
 };
-#endif
 
+#endif
