@@ -66,7 +66,7 @@ void Character::draw()
 	}
 	else
 	{
-		cout << "Error" << endl;
+		cerr << "Error: Cannot find modelView location" << endl;
 		return;
 	}
 
@@ -77,7 +77,7 @@ void Character::draw()
 	}
 	else
 	{
-		cout << "Error" << endl;
+		cerr << "Error: Cannot find normalModelView location" << endl;
 		return;
 	}
 	
@@ -87,7 +87,7 @@ void Character::draw()
 	}
 	else
 	{
-		cout << "Error" << endl;
+		cerr << "Error: Cannot find projection location" << endl;
 		return;
 	}
 
@@ -99,7 +99,7 @@ void Character::draw()
 	}
 	else
 	{
-		cout << "Error" << endl;
+		cerr << "Error: Cannot find texture location" << endl;
 		return;
 	}
 
@@ -109,17 +109,17 @@ void Character::draw()
 
 	if(vertexPosLoc == -1)
 	{
-		cout << "Error" << endl;
+		cerr << "Error: Cannot find vertexPosition location" << endl;
 		return;
 	}
 	if(vertexNormalLoc == -1)
 	{
-		cout << "Error" << endl;
+		cerr << "Error: Cannot find vertexNormal location" << endl;
 		return;
 	}
 	if(vertexTexCoordLoc == -1)
 	{
-		cout << "Error" << endl;
+		cerr << "Error: Cannot find vertexTexCoord location" << endl;
 		return;
 	}
 
