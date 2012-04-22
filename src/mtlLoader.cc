@@ -17,7 +17,7 @@ MtlLoader::MtlLoader()
 
 MtlLoader::~MtlLoader()
 {
-
+	//Nothing to do yet.
 }
 
 void MtlLoader::loadFile(string filename)
@@ -31,7 +31,6 @@ void MtlLoader::loadFile(string filename)
 		stringstream bufferReader(buffer);
 		string type;
 		bufferReader >> type;
-		cout << type[0] << endl;
 		if(type[0] == 'K')
 		{
 			float r, g, b;
@@ -84,12 +83,13 @@ void MtlLoader::loadFile(string filename)
 			name = filename.substr(0, pos) + "/" + name;
 			texture = name;
 		}
-		else
-		{
-			cout << "Didn't enter a goddamn thing BITCH!\n";
-		}
 	}
+	/*	
+	cout << ambient[0] << " " << ambient[1] << " " << ambient[2] << " <Ambient>\n";
+	cout << diffuse[0] << " " << diffuse[1] << " " << diffuse[2] << " <Diffuse>\n";
+	cout << specular[0] << " " << specular[1] << " " << specular[2] << "<Specular>\n";
 	cout << "alpha->" << alpha << "\nshininess->" << shininess << "\nillum->" << illum << "\nfile->" << texture << "\n";
+	*/
 	mtlFile.close();
 }
 
