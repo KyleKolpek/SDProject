@@ -19,7 +19,7 @@ Character *test;
 int main()
 {
 	// create dungeon
-	Dungeon dungeon(4, 4, 5);
+	Dungeon dungeon(2, 2, 1);
 	std::cout << dungeon.str() << std::endl;
 	
 	sf::WindowSettings Settings;
