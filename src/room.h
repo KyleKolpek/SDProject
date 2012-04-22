@@ -6,47 +6,90 @@
 #include "drawable.h"
 #include "wall.h"
 
-/*
-
-	There are five room types. They are all square and vary only by where doors
-	are placed. There are as follows:
-	
-	ONE: One door. Without rotation it is placed on the north wall.
-	TWOA: Two doors, adjacent to each other. Without rotation they are on the
-		north and west walls.
-	TWOB: Two doors, opposite each other. Without rotation they are on the
-		north and south walls.
-	THREE: Three doors, with the empty wall on the east wall by default.
-	FOUR: Each wall has a door.
-
-	Rotation is defined in terms of 90 degrees counter-clockwise rotations. So
-	for example, RoomType ONE with ROT_ONE would put the door on the west wall
-	instead of the north.
-*/
-
-// Room dimensions
 #define ROOM_WIDTH 10
 #define ROOM_HEIGHT 10
 
+/**************************************************************************//**
+ * A room in the dungeon.
+ * Represents a room that may be traversed by the player. Room inherits from
+ * Drawable, so the dungeon should be able to traverse each of its room objects
+ * and simply call draw() in order to render their walls and other models.
+ *****************************************************************************/
 class Room : public Drawable
 {
 public:
+	/***********************************************************************//**
+	 * Creates a room and computes its global x-y coordinates.
+	 * \param[in] i, j
+	 *     Row/column coordinates in dungeon grid of rooms.
+	 ***************************************************************************/
 	Room(int i, int j);
+
+	/***********************************************************************//**
+	 * Draws room walls and other internal components.
+	 ***************************************************************************/
 	void draw();
+
+	/***********************************************************************//**
+	 * Creates walls and doors.
+	 * Walls must be created AFTER roomType and orient have been assigned. Doors
+	 * are then created by actually generating two walls separated by a gap.
+	 ***************************************************************************/
 	void placeWalls();
 
+	/***********************************************************************//**
+	 * Coordinates in dungeon grid of rooms.
+	 * Rooms store their placement in the dungeon's grid. Room [0,0] would have
+	 * the top-left coordinant (0,0) and the bottom-right
+	 * (0 + ROOM_WIDTH, 0 + ROOM_HEIGHT). Thus, we're looking at rooms from a
+	 * top-down perspective.
+	 **************************************************************************/
 	int row, col;
 
-	enum RoomType{ ONE, TWOA, TWOB, THREE, FOUR } roomType;
-	enum orientation{ ROT_ZERO, ROT_ONE, ROT_TWO, ROT_THREE } orient;
+	/***********************************************************************//**
+	 * Enum representing type of room.
+	 * Rooms are given a type based on the number of doors they contain. In the
+	 * following descriptions, the described placement of doors is assuming NO
+	 * rotation. We may also describe rotation in 90-degree increments which 
+	 * changes which walls have doors.
+	 **************************************************************************/
+	enum RoomType
+	{
+		ONE,	/** A single door on the north wall. */ 
+		TWOA,	/** Two adjacent doors placed on the north and west walls. */
+		TWOB,	/** Two opposite doors placed on the north and south walls. */
+		THREE,	/** Three doors placed on the north, west, and south walls. */
+		FOUR	/** Each wall has a door. */
+	} roomType;
 
-	std::vector<Wall> walls;
+	/***********************************************************************//**
+	 * Enum representing orientation of rooms.
+	 * Each member represents how many 90-degree counter-clockwise increments to
+	 * rotate room while placing doors. For instance, roomType ONE with ROT_ONE
+	 * would place the door on the west wall instead of the north.
+	 **************************************************************************/
+	enum Orientation
+	{
+		ROT_ZERO,
+		ROT_ONE,
+		ROT_TWO,
+		ROT_THREE
+	} orient;
 
 private:
-	// Coordinates in x-y plane of north-west (top-left) corner of room.
-	// The rest can be derived from ROOM_WIDTH and ROOM_HEIGHT
+	/***********************************************************************//**
+	 * Coordinates in x-y plane.
+	 * (x,y) points to the north-west (top-left) corner of the room. The rest 
+	 * can be derived from ROOM_WIDTH and ROOM_HEIGHT.
+	 **************************************************************************/
 	float x, y;
 
+	/***********************************************************************//**
+	 * List of walls that have been placed in room.
+	 * Each room has a list of walls that is traversed in draw(). Doors are
+	 * represented via two walls with a gap between them.
+	 **************************************************************************/
+	std::vector<Wall> walls;
 };
 
 #endif
