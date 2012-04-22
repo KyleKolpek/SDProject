@@ -1,6 +1,9 @@
 #ifndef ROOM_H
 #define ROOM_H
 
+#include <vector>
+
+#include "drawable.h"
 #include "wall.h"
 
 /*
@@ -21,16 +24,28 @@
 	instead of the north.
 */
 
-struct Room
+// Room dimensions
+#define ROOM_WIDTH 10
+#define ROM_HEIGHT 10
+
+class Room : public Drawable
 {
-	int row, col;
+	public:
+		Room(int i, int j);
+		void draw();
 
-	enum RoomType{ ONE, TWOA, TWOB, THREE, FOUR } roomType;
-	enum orient{ ROT_ZERO, ROT_ONE, ROT_TWO, ROT_THREE } myOrient;
+		int row, col;
 
-	std::vector<Wall> walls;
+		enum RoomType{ ONE, TWOA, TWOB, THREE, FOUR } roomType;
+		enum orient{ ROT_ZERO, ROT_ONE, ROT_TWO, ROT_THREE } myOrient;
 
-	Room(int i, int j) { row = i; col = j; }
+		std::vector<Wall> walls;
+	
+	private:
+		// Coordinates in x-y plane of north-west (top-left) corner of room.
+		// The rest can be derived from ROOM_WIDTH and ROOM_HEIGHT
+		float x, y;
+
 };
 
 #endif

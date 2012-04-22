@@ -5,17 +5,16 @@
 #include <vector>
 #include <string>
 
-// Room dimensions
-#define ROOM_WIDTH 10
-#define ROM_HEIGHT 10
-
+#include "drawable.h"
 #include "room.h"
 
-class Dungeon
+class Dungeon : public Drawable
 {
 	public:
 		Dungeon(int rows, int cols, int rooms);
 		~Dungeon();
+
+		void draw();
 
 		// Return a string representation of dungeon
 		std::string str();
