@@ -1,4 +1,5 @@
 #include <iostream>
+#include "SOIL/SOIL.h"
 #include "character.h"
 #include "camera.h"
 #include "objLoader.h"
@@ -12,14 +13,21 @@ Character::Character(Camera *camera):
 	vertexCount(0),
 	vertexData(NULL),
 	vertexBuffer(NULL),
+	texture(NULL),
 	camera(camera)
 {
 	ObjLoader loader;
-	loader.getData("../assets/models/Legoman/LegoMan.obj",
-				   vertexData,
-				   indexData,
-				   dataType,
-				   vertexCount);
+	loader.loadModelData("../assets/models/Legoman/LegoMan.obj");
+	vertexData  = loader.getVertexData();
+	dataType    = loader.getType();
+	vertexCount = loader.getVertexCount();
+	texture = SOIL_load_OGL_texture(
+		 "../assets/models/Legoman/Texture.png",
+		 SOIL_LOAD_AUTO,
+		 SOIL_CREATE_NEW_ID,
+		 SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y |
+		 SOIL_FLAG_NTSC_SAFE_RGB |
+		 SOIL_FLAG_COMPRESS_TO_DXT);
 
     // Prepare vertex buffer
     glGenBuffers(1, &vertexBuffer);

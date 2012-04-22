@@ -18,7 +18,7 @@ solution "SDProject"
 	project "SDProject"
 		language "C++"
 		
-		files {"src/*.cc", "src/*.h"}
+		files {"src/**.h", "src/**.c", "src/**.cc"}
 		
 		targetdir "bin"
 		objdir "obj"
@@ -48,4 +48,4 @@ solution "SDProject"
 		configuration "macosx"
 			links {"OpenGL.framework","SFML.framework",
 				   "SFML-window.framework", "SFML-audio.framework",
-			"SFML-system.framework"}
+			"SFML-system.framework", "Carbon.framework"}

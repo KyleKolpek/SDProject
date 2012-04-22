@@ -22,6 +22,7 @@ private:
 	float *vertexData;
 	GLuint vertexBuffer;
 	GLuint dataType;
+	GLuint texture;
 	Camera *camera;
 
 	glm::mat4 getModelMatrix();
