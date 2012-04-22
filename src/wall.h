@@ -1,3 +1,6 @@
+#ifndef WALL_H
+#define WALL_H
+
 #include "drawable.h"
 
 /***************************************************************************//**
@@ -32,3 +35,5 @@ private:
 	float x1, y1;	/** Starting point of wall. */
 	float x2, y2;	/** End point of wall. */
 };
+#endif
+
