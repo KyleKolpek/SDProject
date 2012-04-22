@@ -6,15 +6,15 @@
 #include "objLoader.h"
 
 //Default Constructor
-ObjLoader::ObjLoader()
+ObjLoader::ObjLoader():
+	data(0)
 {
-	data = new ObjInfo;	
 }
 
 //Default Destructor
 ObjLoader::~ObjLoader()
 {
-	delete data;
+	delete data; // TODO: use more descriptive variable names
 }
 
 /*
@@ -35,11 +35,12 @@ void ObjLoader::load(std::string filename)
 
 	if(!objFile.good())
 	{
+		// TODO: Use allman braces
 		if(objFile.eof())
 			std::cout << "EOF\n";
 		else if(objFile.fail())
 			std::cout << "FAIL\n";
-		std::cout << "LOLZ NOT GOOD\n";
+		std::cout << "LOLZ NOT GOOD\n"; // TODO: Write useful messages
 		return;
 	}
 	//Loop through all the lines in the file.
@@ -63,11 +64,13 @@ void ObjLoader::load(std::string filename)
 		if(type[0] == 'v')
 		{
 			//Grab the rest of the data from the line.
+			float holder;
+			bufferReader >> holder;
 			while(bufferReader.good())
 			{
-				float holder;
-				bufferReader >> holder;
 				info.push_back(holder);
+				//float holder;
+				bufferReader >> holder;
 			}
 
 			/*
@@ -93,15 +96,16 @@ void ObjLoader::load(std::string filename)
 		//If the first letter is "f" then we are talking about face values.
 		else if(type[0] == 'f')
 		{
+			std::string holder;
+			bufferReader >> holder;
 			//Parse out face information.
 			while(bufferReader.good())
 			{
 				//Some data temp data holders.
 				int index[3];
-				std::string holder;
-				bufferReader >> holder;
 				
 				//Go through and grab the data.
+				//bool foundSlash = true;
 				for(int i = 0; i < 2; ++i)
 				{
 					int place;
@@ -114,13 +118,15 @@ void ObjLoader::load(std::string filename)
 
 				//Last one is when there are no more slashes avaliable. 
 				index[2] = atoi(holder.c_str());
-
+					
 				//Add the temp data to a more permanent home.
 				face.verts.push_back(index[0]);
 				face.normals.push_back(index[1]);
 				face.textures.push_back(index[2]);
 				face.hasTex = true;
 				face.hasNorm = true;
+				
+				bufferReader >> holder;
 			}
 			//Add temp data to a more permanent location.
 			data->faces.push_back(face);
@@ -137,11 +143,15 @@ void ObjLoader::load(std::string filename)
 * {pos1x, pos1y, pos1z, norm1x, norm1y, norm1z, tex1x, tex1y, ...,
 * posNx, posNy, posNz, normNx, normNy, normNz, texNx, texNy}
 */
+/*
 void ObjLoader::getData(std::string filename, 
 						float* &vertexData, 
 						int* &indexData,
 						GLuint &type,
 						GLsizei &count)
+*/
+
+void ObjLoader::loadModelData(std::string filename)
 {
 	//Load the data.
 	load(filename);
@@ -150,6 +160,7 @@ void ObjLoader::getData(std::string filename,
 	//Figure out the size needed and what kind of shapes it uses
 	//to draw the model.
 	
+	std::cout << data->faces[0].verts.size() << "\n";
 	if(data->faces[0].verts.size() == 3)
 	{
 		type = GL_TRIANGLES;
@@ -158,12 +169,11 @@ void ObjLoader::getData(std::string filename,
 	else
 	{
 		type = GL_QUADS;
-		size = data->faces.size() * 4;
+		size = data->faces.size() * 4; 
 	}
 	
 	//Temporary data holders.
-	float* vertData = new float[size * 8];
-	int* indxData = new int[data->faces.size()];
+	float* vertData = new float[size * 8]; // TODO: Fix magic numbers
 	size_t iCount = 0;
 
 	//Set the amount of vertices stored in vertData
@@ -172,34 +182,55 @@ void ObjLoader::getData(std::string filename,
 	//Go through everyface and added all the data in order.
 	for(size_t i = 0; i < data->faces.size(); ++i)
 	{
-
-		//Add positions
 		for(size_t j = 0; j < data->faces[i].verts.size(); ++j)
 		{
-			for(size_t k = 0; k < data->vertices[data->faces[i].verts[j] -1].size(); ++k)
+			//Add positions
+			int index = data->faces[i].verts[j] - 1;
+			for(size_t k = 0; k < data->vertices[index].size(); ++k)
 			{
-				vertData[iCount] = data->vertices[data->faces[i].verts[j] - 1][k];
+				vertData[iCount] = data->vertices[index][k];
+				std::cout << vertData[iCount] << " ";
 				iCount++;
 			}
-		
-		//Add normals
-			for(size_t k = 0; k < data->normals[data->faces[i].normals[j] - 1].size(); ++k)
-			{
-				vertData[iCount] = data->normals[data->faces[i].normals[j] - 1][k];
-				iCount++;
-			}
+			std::cout << "\n";
 
-		//Add texture coordinates
-			for(size_t k = 0; k < data->texture[data->faces[i].textures[j] - 1].size(); ++k)
+			//Add normals
+			index = data->faces[i].normals[j] - 1;
+			for(size_t k = 0; k < data->normals[index].size(); ++k)
 			{
-				vertData[iCount] = data->texture[data->faces[i].textures[j] - 1][k];
+				vertData[iCount] = data->normals[index][k];
+				std::cout << vertData[iCount] << " ";
+				iCount++;
+			}
+			std::cout << "\n";
+
+			//Add texture coordinates
+			index = data->faces[i].textures[j] - 1;
+			for(size_t k = 0; k < data->texture[index].size(); ++k)
+			{
+				vertData[iCount] = data->texture[index][k];
+				std::cout << vertData[iCount] << "\n";
 				iCount++;
 			}	
+			std::cout << "\n";
 		}
-		indxData[i] = i;
 	}
 
 	//Returns
 	vertexData = vertData;
-	indexData = indxData;
+}
+
+float* ObjLoader::getVertexData() 
+{
+	return vertexData;
+}
+
+GLuint ObjLoader::getType()
+{
+	return type;
+}
+
+GLsizei ObjLoader::getVertexCount()
+{
+	return count;
 }

@@ -14,7 +14,7 @@
 void init();
 
 Camera camera;
-TestDrawable *test;
+Character *test;
 
 int main()
 {
@@ -22,6 +22,12 @@ int main()
 	Dungeon dungeon(4, 4, 5);
 	std::cout << dungeon.str() << std::endl;
 
+	ObjLoader ld;
+	float* l;
+	int* f;
+	GLuint in;
+	GLsizei s;
+	ld.getData("../assets/models/Legoman/LegoMan.obj", l, f, in, s);
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
@@ -121,7 +127,7 @@ void init()
 
 	glViewport(0, 0, 800, 600);
 
-	test = new TestDrawable(&camera);
+	test = new Character(&camera);
 
 	// Setup shaders
 	test->setShaderManager(new ShaderManager("../assets/shaders/"));

@@ -1,3 +1,4 @@
+#include <iostream>
 #include "character.h"
 #include "camera.h"
 #include "objLoader.h"
@@ -19,6 +20,33 @@ Character::Character(Camera *camera):
 				   indexData,
 				   dataType,
 				   vertexCount);
+#ifdef DEBUG
+	/*
+	for(int i=0; i<vertexCount; ++i)
+	{
+		cout << "(";
+		for(int j=0; j<3; ++j)
+		{
+			cout << vertexData[8 * i + j] << ", ";
+		}
+		cout << ")" << endl;
+		cout << "(";
+		for(int j=0; j<3; ++j)
+		{
+			cout << vertexData[8 * i + 3 + j] << ", ";
+		}
+		cout << ")" << endl;
+		cout << "(";
+		for(int j=0; j<2; ++j)
+		{
+			cout << vertexData[8 * i + 6 + j] << ", ";
+		}
+		cout << ")" << endl;
+	}
+	cout << ((dataType == GL_QUADS) ? "GL_QUADS" : "ERR") << endl;
+	cout << "vertexCount: " << vertexCount << endl;
+	*/
+#endif
 
     // Prepare vertex buffer
     glGenBuffers(1, &vertexBuffer);
@@ -83,6 +111,20 @@ void Character::draw()
 
 	GLuint vertexPosLoc = glGetAttribLocation(program, "vertexPosition");
 	GLuint vertexNormalLoc = glGetAttribLocation(program, "vertexNormal");
+
+	if(vertexPosLoc == -1)
+	{
+		cout << "Error" << endl;
+		return;
+	}
+	if(vertexNormalLoc == -1)
+	{
+		cout << "Error" << endl;
+		return;
+	}
+
+	glEnableVertexAttribArray(vertexPosLoc);
+	glEnableVertexAttribArray(vertexNormalLoc);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glVertexAttribPointer(vertexPosLoc, 3, GL_FLOAT, GL_FALSE,
