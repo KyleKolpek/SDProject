@@ -69,7 +69,7 @@ void ObjLoader::load(std::string filename)
 			while(bufferReader.good())
 			{
 				info.push_back(holder);
-				float holder;
+				//float holder;
 				bufferReader >> holder;
 			}
 
