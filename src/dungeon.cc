@@ -7,6 +7,12 @@
 
 using namespace std;
 
+void Dungeon::draw()
+{
+
+
+}
+
 Dungeon::Dungeon(int rows, int cols, int rooms)
 {
 	numRows = rows;
