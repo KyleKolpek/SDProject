@@ -38,7 +38,7 @@ public:
 	int row, col;
 
 	enum RoomType{ ONE, TWOA, TWOB, THREE, FOUR } roomType;
-	enum orient{ ROT_ZERO, ROT_ONE, ROT_TWO, ROT_THREE } myOrient;
+	enum orientation{ ROT_ZERO, ROT_ONE, ROT_TWO, ROT_THREE } orient;
 
 	std::vector<Wall> walls;
 

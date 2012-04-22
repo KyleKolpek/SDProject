@@ -28,23 +28,23 @@ void Room::placeWalls()
 	switch(roomType)
 	{
 		case ONE:
-			doors.push_back(myOrient);
+			doors.push_back(orient);
 			break;
 
 		case TWOA:
-			doors.push_back(NORTH + myOrient);
-			doors.push_back(WEST + myOrient);
+			doors.push_back(NORTH + orient);
+			doors.push_back(WEST + orient);
 			break;
 
 		case TWOB:
-			doors.push_back(NORTH + myOrient);
-			doors.push_back(SOUTH + myOrient);
+			doors.push_back(NORTH + orient);
+			doors.push_back(SOUTH + orient);
 			break;
 
 		case THREE:
-			doors.push_back(NORTH + myOrient);
-			doors.push_back(WEST + myOrient);
-			doors.push_back(SOUTH + myOrient);
+			doors.push_back(NORTH + orient);
+			doors.push_back(WEST + orient);
+			doors.push_back(SOUTH + orient);
 			break;
 
 		case FOUR:
@@ -107,7 +107,7 @@ void Room::placeWalls()
 	
 	
 	/* DEBUG
-	printf("type: %d orient: %d\n", roomType, myOrient);
+	printf("type: %d orient: %d\n", roomType, orient);
 	for(size_t i = 0; i < doors.size(); ++i)
 		printf("%d ", doors[i]);
 	printf("\n");

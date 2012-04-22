@@ -173,16 +173,16 @@ void Dungeon::orientRooms()
 			case Room::ONE:
 				// door on north
 				if(i > 0 && dungeon[i-1][j] != NULL)
-					rooms[ind]->myOrient = Room::ROT_ZERO;
+					rooms[ind]->orient = Room::ROT_ZERO;
 				// door on south
 				else if(i < numRows - 1 && dungeon[i+1][j] != NULL)
-					rooms[ind]->myOrient = Room::ROT_TWO;
+					rooms[ind]->orient = Room::ROT_TWO;
 				// door on west
 				else if(j > 0 && dungeon[i][j-1] != NULL)
-					rooms[ind]->myOrient = Room::ROT_ONE;
+					rooms[ind]->orient = Room::ROT_ONE;
 				// door on east
 				else
-					rooms[ind]->myOrient = Room::ROT_THREE;
+					rooms[ind]->orient = Room::ROT_THREE;
 				break;
 
 			// Two adjacent doors
@@ -192,18 +192,18 @@ void Dungeon::orientRooms()
 				{
 					// If other door is west
 					if(j > 0 && dungeon[i][j-1] != NULL)
-						rooms[ind]->myOrient = Room::ROT_ZERO;
+						rooms[ind]->orient = Room::ROT_ZERO;
 					else // Door should be east then
-						rooms[ind]->myOrient = Room::ROT_THREE;
+						rooms[ind]->orient = Room::ROT_THREE;
 				}
 				// Then one of the doors must be on the south side
 				else if(i < numRows - 1 && dungeon[i+1][j] != NULL)
 				{
 					// If other door is west
 					if(j > 0 && dungeon[i][j-1] != NULL)
-						rooms[ind]->myOrient = Room::ROT_ONE;
+						rooms[ind]->orient = Room::ROT_ONE;
 					else // Door should be east then
-						rooms[ind]->myOrient = Room::ROT_TWO;
+						rooms[ind]->orient = Room::ROT_TWO;
 				}
 				break;
 
@@ -211,9 +211,9 @@ void Dungeon::orientRooms()
 			case Room::TWOB:
 				// If the doors are north-south
 				if(i > 0 && dungeon[i-1][j] != NULL)
-					rooms[ind]->myOrient = Room::ROT_ZERO;
+					rooms[ind]->orient = Room::ROT_ZERO;
 				else // east-west
-					rooms[ind]->myOrient = Room::ROT_ONE;
+					rooms[ind]->orient = Room::ROT_ONE;
 				break;
 			
 			// TODO: Fix meeee
@@ -221,21 +221,21 @@ void Dungeon::orientRooms()
 			case Room::THREE:
 				// north
 				if(i > 0 && dungeon[i-1][j] == NULL)
-					rooms[ind]->myOrient = Room::ROT_ONE;
+					rooms[ind]->orient = Room::ROT_ONE;
 				// south
 				else if(i < numRows - 1 && dungeon[i+1][j] == NULL)
-					rooms[ind]->myOrient = Room::ROT_THREE;
+					rooms[ind]->orient = Room::ROT_THREE;
 				// east
 				else if(j > 0 && dungeon[i][j+1] == NULL)
-					rooms[ind]->myOrient = Room::ROT_ZERO;
+					rooms[ind]->orient = Room::ROT_ZERO;
 				// west
 				else
-					rooms[ind]->myOrient = Room::ROT_TWO;
+					rooms[ind]->orient = Room::ROT_TWO;
 				break;
 
 			// Four doors, orientation doesn't matter
 			case Room::FOUR:
-				dungeon[i][j]->myOrient = Room::ROT_ZERO;
+				dungeon[i][j]->orient = Room::ROT_ZERO;
 				break;
 		} // end switch(roomType)
 	} // end foreach room
@@ -283,7 +283,7 @@ string Dungeon::str()
 				ret += ".";
 			else
 			{
-				switch(dungeon[i][j]->myOrient)
+				switch(dungeon[i][j]->orient)
 				{
 					case Room::ROT_ZERO:
 						ret += "0";
