@@ -6,15 +6,15 @@
 #include "objLoader.h"
 
 //Default Constructor
-ObjLoader::ObjLoader()
+ObjLoader::ObjLoader():
+	data(0)
 {
-	data = new ObjInfo;	
 }
 
 //Default Destructor
 ObjLoader::~ObjLoader()
 {
-	delete data;
+	delete data; // TODO: use more descriptive variable names
 }
 
 /*
@@ -35,11 +35,12 @@ void ObjLoader::load(std::string filename)
 
 	if(!objFile.good())
 	{
+		// TODO: Use allman braces
 		if(objFile.eof())
 			std::cout << "EOF\n";
 		else if(objFile.fail())
 			std::cout << "FAIL\n";
-		std::cout << "LOLZ NOT GOOD\n";
+		std::cout << "LOLZ NOT GOOD\n"; // TODO: Write useful messages
 		return;
 	}
 	//Loop through all the lines in the file.
@@ -164,11 +165,11 @@ void ObjLoader::getData(std::string filename,
 	else
 	{
 		type = GL_QUADS;
-		size = data->faces.size() * 4;
+		size = data->faces.size() * 4; 
 	}
 	
 	//Temporary data holders.
-	float* vertData = new float[size * 8];
+	float* vertData = new float[size * 8]; // TODO: Fix magic numbers
 	int* indxData = new int[data->faces.size()];
 	size_t iCount = 0;
 
@@ -178,33 +179,37 @@ void ObjLoader::getData(std::string filename,
 	//Go through everyface and added all the data in order.
 	for(size_t i = 0; i < data->faces.size(); ++i)
 	{
-
-		//Add positions
 		for(size_t j = 0; j < data->faces[i].verts.size(); ++j)
 		{
-			for(size_t k = 0; k < data->vertices[data->faces[i].verts[j] -1].size(); ++k)
+			//Add positions
+			int index = data->faces[i].verts[j] - 1;
+			for(size_t k = 0; k < data->vertices[index].size(); ++k)
 			{
-				vertData[iCount] = data->vertices[data->faces[i].verts[j] - 1][k];
-			//	std::cout << vertData[iCount] << " " << k << " ";
+				vertData[iCount] = data->vertices[index][k];
+				std::cout << vertData[iCount] << " ";
 				iCount++;
 			}
-			//std::cout << "\n";
-		//Add normals
-			for(size_t k = 0; k < data->normals[data->faces[i].normals[j] - 1].size(); ++k)
+			std::cout << "\n";
+
+			//Add normals
+			index = data->faces[i].normals[j] - 1;
+			for(size_t k = 0; k < data->normals[index].size(); ++k)
 			{
-				vertData[iCount] = data->normals[data->faces[i].normals[j] - 1][k];
-				//std::cout << vertData[iCount] << " ";
+				vertData[iCount] = data->normals[index][k];
+				std::cout << vertData[iCount] << " ";
 				iCount++;
 			}
-			//std::cout << "\n";
-		//Add texture coordinates
-			for(size_t k = 0; k < data->texture[data->faces[i].textures[j] - 1].size(); ++k)
+			std::cout << "\n";
+
+			//Add texture coordinates
+			index = data->faces[i].textures[j] - 1;
+			for(size_t k = 0; k < data->texture[index].size(); ++k)
 			{
-				vertData[iCount] = data->texture[data->faces[i].textures[j] - 1][k];
-			//	std::cout << vertData[iCount] << "\n";
+				vertData[iCount] = data->texture[index][k];
+				std::cout << vertData[iCount] << "\n";
 				iCount++;
 			}	
-			//std::cout << "\n";
+			std::cout << "\n";
 		}
 		indxData[i] = i;
 	}
