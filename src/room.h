@@ -26,13 +26,14 @@
 
 // Room dimensions
 #define ROOM_WIDTH 10
-#define ROM_HEIGHT 10
+#define ROOM_HEIGHT 10
 
 class Room : public Drawable
 {
 	public:
 		Room(int i, int j);
 		void draw();
+		void placeWalls();
 
 		int row, col;
 

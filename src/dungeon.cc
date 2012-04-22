@@ -103,6 +103,10 @@ void Dungeon::generateDungeon()
 	// Now that all of our rooms created, determine which type to assign each room
 	assignRoomTypes();
 	orientRooms();
+
+	// have each room create its walls
+	for(size_t i = 0; i < rooms.size(); ++i)
+		rooms[i]->placeWalls();
 }
 
 void Dungeon::assignRoomTypes()
