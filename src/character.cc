@@ -48,12 +48,13 @@ Character::~Character()
 void Character::draw()
 {
 	// Store a ShaderManager over a program
-	GLuint program = shaderManager->getProgram(2, "phong.vert", "phong.frag");
+	GLuint program = shaderManager->getProgram(2, "phongTex.vert", "phongTex.frag");
 	glUseProgram(program);
 
 	GLint mvLoc = glGetUniformLocation(program, "modelView");
 	GLint nmvLoc = glGetUniformLocation(program, "normalModelView");
 	GLint projLoc = glGetUniformLocation(program, "projection");
+	GLint texLoc = glGetUniformLocation(program, "texture");
 
 	glm::mat4 MV = getModelMatrix() * camera->getViewMatrix();
 	glm::mat4 proj = camera->getProjectionMatrix();
@@ -90,8 +91,21 @@ void Character::draw()
 		return;
 	}
 
+	if(texLoc != -1)
+	{
+		glUniform1i(texLoc, 0);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture);
+	}
+	else
+	{
+		cout << "Error" << endl;
+		return;
+	}
+
 	GLuint vertexPosLoc = glGetAttribLocation(program, "vertexPosition");
 	GLuint vertexNormalLoc = glGetAttribLocation(program, "vertexNormal");
+	GLuint vertexTexCoordLoc = glGetAttribLocation(program, "vertexTexCoord");
 
 	if(vertexPosLoc == -1)
 	{
@@ -103,15 +117,23 @@ void Character::draw()
 		cout << "Error" << endl;
 		return;
 	}
+	if(vertexTexCoordLoc == -1)
+	{
+		cout << "Error" << endl;
+		return;
+	}
 
 	glEnableVertexAttribArray(vertexPosLoc);
 	glEnableVertexAttribArray(vertexNormalLoc);
+	glEnableVertexAttribArray(vertexTexCoordLoc);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	glVertexAttribPointer(vertexPosLoc, 3, GL_FLOAT, GL_FALSE,
 		8 * sizeof(float), 0);
 	glVertexAttribPointer(vertexNormalLoc, 3, GL_FLOAT, GL_TRUE,
 		8 * sizeof(float), (void *)(3 * sizeof(float)));
+	glVertexAttribPointer(vertexTexCoordLoc, 2, GL_FLOAT, GL_TRUE,
+		8 * sizeof(float), (void *)(6 * sizeof(float)));
 
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 	glDisableVertexAttribArray(vertexPosLoc);
