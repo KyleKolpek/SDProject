@@ -7,10 +7,9 @@
 #include<vector>
 #include<sstream>
 #include<cstdlib>
-#ifndef SHADERMANAGER
+
 #include"stdgl.h"
 #include"mtlLoader.h"
-#endif
 
 /***************************************************************************//**
 * Holds information for each face.
