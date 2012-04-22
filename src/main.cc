@@ -20,6 +20,7 @@ int main()
 {
 	// create dungeon
 	Dungeon dungeon(4, 4, 5);
+	std::cout << dungeon.str() << std::endl;
 
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24;

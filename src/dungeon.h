@@ -9,19 +9,7 @@
 #define ROOM_WIDTH 10
 #define ROM_HEIGHT 10
 
-#include "wall.h"
-
-struct Room
-{
-	int row, col;
-
-	enum RoomType{ ONE, TWOA, TWOB, THREE, FOUR } roomType;
-
-	// TODO: Wall class
-	std::vector<Wall> walls;
-
-	Room(int i, int j) { row = i; col = j; }
-};
+#include "room.h"
 
 class Dungeon
 {
@@ -43,6 +31,7 @@ class Dungeon
 
 		void generateDungeon();
 		void assignRoomTypes();
+		void orientRooms();
 };
 
 #endif

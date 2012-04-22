@@ -96,6 +96,7 @@ void Dungeon::generateDungeon()
 
 	// Now that all of our rooms created, determine which type to assign each room
 	assignRoomTypes();
+	orientRooms();
 }
 
 void Dungeon::assignRoomTypes()
@@ -145,13 +146,94 @@ void Dungeon::assignRoomTypes()
 				dungeon[i][j]->roomType = Room::FOUR;
 				break;
 		}
-
 	}
+}
+
+void Dungeon::orientRooms()
+{
+	// Iterate through each room and determine what orientation to assign.
+	for(size_t ind = 0; ind < rooms.size(); ++ind)
+	{
+		int i = rooms[ind]->row;
+		int j = rooms[ind]->col;
+
+		switch(rooms[ind]->roomType)
+		{
+			// just one door, find it.
+			case Room::ONE:
+				// door on north
+				if(i > 0 && dungeon[i-1][j] != NULL)
+					rooms[ind]->myOrient = Room::ROT_ZERO;
+				// door on south
+				else if(i < numRows - 1 && dungeon[i+1][j] != NULL)
+					rooms[ind]->myOrient = Room::ROT_TWO;
+				// door on west
+				else if(j > 0 && dungeon[i][j-1] != NULL)
+					rooms[ind]->myOrient = Room::ROT_ONE;
+				// door on east
+				else
+					rooms[ind]->myOrient = Room::ROT_THREE;
+				break;
+
+			// Two adjacent doors
+			case Room::TWOA:
+				// If one door is north (one row up)
+				if(i > 0 && dungeon[i-1][j] != NULL)
+				{
+					// If other door is west
+					if(j > 0 && dungeon[i][j-1] != NULL)
+						rooms[ind]->myOrient = Room::ROT_ZERO;
+					else // Door should be east then
+						rooms[ind]->myOrient = Room::ROT_THREE;
+				}
+				// Then one of the doors must be on the south side
+				else if(i < numRows - 1 && dungeon[i+1][j] != NULL)
+				{
+					// If other door is west
+					if(j > 0 && dungeon[i][j-1] != NULL)
+						rooms[ind]->myOrient = Room::ROT_ONE;
+					else // Door should be east then
+						rooms[ind]->myOrient = Room::ROT_TWO;
+				}
+				break;
+
+			// Two opposite doors
+			case Room::TWOB:
+				// If the doors are north-south
+				if(i > 0 && dungeon[i-1][j] != NULL)
+					rooms[ind]->myOrient = Room::ROT_ZERO;
+				else // east-west
+					rooms[ind]->myOrient = Room::ROT_ONE;
+				break;
+			
+			// TODO: Fix meeee
+			// Three doors, just find the side without a door
+			case Room::THREE:
+				// north
+				if(i > 0 && dungeon[i-1][j] == NULL)
+					rooms[ind]->myOrient = Room::ROT_ONE;
+				// south
+				else if(i < numRows - 1 && dungeon[i+1][j] == NULL)
+					rooms[ind]->myOrient = Room::ROT_THREE;
+				// east
+				else if(j > 0 && dungeon[i][j+1] == NULL)
+					rooms[ind]->myOrient = Room::ROT_ZERO;
+				// west
+				else
+					rooms[ind]->myOrient = Room::ROT_TWO;
+				break;
+
+			// Four doors, orientation doesn't matter
+			case Room::FOUR:
+				dungeon[i][j]->myOrient = Room::ROT_ZERO;
+				break;
+		} // end switch(roomType)
+	} // end foreach room
 }
 
 string Dungeon::str()
 {
-	string ret = "";
+	string ret = "Room Types:\n";
 	for(size_t i = 0; i < numRows; ++i)
 	{
 		for(size_t j = 0; j < numCols; ++j)
@@ -182,10 +264,37 @@ string Dungeon::str()
 		}
 		ret += "\n";
 	}
+	ret += "Orientations:\n";
+	for(size_t i = 0; i < numRows; ++i)
+	{
+		for(size_t j = 0; j < numCols; ++j)
+		{
+			if(dungeon[i][j] == NULL)
+				ret += ".";
+			else
+			{
+				switch(dungeon[i][j]->myOrient)
+				{
+					case Room::ROT_ZERO:
+						ret += "0";
+						break;
+					case Room::ROT_ONE:
+						ret += "1";
+						break;
+					case Room::ROT_TWO:
+						ret += "2";
+					break;
+					case Room::ROT_THREE:
+						ret += "3";
+						break;
+				}
+			}
+		}
+		ret += "\n";
+	}
 	
 	return ret;
 }
-
 /* DEBUG
 int main()
 {
