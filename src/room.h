@@ -30,22 +30,22 @@
 
 class Room : public Drawable
 {
-	public:
-		Room(int i, int j);
-		void draw();
-		void placeWalls();
+public:
+	Room(int i, int j);
+	void draw();
+	void placeWalls();
 
-		int row, col;
+	int row, col;
 
-		enum RoomType{ ONE, TWOA, TWOB, THREE, FOUR } roomType;
-		enum orient{ ROT_ZERO, ROT_ONE, ROT_TWO, ROT_THREE } myOrient;
+	enum RoomType{ ONE, TWOA, TWOB, THREE, FOUR } roomType;
+	enum orient{ ROT_ZERO, ROT_ONE, ROT_TWO, ROT_THREE } myOrient;
 
-		std::vector<Wall> walls;
-	
-	private:
-		// Coordinates in x-y plane of north-west (top-left) corner of room.
-		// The rest can be derived from ROOM_WIDTH and ROOM_HEIGHT
-		float x, y;
+	std::vector<Wall> walls;
+
+private:
+	// Coordinates in x-y plane of north-west (top-left) corner of room.
+	// The rest can be derived from ROOM_WIDTH and ROOM_HEIGHT
+	float x, y;
 
 };
 
