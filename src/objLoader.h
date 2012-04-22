@@ -74,26 +74,31 @@ public:
 	 * and type.
 	 * \param[in] filename
 	 * 	  The filename of the obj file to load.
-	 * \param[out] vertexData
-	 *     The complete vertex data in the form of pos1, norm1, tex1, _ ,
-	 *     posN, normN, texN.
-	 * \param[out] indexData
-	 *     The index face data. Probably not necessary.
-	 * \param[out] type
-	 * 	  GL type that tells the receiver what kind of shape the model is made
-	 *    of.
 	 **************************************************************************/
-	void getData(std::string filename, 
-				float* &vertexData, 
-				int* &indexData,
-				GLuint &type,
-				GLsizei &count);
+	void loadModelData(std::string filename);
+
+	/***********************************************************************//**
+	 * Returns vertex data for the loaded model.
+	 **************************************************************************/
+	float* getVertexData();
+	
+	/***********************************************************************//**
+	 * Returns type (quads or triangles) for loaded model.
+	 **************************************************************************/	
+	GLuint getType();
+
+	/***********************************************************************//**
+	 * Returns vertex data count for the loaded model.
+	 **************************************************************************/	
+	GLsizei getVertexCount();
 
 private:
 	/***********************************************************************//**
 	 * Holds the data from the obj for later conversion to output format.
 	 **************************************************************************/
 	ObjInfo* data;
-	
+	float* vertexData;
+	GLuint type;
+	GLsizei count;
 };
 #endif 

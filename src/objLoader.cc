@@ -143,11 +143,15 @@ void ObjLoader::load(std::string filename)
 * {pos1x, pos1y, pos1z, norm1x, norm1y, norm1z, tex1x, tex1y, ...,
 * posNx, posNy, posNz, normNx, normNy, normNz, texNx, texNy}
 */
+/*
 void ObjLoader::getData(std::string filename, 
 						float* &vertexData, 
 						int* &indexData,
 						GLuint &type,
 						GLsizei &count)
+*/
+
+void ObjLoader::loadModelData(std::string filename)
 {
 	//Load the data.
 	load(filename);
@@ -170,7 +174,6 @@ void ObjLoader::getData(std::string filename,
 	
 	//Temporary data holders.
 	float* vertData = new float[size * 8]; // TODO: Fix magic numbers
-	int* indxData = new int[data->faces.size()];
 	size_t iCount = 0;
 
 	//Set the amount of vertices stored in vertData
@@ -211,10 +214,23 @@ void ObjLoader::getData(std::string filename,
 			}	
 			std::cout << "\n";
 		}
-		indxData[i] = i;
 	}
 
 	//Returns
 	vertexData = vertData;
-	indexData = indxData;
+}
+
+float* ObjLoader::getVertexData() 
+{
+	return vertexData;
+}
+
+GLuint ObjLoader::getType()
+{
+	return type;
+}
+
+GLsizei ObjLoader::getVertexCount()
+{
+	return count;
 }
