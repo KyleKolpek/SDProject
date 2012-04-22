@@ -14,7 +14,7 @@
 void init();
 
 Camera camera;
-TestDrawable *test;
+Character *test;
 
 int main()
 {
@@ -125,7 +125,7 @@ void init()
 
 	glViewport(0, 0, 800, 600);
 
-	test = new TestDrawable(&camera);
+	test = new Character(&camera);
 
 	// Setup shaders
 	test->setShaderManager(new ShaderManager("../assets/shaders/"));
