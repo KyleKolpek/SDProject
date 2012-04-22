@@ -76,13 +76,14 @@ void Dungeon::generateDungeon()
 			// Either expand off of i or j
 			if(rand() % 2 == 0)
 			{
+				// Expand off of i
 				possibleCoords[0] = max(0, i-1);
 				possibleCoords[1] = min(numRows-1, i+1);
 				// Grab new value
 				i = possibleCoords[rand() % 2];
 				
 			}
-			else
+			else // j
 			{
 				possibleCoords[0] = max(0, j-1);
 				possibleCoords[1] = min(numCols-1, j+1);
@@ -90,6 +91,7 @@ void Dungeon::generateDungeon()
 				j = possibleCoords[rand() % 2];
 			}
 
+			// If we chose an empty location
 			if(dungeon[i][j] == NULL)
 			{
 				dungeon[i][j] = new Room(i, j);
@@ -100,7 +102,8 @@ void Dungeon::generateDungeon()
 		} // end repeat until success
 	} // end foreach room to create
 
-	// Now that all of our rooms created, determine which type to assign each room
+	// Now that all of our rooms created, determine which type and orientation
+	// to assign to each room
 	assignRoomTypes();
 	orientRooms();
 
