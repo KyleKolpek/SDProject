@@ -106,6 +106,9 @@ int main()
 
 void init()
 {
+	// Initialize glew -- should fix segfaults on linux machines
+	glewInit();
+
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 	glDepthMask(GL_TRUE);
