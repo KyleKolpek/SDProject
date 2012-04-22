@@ -9,6 +9,7 @@
 #include<cstdlib>
 #ifndef SHADERMANAGER
 #include"stdgl.h"
+#include"mtlLoader.h"
 #endif
 
 /***************************************************************************//**
@@ -92,6 +93,11 @@ public:
 	 **************************************************************************/	
 	GLsizei getVertexCount();
 
+	/***********************************************************************//**
+	 * Returns material file data for the loaded model.
+	 **************************************************************************/		
+	MtlLoader* getMtlLoader();
+
 private:
 	/***********************************************************************//**
 	 * Holds the data from the obj for later conversion to output format.
@@ -100,5 +106,6 @@ private:
 	float* vertexData;
 	GLuint type;
 	GLsizei count;
+	MtlLoader mtl;
 };
 #endif 

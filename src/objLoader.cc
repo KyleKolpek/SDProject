@@ -43,6 +43,7 @@ void ObjLoader::load(std::string filename)
 		std::cout << "LOLZ NOT GOOD\n"; // TODO: Write useful messages
 		return;
 	}
+
 	//Loop through all the lines in the file.
 	while(objFile.good())
 	{
@@ -131,6 +132,15 @@ void ObjLoader::load(std::string filename)
 			//Add temp data to a more permanent location.
 			data->faces.push_back(face);
 
+		}
+		else if(type.compare("mtllib") == 0)
+		{
+			std::string name;
+			bufferReader >> name;
+			size_t pos = filename.find_last_of("/\\");
+			name = filename.substr(0, pos) + "/" + name;
+			std::cout << name << std::endl;
+			mtl.loadFile(name);
 		}
 	}	
 	objFile.close();
@@ -233,4 +243,9 @@ GLuint ObjLoader::getType()
 GLsizei ObjLoader::getVertexCount()
 {
 	return count;
+}
+
+MtlLoader* ObjLoader::getMtlLoader()
+{
+	return &mtl;
 }
