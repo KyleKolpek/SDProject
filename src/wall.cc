@@ -5,7 +5,8 @@ Wall::Wall(float x1, float y1, float x2, float y2):
 	x1(x1),
 	y1(y1),
 	x2(x2),
-	y2(y2)
+	y2(y2),
+	vertexCount(4)
 {
 	
 	float tmpVertexData[] = {x1, 0.0, y1,
@@ -15,7 +16,7 @@ Wall::Wall(float x1, float y1, float x2, float y2):
     // Prepare vertex buffer
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexCount * 3 * sizeof(float), vertexData,
+	glBufferData(GL_ARRAY_BUFFER, vertexCount * 3 * sizeof(float), tmpVertexData,
 		GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 

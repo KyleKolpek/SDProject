@@ -41,6 +41,7 @@ private:
 	float x2, y2;	/**< End point of wall. */
 	float width;
 	float height;
+	int vertexCount;
 	glm::vec3 normal;
 	GLuint vertexBuffer;
 	GLuint texture;
