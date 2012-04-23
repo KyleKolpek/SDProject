@@ -8,7 +8,8 @@
 #include "camera.h"
 
 #define ROOM_WIDTH 10
-#define ROOM_HEIGHT 10
+#define ROOM_LENGTH 10
+#define ROOM_HEIGHT 4
 
 /**************************************************************************//**
  * A room in the dungeon.

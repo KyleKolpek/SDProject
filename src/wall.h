@@ -56,6 +56,8 @@ private:
 	Camera *camera;
 
 	static GLuint texture;
+
+	glm::mat4 getModelMatrix();
 };
 
 #endif
