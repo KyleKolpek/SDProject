@@ -1,9 +1,9 @@
 #ifndef SPLASHSCREEN_H
 #define SPLASHSCREEN_H
 
-#include<SFML/window.hpp>
-#include<SFML/graphics.hpp>
-#include<SFML/system.hpp>
+#include<SFML/Window.hpp>
+#include<SFML/Graphics.hpp>
+#include<SFML/System.hpp>
 
 /***************************************************************************//**
 * A class that just displays the splash screen.
