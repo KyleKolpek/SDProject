@@ -1,13 +1,11 @@
-# Blender MTL File: ''
-# Material Count: 1
-newmtl Texture_Texture.png.001
-Ns 0.000000
-Ka 0.000000 0.000000 0.000000
-Kd 0.640000 0.640000 0.640000
-Ks 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-map_Kd Texture.png
+# Material file for LegoMan.obj
 
+newmtl Texture
+	Ns 0
+	d 1
+	illum 2
+	Kd 0.8 0.8 0.8
+	Ks 0.0 0.0 0.0
+	Ka 0.2 0.2 0.2
+	map_Kd Texture.png
 
