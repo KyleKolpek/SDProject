@@ -9,8 +9,19 @@ using namespace std;
 
 void Dungeon::draw()
 {
+	for(vector<Room*>::iterator it = rooms.begin(); it < rooms.end(); it++)
+	{
+		(*it)->draw();
+	}
+}
 
-
+void Dungeon::setShaderManager(ShaderManager *shaderManager)
+{
+	Drawable::setShaderManager(shaderManager);
+	for(vector<Room*>::iterator it = rooms.begin(); it < rooms.end(); it++)
+	{
+		(*it)->setShaderManager(shaderManager);
+	}
 }
 
 Dungeon::Dungeon(int rows, int cols, int rooms, Camera *camera)

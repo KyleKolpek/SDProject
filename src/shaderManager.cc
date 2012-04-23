@@ -13,10 +13,6 @@ ShaderManager::ShaderManager(string shaderDir):
 {
 }
 
-ShaderManager::ShaderManager(ShaderManager const &shaderManager)
-{
-}
-
 GLuint ShaderManager::getProgram(int shaderFileCount, ...)
 {
 	// Set up the parameter list

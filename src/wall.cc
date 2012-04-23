@@ -154,7 +154,7 @@ void Wall::loadTexture(string const &filename)
 {
 	// Load texture data
 	texture = SOIL_load_OGL_texture(
-		 "../assets/models/wall/stoneWall.jpg",
+		 filename.c_str(),
 		 SOIL_LOAD_AUTO,
 		 SOIL_CREATE_NEW_ID,
 		 SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y |

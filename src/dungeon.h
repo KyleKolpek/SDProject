@@ -40,6 +40,8 @@ public:
 	 **************************************************************************/
 	void draw();
 
+	void setShaderManager(ShaderManager *shaderManager);
+
 	/***********************************************************************//**
 	 * Create a string representation of the dungeon.
 	 * \param[out]

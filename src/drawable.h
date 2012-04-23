@@ -31,7 +31,7 @@ public:
 	 * \param[in] shaderManager
 	 *     The ShaderManager to be stored.
 	 **************************************************************************/
-	void setShaderManager(ShaderManager *shaderManager);
+	virtual void setShaderManager(ShaderManager *shaderManager);
 
 protected:
 	/***********************************************************************//**

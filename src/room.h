@@ -34,6 +34,8 @@ public:
 	 ***************************************************************************/
 	void draw();
 
+	void setShaderManager(ShaderManager *shaderManager);
+
 	/***********************************************************************//**
 	 * Creates walls and doors.
 	 * Walls must be created AFTER roomType and orient have been assigned. Doors

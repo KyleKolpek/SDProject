@@ -3,6 +3,7 @@
 
 #include <cstdio>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
@@ -124,6 +125,18 @@ void Room::placeWalls()
 
 void Room::draw()
 {
+	for(vector<Wall>::iterator it = walls.begin(); it < walls.end(); it++)
+	{
+		(*it).draw();
+	}
+}
 
-
+void Room::setShaderManager(ShaderManager *shaderManager)
+{
+	Drawable::setShaderManager(shaderManager);
+	// Add shader manager to walls
+	for(vector<Wall>::iterator it = walls.begin(); it < walls.end(); it++)
+	{
+		(*it).setShaderManager(shaderManager);
+	}
 }

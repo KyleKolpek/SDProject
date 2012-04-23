@@ -10,17 +10,16 @@
 #include "testDrawable.h"
 #include "audioManager.h"
 #include "dungeon.h"
+#include "wall.h"
 
 void init();
 
 Camera camera;
 Character *test;
+Dungeon *dungeon;
 
 int main()
 {
-	// create dungeon
-	Dungeon dungeon(2, 2, 1, &camera);
-	std::cout << dungeon.str() << std::endl;
 	
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24;
@@ -100,6 +99,8 @@ int main()
 		
 		//Call to actually display the things.
 		test->draw();
+		dungeon->draw();
+
 		App.Display();
 	}
 
@@ -129,11 +130,21 @@ void init()
 
 	test = new Character(&camera);
 
+	// create dungeon
+	dungeon = new Dungeon(3, 3, 1, &camera);
+	std::cout << dungeon->str() << std::endl;
+
+	// This could probably be done cleaner
+	Wall::loadTexture("../assets/models/wall/stoneWall.jpg");
+
 	// Setup shaders
-	test->setShaderManager(new ShaderManager("../assets/shaders/"));
+	ShaderManager *shaderManager = new ShaderManager("../assets/shaders/");
+	test->setShaderManager(shaderManager);
+	dungeon->setShaderManager(shaderManager);
 	camera.lookAt(glm::vec3(0.0, 0.0, 0.0),
 				  glm::vec3(0.0, 0.0, -1.0),
 				  glm::vec3(0.0, 1.0, 0.0));
 	camera.perspective(45.0, 4.0/3.0, 0.01, 100.0); 
+
 }
 
