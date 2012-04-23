@@ -4,6 +4,7 @@
 #include<SFML/Window.hpp>
 #include<SFML/Graphics.hpp>
 #include<SFML/System.hpp>
+#include<cstdlib>
 
 /***************************************************************************//**
 * A class that just displays the splash screen.

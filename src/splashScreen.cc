@@ -22,10 +22,13 @@ void SplashScreen::Show(sf::RenderWindow &window)
 		while(window.GetEvent(event))
 		{
 			if(event.Type == sf::Event::KeyPressed ||
-				event.Type == sf::Event::MouseButtonPressed ||
-				event.Type == sf::Event::Closed)
+				event.Type == sf::Event::MouseButtonPressed)
 			{
 				return;		
+			}
+			else if(event.Type == sf::Event::Closed)
+			{
+				exit(0);
 			}
 			window.Display();
 		}
