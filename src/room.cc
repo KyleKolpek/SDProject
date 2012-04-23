@@ -6,10 +6,11 @@
 
 using namespace std;
 
-Room::Room(int i, int j)
+Room::Room(int i, int j, Camera *camera)
 {
 	row = i;
 	col = j;
+	this->camera = camera;
 
 	y = row * ROOM_HEIGHT;
 	x = col * ROOM_WIDTH;
@@ -67,42 +68,46 @@ void Room::placeWalls()
 	// Now traverse each wall and create the wall objects
 	if(hasDoor[NORTH])
 	{
-		walls.push_back(Wall(x, y, x + 4, y));
-		walls.push_back(Wall(x+6, y, x + ROOM_WIDTH, y));
+		walls.push_back(Wall(x, y, x + 4, y, camera));
+		walls.push_back(Wall(x+6, y, x + ROOM_WIDTH, y, camera));
 	}
 	else
 	{
-		walls.push_back(Wall(x,y, x + ROOM_WIDTH, y));
+		walls.push_back(Wall(x,y, x + ROOM_WIDTH, y, camera));
 	}
 
 	if(hasDoor[WEST])
 	{
-		walls.push_back(Wall(x, y, x, y + 4));
-		walls.push_back(Wall(x, y+6, x, y + ROOM_HEIGHT));
+		walls.push_back(Wall(x, y, x, y + 4, camera));
+		walls.push_back(Wall(x, y+6, x, y + ROOM_HEIGHT, camera));
 	}
 	else
 	{
-		walls.push_back(Wall(x, y, x, y + ROOM_HEIGHT));
+		walls.push_back(Wall(x, y, x, y + ROOM_HEIGHT, camera));
 	}
 
 	if(hasDoor[SOUTH])
 	{
-		walls.push_back(Wall(x, y + ROOM_HEIGHT, x + 4, y + ROOM_HEIGHT));
-		walls.push_back(Wall(x+6, y + ROOM_HEIGHT, x + ROOM_WIDTH, y + ROOM_HEIGHT));
+		walls.push_back(Wall(x, y + ROOM_HEIGHT, x + 4, y + ROOM_HEIGHT, camera));
+		walls.push_back(Wall(x+6, y + ROOM_HEIGHT,
+			x + ROOM_WIDTH, y + ROOM_HEIGHT, camera));
 	}
 	else
 	{
-		walls.push_back(Wall(x, y + ROOM_HEIGHT, x + ROOM_WIDTH, y + ROOM_HEIGHT));
+		walls.push_back(Wall(x, y + ROOM_HEIGHT,
+			x + ROOM_WIDTH, y + ROOM_HEIGHT, camera));
 	}
 
 	if(hasDoor[EAST])
 	{
-		walls.push_back(Wall(x + ROOM_WIDTH, y, x + ROOM_WIDTH, y + 4));
-		walls.push_back(Wall(x + ROOM_WIDTH, y+6, x + ROOM_WIDTH, y + ROOM_HEIGHT));
+		walls.push_back(Wall(x + ROOM_WIDTH, y, x + ROOM_WIDTH, y + 4, camera));
+		walls.push_back(Wall(x + ROOM_WIDTH, y+6,
+			x + ROOM_WIDTH, y + ROOM_HEIGHT, camera));
 	}
 	else
 	{
-		walls.push_back(Wall(x + ROOM_WIDTH, y, x + ROOM_WIDTH, y + ROOM_HEIGHT));
+		walls.push_back(Wall(x + ROOM_WIDTH, y,
+			x + ROOM_WIDTH, y + ROOM_HEIGHT, camera));
 	}
 	
 	

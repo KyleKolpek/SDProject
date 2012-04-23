@@ -3,6 +3,7 @@
 
 #include "GLM/glm.hpp"
 #include "drawable.h"
+#include "camera.h"
 
 /***************************************************************************//**
  * A wall to be drawn in our dungeon. 
@@ -22,8 +23,10 @@ public:
 	 *     The ending x coord of the wall.
 	 * \param[in] y2
 	 *     The ending y coord of the wall.
+	 * \param[in] *camera
+	 *     A pointer to the game camera.
 	 **************************************************************************/
-	Wall(float x1, float y1, float x2, float y2);
+	Wall(float x1, float y1, float x2, float y2, Camera *camera);
 
 	/***********************************************************************//**
 	 * Wall destructor.
@@ -45,6 +48,7 @@ private:
 	glm::vec3 normal;
 	GLuint vertexBuffer;
 	GLuint texture;
+	Camera *camera;	/** Pointer to the game camera. */
 };
 
 #endif

@@ -6,6 +6,7 @@
 
 #include "drawable.h"
 #include "room.h"
+#include "camera.h"
 
 /***************************************************************************//**
  * The setting of the game.
@@ -22,8 +23,10 @@ public:
 	 *     The number of columns in dungeon grid.
 	 * \param[in] rooms
 	 *     The number of rooms to place in the dungeon.
+	 * \param[in] *camera
+	 *     A pointer to the game camera.
 	 **************************************************************************/
-	Dungeon(int rows, int cols, int rooms);
+	Dungeon(int rows, int cols, int rooms, Camera *camera);
 
 	/***********************************************************************//**
 	 * Dungeon destructor.
@@ -76,6 +79,8 @@ private:
 	int numRows;	/** The number of rows in our grid of rooms. */
 	int numCols;	/** The number of columns in our grid of rooms. */
 	int numRooms;	/** The number of rooms in our dungeon. */
+
+	Camera *camera;	/** Pointer to the game camera. */
 };
 
 #endif
