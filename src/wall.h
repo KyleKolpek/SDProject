@@ -1,7 +1,9 @@
 #ifndef WALL_H
 #define WALL_H
 
+#include <string>
 #include "GLM/glm.hpp"
+#include "camera.h"
 #include "drawable.h"
 
 /***************************************************************************//**
@@ -22,8 +24,13 @@ public:
 	 *     The ending x coord of the wall.
 	 * \param[in] y2
 	 *     The ending y coord of the wall.
+	 * \param[in] height
+	 *     The height of the wall.
+	 * \param[in] camera
+	 *     A pointer to a camera object to manage the view and projection
+	 *     matrices.
 	 **************************************************************************/
-	Wall(float x1, float y1, float x2, float y2);
+	Wall(float x1, float y1, float x2, float y2, float height, Camera *camera);
 
 	/***********************************************************************//**
 	 * Wall destructor.
@@ -32,19 +39,22 @@ public:
 	~Wall();
 
 	/***********************************************************************//**
-	 * Draws wall.
+	 * Draws the Wall.
 	 **************************************************************************/
 	void draw();
+
+	static void loadTexture(std::string const &filename);
 
 private:
 	float x1, y1;	/**< Starting point of wall. */
 	float x2, y2;	/**< End point of wall. */
-	float width;
 	float height;
 	int vertexCount;
 	glm::vec3 normal;
 	GLuint vertexBuffer;
-	GLuint texture;
+	Camera *camera;
+
+	static GLuint texture;
 };
 
 #endif
