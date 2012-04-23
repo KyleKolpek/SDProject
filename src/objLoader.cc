@@ -32,7 +32,7 @@ void ObjLoader::load(std::string filename)
 	//Open file
 	std::ifstream objFile(filename.c_str());
 	std::string buffer;
-
+	int c = 0;
 	if(!objFile.good())
 	{
 		// TODO: Use allman braces
@@ -57,7 +57,7 @@ void ObjLoader::load(std::string filename)
 		std::vector<float> info;
 		std::vector<int> faceInfo;
 		Face face;
-
+	
 		//Get the type of data stored in the line.
 		bufferReader >> type;
 
@@ -65,13 +65,15 @@ void ObjLoader::load(std::string filename)
 		if(type[0] == 'v')
 		{
 			//Grab the rest of the data from the line.
-			float holder;
-			bufferReader >> holder;
+			//float holder;
+			//bufferReader >> holder;
 			while(bufferReader.good())
 			{
-				info.push_back(holder);
-				//float holder;
+				//info.push_back(holder);
+				float holder;
 				bufferReader >> holder;
+				info.push_back(holder);
+			
 			}
 
 			/*
@@ -97,14 +99,24 @@ void ObjLoader::load(std::string filename)
 		//If the first letter is "f" then we are talking about face values.
 		else if(type[0] == 'f')
 		{
-			std::string holder;
-			bufferReader >> holder;
+			//std::string holder;
+			//bufferReader >> holder;
+			//std::cout << holder << std::endl;
 			//Parse out face information.
 			while(bufferReader.good())
 			{
+				std::string holder;
+				bufferReader >> holder;
+				bool done = false;
 				//Some data temp data holders.
 				int index[3];
 				
+				if(holder.find('/') == std::string::npos)
+				{
+					done = true;
+				}
+				
+				if(!done){
 				//Go through and grab the data.
 				//bool foundSlash = true;
 				for(int i = 0; i < 2; ++i)
@@ -116,7 +128,7 @@ void ObjLoader::load(std::string filename)
 					holder = holder.substr(place + 1);
 					index[i] = atoi(num.c_str());
 				}
-
+		
 				//Last one is when there are no more slashes avaliable. 
 				index[2] = atoi(holder.c_str());
 					
@@ -126,8 +138,9 @@ void ObjLoader::load(std::string filename)
 				face.textures.push_back(index[2]);
 				face.hasTex = true;
 				face.hasNorm = true;
-				
-				bufferReader >> holder;
+				}
+				//bufferReader >> holder;
+				//std::cout << holder << std::endl;
 			}
 			//Add temp data to a more permanent location.
 			data->faces.push_back(face);
@@ -142,7 +155,8 @@ void ObjLoader::load(std::string filename)
 			std::cout << name << std::endl;
 			mtl.loadFile(name);
 		}
-	}	
+	}
+	std::cout << "DONE\n";	
 	objFile.close();
 }
 
@@ -188,7 +202,8 @@ void ObjLoader::loadModelData(std::string filename)
 
 	//Set the amount of vertices stored in vertData
 	count = size;	
-
+	
+	std::cout << "LESS DONE\n";
 	//Go through everyface and added all the data in order.
 	for(size_t i = 0; i < data->faces.size(); ++i)
 	{
@@ -199,27 +214,27 @@ void ObjLoader::loadModelData(std::string filename)
 			for(size_t k = 0; k < data->vertices[index].size(); ++k)
 			{
 				vertData[iCount] = data->vertices[index][k];
-				//std::cout << vertData[iCount] << " ";
+				std::cout << vertData[iCount] << " ";
 				iCount++;
 			}
-			//std::cout << "\n";
+			std::cout << "\n";
 
 			//Add normals
 			index = data->faces[i].normals[j] - 1;
 			for(size_t k = 0; k < data->normals[index].size(); ++k)
 			{
 				vertData[iCount] = data->normals[index][k];
-				//std::cout << vertData[iCount] << " ";
+				std::cout << vertData[iCount] << " ";
 				iCount++;
 			}
-			//std::cout << "\n";
+			std::cout << "\n";
 
 			//Add texture coordinates
 			index = data->faces[i].textures[j] - 1;
 			for(size_t k = 0; k < data->texture[index].size(); ++k)
 			{
 				vertData[iCount] = data->texture[index][k];
-				//std::cout << vertData[iCount] << "\n";
+				std::cout << vertData[iCount] << "\n";
 				iCount++;
 			}	
 			//std::cout << "\n";
@@ -228,6 +243,7 @@ void ObjLoader::loadModelData(std::string filename)
 
 	//Returns
 	vertexData = vertData;
+	std::cout << "MORE DONE\n";
 }
 
 float* ObjLoader::getVertexData() 
