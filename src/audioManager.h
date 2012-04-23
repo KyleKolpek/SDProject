@@ -35,7 +35,7 @@ class AudioManager
  	* \param[in] filename
 	*     The name of the file in path that you want to load.
  	******************************************************************************/
-	void load(std::string filename);
+	void loadSound(std::string filename);
 
 	/***************************************************************************//**
  	* Returns a pointer to the Sound you wanted.
@@ -43,7 +43,7 @@ class AudioManager
 	*     The name of the sound you want to here. essentially the filename minus
 	*	  the extension.
  	******************************************************************************/
-	sf::Sound* get(std::string sound);
+	sf::Sound* getSound(std::string sound);
 
 	/***************************************************************************//**
  	* Plays the sound you requested.
@@ -51,13 +51,41 @@ class AudioManager
 	*     The name of the sound you want to hear. essentially the filename minus
 	*     the extension.
  	******************************************************************************/	
-	void play(std::string sound);
+	void playSound(std::string sound);
 
+	/***************************************************************************//**
+ 	* Loads the music you requested.
+ 	* \params[in] filename
+	*     The name of the music you want to load.
+ 	******************************************************************************/		
+	void loadMusic(std::string filename);
+
+	/***************************************************************************//**
+ 	* Plays the music you requested.
+ 	* \params[in] music
+	*     The name of the sound you want to hear. essentially the filename minus
+	*     the extension.
+	* \params[in] loop
+	*     Tells if you want to song to loop.
+ 	******************************************************************************/	
+	void playMusic(std::string music, bool loop);
+
+	/***************************************************************************//**
+ 	* Stops the music that is currently playing.
+ 	* \params[in] music
+	*     The name of the music you want to stop.
+ 	******************************************************************************/		
+	void stopMusic(std::string music);
 	private:
 	/***************************************************************************//**
  	* Holds the path to the sound files.
  	******************************************************************************/
 	std::string path;
+
+	/***************************************************************************//**
+ 	* Holds the path to the music files.
+ 	******************************************************************************/	
+	std::string musicPath;
 
 	/***************************************************************************//**
  	* Associates the key (sound name) with the actual loaded sound.
@@ -68,4 +96,9 @@ class AudioManager
  	* Holds all the SoundBuffer objects loaded in, just in case if it is needed. 
  	******************************************************************************/
 	std::vector<sf::SoundBuffer*> buffers;
+
+	/***************************************************************************//**
+ 	* Holds all the Music objects for playbck. 
+ 	******************************************************************************/
+	std::map<std::string, sf::Music*> musics;
 };

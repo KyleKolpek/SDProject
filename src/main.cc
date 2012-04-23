@@ -30,12 +30,14 @@ int main()
 	sf::Clock Clock;
 
 	AudioManager ad;
-	ad.load("huh.wav");
-	ad.load("doorSqueak.wav");
-	ad.load("thunder.wav");
-	ad.load("wind.wav");
+	ad.loadMusic("forest.ogg");
+	ad.loadSound("huh.wav");
+	ad.loadSound("doorSqueak.wav");
+	ad.loadSound("thunder.wav");
+	ad.loadSound("wind.wav");
 	init();
-
+	
+	ad.playMusic("forest", true);
 	const sf::Input& Input = App.GetInput();
 	
 	while(App.IsOpened())
@@ -62,20 +64,20 @@ int main()
 			
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Down))
 			{
-				ad.play("wind");
+				ad.playSound("wind");
 			}
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Up))
 			{
-				ad.play("thunder");
+				ad.playSound("thunder");
 			}
 
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Left))
 			{
-				ad.play("huh");
+				ad.playSound("huh");
 			}
 			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Right))
 			{
-				ad.play("doorSqueak");
+				ad.playSound("doorSqueak");
 			}
 		}
 		
