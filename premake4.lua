@@ -43,9 +43,9 @@ solution "SDProject"
 
 		configuration "linux"
 			links {"GLEW", "GL", "GLU", "sfml-graphics", "sfml-window",
-				   "sfml-audio", "sfml-system"}
+				   "sfml-audio", "sfml-system", "sfml-graphics"}
 
 		configuration "macosx"
 			links {"OpenGL.framework","SFML.framework",
 				   "SFML-window.framework", "SFML-audio.framework",
-			"SFML-system.framework", "Carbon.framework"}
+			"SFML-system.framework", "SFML-graphics.framework", "Carbon.framework"}

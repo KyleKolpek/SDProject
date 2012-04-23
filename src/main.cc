@@ -10,6 +10,7 @@
 #include "testDrawable.h"
 #include "audioManager.h"
 #include "dungeon.h"
+#include "splashScreen.h"
 
 void init();
 
@@ -25,7 +26,9 @@ int main()
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
-	sf::Window App(sf::VideoMode(800, 600, 32), "SFML Demo", sf::Style::Close, Settings);
+	sf::RenderWindow App(sf::VideoMode(800, 600, 32), 
+						"Delfino's Dungeon Extravaganza", 
+						sf::Style::Close, Settings);
 
 	sf::Clock Clock;
 
@@ -35,11 +38,14 @@ int main()
 	ad.loadSound("doorSqueak.wav");
 	ad.loadSound("thunder.wav");
 	ad.loadSound("wind.wav");
-	init();
 	
+	SplashScreen screen;
 	ad.playMusic("forest", true);
 	const sf::Input& Input = App.GetInput();
 	
+	std::cout << "SPLASH\n";
+	screen.Show(App);
+	init();
 	while(App.IsOpened())
 	{
 		sf::Event Event;
