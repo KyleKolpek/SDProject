@@ -69,48 +69,48 @@ void Room::placeWalls()
 	// Now traverse each wall and create the wall objects
 	if(hasDoor[NORTH])
 	{
-		walls.push_back(Wall(x, y, x + 4, y, ROOM_HEIGHT, camera));
-		walls.push_back(Wall(x+6, y, x + ROOM_WIDTH, y, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(0, 0, 4, 0, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(6, 0, ROOM_WIDTH, 0, ROOM_HEIGHT, camera));
 	}
 	else
 	{
-		walls.push_back(Wall(x,y, x + ROOM_WIDTH, y, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(0, 0, ROOM_WIDTH, 0, ROOM_HEIGHT, camera));
 	}
 
 	if(hasDoor[WEST])
 	{
-		walls.push_back(Wall(x, y, x, y + 4, ROOM_HEIGHT, camera));
-		walls.push_back(Wall(x, y+6, x, y + ROOM_HEIGHT, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(0, 0, 0, 4, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(0, 6, 0, ROOM_LENGTH, ROOM_HEIGHT, camera));
 	}
 	else
 	{
-		walls.push_back(Wall(x, y, x, y + ROOM_HEIGHT, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(0, 0, 0, ROOM_LENGTH, ROOM_HEIGHT, camera));
 	}
 
 	if(hasDoor[SOUTH])
 	{
-		walls.push_back(Wall(x, y + ROOM_HEIGHT, x + 4, y + ROOM_HEIGHT,
+		walls.push_back(Wall(0, ROOM_LENGTH, 4, ROOM_LENGTH,
 			ROOM_HEIGHT, camera));
-		walls.push_back(Wall(x+6, y + ROOM_HEIGHT,
-			x + ROOM_WIDTH, y + ROOM_HEIGHT, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(6, ROOM_LENGTH,
+			ROOM_WIDTH, ROOM_LENGTH, ROOM_HEIGHT, camera));
 	}
 	else
 	{
-		walls.push_back(Wall(x, y + ROOM_HEIGHT,
-			x + ROOM_WIDTH, y + ROOM_HEIGHT, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(0, ROOM_LENGTH,
+			ROOM_WIDTH, ROOM_LENGTH, ROOM_HEIGHT, camera));
 	}
 
 	if(hasDoor[EAST])
 	{
-		walls.push_back(Wall(x + ROOM_WIDTH, y, x + ROOM_WIDTH, y + 4,
+		walls.push_back(Wall(ROOM_WIDTH, 0, ROOM_WIDTH, 4,
 			ROOM_HEIGHT, camera));
-		walls.push_back(Wall(x + ROOM_WIDTH, y+6,
-			x + ROOM_WIDTH, y + ROOM_HEIGHT, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(ROOM_WIDTH, 6,
+			ROOM_WIDTH, ROOM_LENGTH, ROOM_HEIGHT, camera));
 	}
 	else
 	{
-		walls.push_back(Wall(x + ROOM_WIDTH, y,
-			x + ROOM_WIDTH, y + ROOM_HEIGHT, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(ROOM_WIDTH, 0,
+			ROOM_WIDTH, ROOM_LENGTH, ROOM_HEIGHT, camera));
 	}
 	
 	
