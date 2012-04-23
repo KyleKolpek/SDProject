@@ -1,3 +1,6 @@
+#ifndef MTLLOADER_H
+#define MTLLOADER_H
+
 #include<iostream>
 #include<fstream>
 #include<string>
@@ -117,3 +120,4 @@ class MtlLoader
 	glm::vec3 diffuse;
 
 };
+#endif

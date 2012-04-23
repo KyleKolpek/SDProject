@@ -1,3 +1,6 @@
+#ifndef AUDIOMANAGER_H
+#define AUDIOMANAGER_H
+
 #include<SFML/Audio.hpp>
 #include<SFML/System.hpp>
 #include<SFML/Window.hpp>
@@ -102,3 +105,5 @@ class AudioManager
  	******************************************************************************/
 	std::map<std::string, sf::Music*> musics;
 };
+
+#endif
