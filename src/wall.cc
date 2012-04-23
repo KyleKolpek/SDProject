@@ -8,6 +8,8 @@ Wall::Wall(float x1, float y1,
 		   float x2, float y2,
 		   float height,
 		   Camera *camera):
+Wall::Wall(float x1, float y1, float x2, float y2, Camera *camera):
+>>>>>>> 5515ed97ce139e97d97f159dc6113f655061569c
 	x1(x1),
 	y1(y1),
 	x2(x2),
@@ -32,6 +34,7 @@ Wall::Wall(float x1, float y1,
 							  x2, 0.0,  y2,
 							 n.x, n.y, n.z,
 							      1.0, 1.0};
+
     // Prepare vertex buffer
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);

@@ -5,6 +5,7 @@
 #include "GLM/glm.hpp"
 #include "camera.h"
 #include "drawable.h"
+#include "camera.h"
 
 /***************************************************************************//**
  * A wall to be drawn in our dungeon. 

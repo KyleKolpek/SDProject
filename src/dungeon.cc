@@ -13,11 +13,12 @@ void Dungeon::draw()
 
 }
 
-Dungeon::Dungeon(int rows, int cols, int rooms)
+Dungeon::Dungeon(int rows, int cols, int rooms, Camera *camera)
 {
 	numRows = rows;
 	numCols = cols;
 	numRooms = rooms;
+	this->camera = camera;
 
 	// Allocate dungeon memory
 	dungeon = new Room**[numRows];
@@ -53,7 +54,7 @@ void Dungeon::generateDungeon()
 	// fill in first room as a seed. Just place it in the middle.
 	int startI = numRows / 2;
 	int startJ = numCols / 2;
-	dungeon[startI][startJ] = new Room(startI, startJ);
+	dungeon[startI][startJ] = new Room(startI, startJ, camera);
 	rooms.push_back(dungeon[startI][startJ]);
 
 	
@@ -94,7 +95,7 @@ void Dungeon::generateDungeon()
 			// If we chose an empty location
 			if(dungeon[i][j] == NULL)
 			{
-				dungeon[i][j] = new Room(i, j);
+				dungeon[i][j] = new Room(i, j, camera);
 				rooms.push_back(dungeon[i][j]);
 				// move to next room
 				break;

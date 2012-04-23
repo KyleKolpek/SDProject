@@ -5,6 +5,7 @@
 
 #include "drawable.h"
 #include "wall.h"
+#include "camera.h"
 
 #define ROOM_WIDTH 10
 #define ROOM_HEIGHT 10
@@ -22,8 +23,10 @@ public:
 	 * Creates a room and computes its global x-y coordinates.
 	 * \param[in] i, j
 	 *     Row/column coordinates in dungeon grid of rooms.
+	 * \param[in] *camera
+	 *     Pointer to the game camera.
 	 ***************************************************************************/
-	Room(int i, int j);
+	Room(int i, int j, Camera *camera);
 
 	/***********************************************************************//**
 	 * Draws room walls and other internal components.
@@ -90,6 +93,8 @@ private:
 	 * represented via two walls with a gap between them.
 	 **************************************************************************/
 	std::vector<Wall> walls;
+
+	Camera *camera;	/** Pointer to the game camera. */
 };
 
 #endif

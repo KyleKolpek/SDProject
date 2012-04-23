@@ -3,6 +3,7 @@
 AudioManager::AudioManager()
 {
 	path = "../assets/sounds/";
+	musicPath = "../assets/music/";
 }
 
 AudioManager::~AudioManager()
@@ -22,7 +23,7 @@ AudioManager::~AudioManager()
 	
 }
 
-void AudioManager::load(std::string filename)
+void AudioManager::loadSound(std::string filename)
 {
 	//Variables Needed.
 	sf::Sound *sound = new sf::Sound;
@@ -44,21 +45,62 @@ void AudioManager::load(std::string filename)
 
 	//Parsing out the name of the sound for the map.
 	dot = filename.find(".");
-	std::cout << filename.substr(0, dot) + "\n";
 	sounds[filename.substr(0, dot)] = sound;
 }
 
+void AudioManager::loadMusic(std::string filename)
+{
+	//Some variables we will need.
+	sf::Music *music = new sf::Music;
+	std::string file = musicPath + filename;
+	size_t dot;
+
+	//Loading the file.
+	if(!music->OpenFromFile(file))
+	{
+		std::cout << "Failure to load " + filename + "\n";
+		return;
+	}	
+
+	//Some variable settings
+	music->SetVolume(50.0f);
+	
+	//Parsing out the name for the map
+	dot = filename.find(".");
+	musics[filename.substr(0, dot)] = music;
+}
+
 //Mostly for testing.
-sf::Sound* AudioManager::get(std::string sound)
+sf::Sound* AudioManager::getSound(std::string sound)
 {
 	return sounds[sound];
 }
 
 //Plays the requested sound.
-void AudioManager::play(std::string sound)
+void AudioManager::playSound(std::string sound)
 {
 	sf::Sound* sd = sounds[sound];
 	if(sd->GetStatus() == sf::Sound::Playing)
 		sd->Stop();
 	sd->Play();
+}
+
+void AudioManager::playMusic(std::string music, bool loop)
+{
+	sf::Music *ms = musics[music];
+	if(ms->GetStatus() == sf::Sound::Playing)
+	{
+		ms->Stop();
+	}
+	ms->SetLoop(loop);
+	ms->Play();
+}
+
+void AudioManager::stopMusic(std::string music)
+{
+	sf::Music *ms = musics[music];
+	if(ms->GetStatus() == sf::Sound::Playing)
+	{
+		ms->Stop();
+	}
 }
