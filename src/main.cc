@@ -18,6 +18,7 @@ void init();
 Camera camera;
 Character *test;
 Dungeon *dungeon;
+Wall *wall1, *wall2;
 
 int main()
 {
@@ -25,6 +26,8 @@ int main()
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
+
+	// Show splash screen
 	sf::RenderWindow App(sf::VideoMode(800, 600, 32), 
 						"Delfino's Dungeon Extravaganza", 
 						sf::Style::Close, Settings);
@@ -42,7 +45,9 @@ int main()
 	ad.playMusic("forest", true);
 	const sf::Input& Input = App.GetInput();
 	
+	// Show splash screen
 	screen.Show(App);
+
 	init();
 	while(App.IsOpened())
 	{
@@ -104,7 +109,9 @@ int main()
 		
 		//Call to actually display the things.
 		test->draw();
-		dungeon->draw();
+		//dungeon->draw();
+		wall1->draw();
+		wall2->draw();
 
 		App.Display();
 	}
@@ -134,10 +141,12 @@ void init()
 	glViewport(0, 0, 800, 600);
 
 	test = new Character(&camera);
+	wall1 = new Wall(-10, -10, 10, -10, 4, &camera);
+	wall2 = new Wall(-10, 10, -10, -10, 4, &camera);
 
 	// create dungeon
-	dungeon = new Dungeon(3, 3, 1, &camera);
-	std::cout << dungeon->str() << std::endl;
+	//dungeon = new Dungeon(3, 3, 1, &camera);
+	//std::cout << dungeon->str() << std::endl;
 
 	// This could probably be done cleaner
 	Wall::loadTexture("../assets/models/wall/stoneWall.jpg");
@@ -145,9 +154,11 @@ void init()
 	// Setup shaders
 	ShaderManager *shaderManager = new ShaderManager("../assets/shaders/");
 	test->setShaderManager(shaderManager);
-	dungeon->setShaderManager(shaderManager);
-	camera.lookAt(glm::vec3(0.0, 0.0, 0.0),
-				  glm::vec3(0.0, 0.0, -1.0),
+	wall1->setShaderManager(shaderManager);
+	wall2->setShaderManager(shaderManager);
+	//dungeon->setShaderManager(shaderManager);
+	camera.lookAt(glm::vec3(0.0, 50.0, 50.0),
+				  glm::vec3(0.0, 0.0, 0.0),
 				  glm::vec3(0.0, 1.0, 0.0));
 	camera.perspective(45.0, 4.0/3.0, 0.01, 100.0); 
 }

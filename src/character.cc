@@ -9,7 +9,7 @@ using namespace std;
 Character::Character(Camera *camera):
 	x(0),
 	y(0),
-	z(-17),
+	z(0),
 	vertexCount(0),
 	vertexData(NULL),
 	vertexBuffer(NULL),

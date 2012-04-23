@@ -20,24 +20,25 @@ Wall::Wall(float x1, float y1,
 {
 	glm::vec3 a(x2-x1, 0.0, y2-y1),
 			  b(0.0, 1.0, 0.0);
-	glm::vec3 n = glm::cross(a, b);
+	glm::vec3 n = glm::cross(glm::vec3(0.0, 1.0, 0.0),
+							 glm::vec3(x2 - x1, 0.0, y2 - y1));
 	float tmpVertexData[] = { x1, 0.0,  y1,
 							 n.x, n.y, n.z,
 							      0.0, 0.0,
 							  x1, 4.0,  y1,
 							 n.x, n.y, n.z,
-							      1.0, 0.0, // may need swapped
+							      0.0, 1.0, // may need swapped
 							  x2, 4.0,  y2,
 							 n.x, n.y, n.z,
-							      0.0, 1.0, // may need swapped
+							      1.0, 1.0, // may need swapped
 							  x2, 0.0,  y2,
 							 n.x, n.y, n.z,
-							      1.0, 1.0};
+							      1.0, 0.0};
 
     // Prepare vertex buffer
 	glGenBuffers(1, &vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, vertexCount * 3 * sizeof(float), tmpVertexData,
+	glBufferData(GL_ARRAY_BUFFER, vertexCount * 8 * sizeof(float), tmpVertexData,
 		GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
@@ -143,7 +144,7 @@ void Wall::draw()
 	glVertexAttribPointer(vertexTexCoordLoc, 2, GL_FLOAT, GL_TRUE,
 		8 * sizeof(float), (void *)(6 * sizeof(float)));
 
-	glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+	glDrawArrays(GL_QUADS, 0, vertexCount);
 	glDisableVertexAttribArray(vertexPosLoc);
 	glDisableVertexAttribArray(vertexNormalLoc);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
