@@ -7,12 +7,11 @@
 
 using namespace std;
 
-Room::Room(int i, int j, Camera *camera)
+Room::Room(int row, int col, Camera *camera):
+	row(row),
+	col(col),
+	camera(camera)
 {
-	row = i;
-	col = j;
-	this->camera = camera;
-
 	y = row * ROOM_LENGTH;
 	x = col * ROOM_WIDTH;
 }

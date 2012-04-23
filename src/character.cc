@@ -8,7 +8,7 @@ using namespace std;
 
 Character::Character(Camera *camera):
 	x(0),
-	y(0),
+	y(-1),
 	z(0),
 	vertexCount(0),
 	vertexData(NULL),
@@ -144,8 +144,8 @@ void Character::draw()
 
 glm::mat4 Character::getModelMatrix()
 {
-	return glm::mat4(1.0, 0.0, 0.0, 0.0,
-					 0.0, 1.0, 0.0, 0.0,
-					 0.0, 0.0, 1.0, 0.0,
+	return glm::mat4(0.5, 0.0, 0.0, 0.0,
+					 0.0, 0.5, 0.0, 0.0,
+					 0.0, 0.0, 0.5, 0.0,
 					   x,   y,   z, 1.0);
 }

@@ -22,12 +22,14 @@ class Room : public Drawable
 public:
 	/***********************************************************************//**
 	 * Creates a room and computes its global x-y coordinates.
-	 * \param[in] i, j
-	 *     Row/column coordinates in dungeon grid of rooms.
+	 * \param[in] row
+	 *     Row in dungeon grid of rooms.
+	 * \param[in] col
+	 *     Column in dungeon grid of rooms.
 	 * \param[in] *camera
 	 *     Pointer to the game camera.
 	 ***************************************************************************/
-	Room(int i, int j, Camera *camera);
+	Room(int row, int col, Camera *camera);
 
 	/***********************************************************************//**
 	 * Draws room walls and other internal components.
