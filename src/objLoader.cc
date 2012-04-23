@@ -44,11 +44,12 @@ void ObjLoader::load(std::string filename)
 		return;
 	}
 
+	// Prime the loop for reading.
+	getline(objFile, buffer);
+
 	//Loop through all the lines in the file.
 	while(objFile.good())
 	{
-		//Grab a whole line.
-		getline(objFile, buffer);
 		//Set it into a stringstream for parsing.
 		std::stringstream bufferReader(buffer);
 		
@@ -142,7 +143,10 @@ void ObjLoader::load(std::string filename)
 			std::cout << name << std::endl;
 			mtl.loadFile(name);
 		}
-	}	
+
+		// Grab the next line for reading.
+		getline(objFile, buffer);
+	} // end while file is good	
 	objFile.close();
 }
 
