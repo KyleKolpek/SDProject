@@ -1,6 +1,7 @@
 #ifndef UPDATABLE_H
 #define UPDATABLE_H
 
+#include "stdgl.h"
 #include <SFML/Window.hpp>
 
 /***************************************************************************//**
