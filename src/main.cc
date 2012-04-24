@@ -142,10 +142,10 @@ void init()
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	glViewport(0, 0, 800, 600);
-	camera = new Camera(glm::vec3(25.0, 50.0, 50.0),
-						glm::vec3(25.0,  0.0, 25.0),
+	camera = new Camera(glm::vec3(75.0, 100.0, 150.0),
+						glm::vec3(75.0,  0.0, 37.5),
 						glm::vec3(0.0, 1.0, 0.0));
-	camera->perspective(45.0, 4.0/3.0, 0.01, 100.0); 
+	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
 
 	//test = new Character(&camera);
 	//wall1 = new Wall(-10, -10, 10, -10, 4, &camera);

@@ -22,7 +22,7 @@ public:
 	 * \param[in] input
 	 *     An input object holding any given user input.
 	 **************************************************************************/
-	 virtual void update(sf::Clock const &clock, sf::Input const &input) = 0;
+	virtual void update(sf::Clock const &clock, sf::Input const &input) = 0;
 };
 
 #endif

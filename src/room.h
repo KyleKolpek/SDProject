@@ -7,8 +7,8 @@
 #include "wall.h"
 #include "camera.h"
 
-#define ROOM_WIDTH 10
-#define ROOM_LENGTH 10
+#define ROOM_WIDTH 30
+#define ROOM_LENGTH 15
 #define ROOM_HEIGHT 4
 #define DOOR_WIDTH 2
 

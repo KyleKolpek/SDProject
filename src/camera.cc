@@ -69,3 +69,8 @@ void Camera::perspective(float fov, float aspect, float zNear, float zFar)
 {
 	projMatrix = glm::perspective(fov, aspect, zNear, zFar);
 }
+
+void Camera::update(sf::Clock const &clock, sf::Input const &input)
+{
+	// ADD CAMERA MOVEMENT HERE
+}
