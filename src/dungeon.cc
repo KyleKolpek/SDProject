@@ -119,9 +119,12 @@ void Dungeon::generateDungeon()
 	assignRoomTypes();
 	orientRooms();
 
-	// have each room create its walls
-	for(size_t i = 0; i < rooms.size(); ++i)
-		rooms[i]->placeWalls();
+	// Seed room has a door manually placed on south wall.
+	rooms[0]->placeWalls(0,0,1,0);
+
+	// have each other room create its walls
+	for(size_t i = 1; i < rooms.size(); ++i)
+		rooms[i]->placeWalls(0,0,0,0); // no default walls
 }
 
 void Dungeon::assignRoomTypes()
