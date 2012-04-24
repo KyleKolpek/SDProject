@@ -1,5 +1,5 @@
-#ifndef DRAWABLE_H
-#define DRAWABLE_H
+#ifndef UPDATABLE_H
+#define UPDATABLE_H
 
 #include <SFML/Window.hpp>
 

@@ -10,6 +10,7 @@ public:
 	Camera(glm::vec3 const &eye,
 		   glm::vec3 const &at,
 		   glm::vec3 const &up);
+
 	glm::mat4 getViewMatrix();
 	glm::mat4 getProjectionMatrix();
 	
