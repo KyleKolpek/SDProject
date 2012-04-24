@@ -1,9 +1,8 @@
-
-#include "room.h"
-
 #include <cstdio>
 #include <algorithm>
 #include <iostream>
+
+#include "room.h"
 
 using namespace std;
 
@@ -112,6 +111,10 @@ void Room::placeWalls()
 			ROOM_WIDTH, ROOM_LENGTH, ROOM_HEIGHT, camera));
 	}
 	
+	for(vector<Wall>::iterator it = walls.begin(); it < walls.end(); it++)
+	{
+		(*it).translate(col * ROOM_WIDTH, row * ROOM_LENGTH);
+	}
 	
 	/* DEBUG
 	printf("type: %d orient: %d\n", roomType, orient);

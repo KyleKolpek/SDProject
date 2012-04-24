@@ -16,7 +16,9 @@ Wall::Wall(float x1, float y1,
 	y2(y2),
 	height(height),
 	camera(camera),
-	vertexCount(4)
+	vertexCount(4),
+	offsetX(0),
+	offsetY(0)
 {
 	glm::vec3 a(x2-x1, 0.0, y2-y1),
 			  b(0.0, 1.0, 0.0);
@@ -65,7 +67,7 @@ void Wall::draw()
 	GLint projLoc = glGetUniformLocation(program, "projection");
 	GLint texLoc = glGetUniformLocation(program, "texture");
 
-	glm::mat4 MV = getModelMatrix() * camera->getViewMatrix();
+	glm::mat4 MV = camera->getViewMatrix() * getModelMatrix();
 	glm::mat4 proj = camera->getProjectionMatrix();
 
 	// TODO: Error check here.
@@ -151,6 +153,20 @@ void Wall::draw()
 	glUseProgram(0);
 }
 
+glm::mat4 Wall::getModelMatrix()
+{
+	return modelMatrix;
+}
+
+void Wall::translate(float x, float y)
+{
+
+	modelMatrix = glm::mat4(1.0, 0.0, 0.0, 0.0,
+							0.0, 1.0, 0.0, 0.0,
+							0.0, 0.0, 1.0, 0.0,
+							  x, 0.0,   y, 1.0);
+}
+
 void Wall::loadTexture(string const &filename)
 {
 	// Load texture data
@@ -161,12 +177,4 @@ void Wall::loadTexture(string const &filename)
 		 SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y |
 		 SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT |
 		 SOIL_FLAG_TEXTURE_REPEATS);
-}
-
-glm::mat4 Wall::getModelMatrix()
-{
-	return glm::mat4(1.0, 0.0, 0.0, 0.0,
-					 0.0, 1.0, 0.0, 0.0,
-					 0.0, 0.0, 1.0, 0.0,
-					 0.0, 0.0, 0.0, 1.0);
 }

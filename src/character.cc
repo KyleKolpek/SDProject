@@ -56,7 +56,7 @@ void Character::draw()
 	GLint projLoc = glGetUniformLocation(program, "projection");
 	GLint texLoc = glGetUniformLocation(program, "texture");
 
-	glm::mat4 MV = getModelMatrix() * camera->getViewMatrix();
+	glm::mat4 MV = camera->getViewMatrix() * getModelMatrix();
 	glm::mat4 proj = camera->getProjectionMatrix();
 
 	// TODO: Error check here.

@@ -44,14 +44,19 @@ public:
 	 **************************************************************************/
 	void draw();
 
+	void translate(float x, float y);
+
 	static void loadTexture(std::string const &filename);
 
 private:
 	float x1, y1;	/**< Starting point of wall. */
 	float x2, y2;	/**< End point of wall. */
 	float height;
+	float offsetX;
+	float offsetY;
 	int vertexCount;
 	glm::vec3 normal;
+	glm::mat4 modelMatrix;
 	GLuint vertexBuffer;
 	Camera *camera;
 

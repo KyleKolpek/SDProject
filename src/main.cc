@@ -51,6 +51,7 @@ int main()
 	screen.Show(App);
 
 	init();
+	std::cout << dungeon->str() << std::endl;
 	while(App.IsOpened())
 	{
 		sf::Event Event;
@@ -111,10 +112,10 @@ int main()
 		
 		//Call to actually display the things.
 		test->draw();
-		//dungeon->draw();
+		dungeon->draw();
 		//wall1->draw();
 		//wall2->draw();
-		room->draw();
+		//room->draw();
 
 		App.Display();
 	}
@@ -146,13 +147,13 @@ void init()
 	test = new Character(&camera);
 	//wall1 = new Wall(-10, -10, 10, -10, 4, &camera);
 	//wall2 = new Wall(-10, 10, -10, -10, 4, &camera);
-	room = new Room(0, 0, &camera);
-	room->roomType = Room::TWOB;
-	room->orient = Room::ROT_ZERO;
-	room->placeWalls();
+	//room = new Room(0, 0, &camera);
+	//room->roomType = Room::TWOB;
+	//room->orient = Room::ROT_ZERO;
+	//room->placeWalls();
 
 	// create dungeon
-	//dungeon = new Dungeon(3, 3, 1, &camera);
+	dungeon = new Dungeon(3, 3, 6, &camera);
 	//std::cout << dungeon->str() << std::endl;
 
 	// This could probably be done cleaner
@@ -164,10 +165,10 @@ void init()
 	test->setShaderManager(shaderManager);
 	//wall1->setShaderManager(shaderManager);
 	//wall2->setShaderManager(shaderManager);
-	room->setShaderManager(shaderManager);
-	//dungeon->setShaderManager(shaderManager);
-	camera.lookAt(glm::vec3(5.0, 15.0, 15.0),
-				  glm::vec3(5.0, 0.0, 0.0),
+	//room->setShaderManager(shaderManager);
+	dungeon->setShaderManager(shaderManager);
+	camera.lookAt(glm::vec3(15.0, 35.0, 35.0),
+				  glm::vec3(15.0,  0.0, 15.0),
 				  glm::vec3(0.0, 1.0, 0.0));
 	camera.perspective(45.0, 4.0/3.0, 0.01, 100.0); 
 }
