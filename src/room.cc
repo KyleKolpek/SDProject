@@ -58,6 +58,12 @@ void Room::placeWalls()
 
 	vector<int> hasDoor(4, 0);
 
+	// The points to place the beginning and end of doors. Since rooms are
+	// square we the same values can be used for either x or y.
+	// Center them in walls.
+	float doorStart = (ROOM_WIDTH / 2) - (DOOR_WIDTH / 2);
+	float doorEnd = (ROOM_WIDTH / 2) + (DOOR_WIDTH / 2);
+
 	// now do each wall mod 4 (to fix going all the way around for some sides)
 	for(size_t i = 0; i < doors.size(); ++i)
 	{
@@ -68,8 +74,8 @@ void Room::placeWalls()
 	// Now traverse each wall and create the wall objects
 	if(hasDoor[NORTH])
 	{
-		walls.push_back(Wall(0, 0, 4, 0, ROOM_HEIGHT, camera));
-		walls.push_back(Wall(6, 0, ROOM_WIDTH, 0, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(0, 0, doorStart, 0, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(doorEnd, 0, ROOM_WIDTH, 0, ROOM_HEIGHT, camera));
 	}
 	else
 	{
@@ -78,8 +84,8 @@ void Room::placeWalls()
 
 	if(hasDoor[WEST])
 	{
-		walls.push_back(Wall(0, 0, 0, 4, ROOM_HEIGHT, camera));
-		walls.push_back(Wall(0, 6, 0, ROOM_LENGTH, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(0, 0, 0, doorStart, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(0, doorEnd, 0, ROOM_LENGTH, ROOM_HEIGHT, camera));
 	}
 	else
 	{
@@ -88,9 +94,9 @@ void Room::placeWalls()
 
 	if(hasDoor[SOUTH])
 	{
-		walls.push_back(Wall(0, ROOM_LENGTH, 4, ROOM_LENGTH,
+		walls.push_back(Wall(0, ROOM_LENGTH, doorStart, ROOM_LENGTH,
 			ROOM_HEIGHT, camera));
-		walls.push_back(Wall(6, ROOM_LENGTH,
+		walls.push_back(Wall(doorEnd, ROOM_LENGTH,
 			ROOM_WIDTH, ROOM_LENGTH, ROOM_HEIGHT, camera));
 	}
 	else
@@ -101,9 +107,9 @@ void Room::placeWalls()
 
 	if(hasDoor[EAST])
 	{
-		walls.push_back(Wall(ROOM_WIDTH, 0, ROOM_WIDTH, 4,
+		walls.push_back(Wall(ROOM_WIDTH, 0, ROOM_WIDTH, doorStart,
 			ROOM_HEIGHT, camera));
-		walls.push_back(Wall(ROOM_WIDTH, 6,
+		walls.push_back(Wall(ROOM_WIDTH, doorEnd,
 			ROOM_WIDTH, ROOM_LENGTH, ROOM_HEIGHT, camera));
 	}
 	else
