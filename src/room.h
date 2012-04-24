@@ -10,6 +10,7 @@
 #define ROOM_WIDTH 10
 #define ROOM_LENGTH 10
 #define ROOM_HEIGHT 4
+#define DOOR_WIDTH 2
 
 /**************************************************************************//**
  * A room in the dungeon.
