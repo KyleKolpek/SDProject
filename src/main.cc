@@ -159,7 +159,7 @@ void init()
 
 	// This could probably be done cleaner
 	Wall::loadTexture("../assets/models/wall/stoneWall.jpg");
-	Room::loadTexture("../assets/models/floor/dirt.png");
+	Room::loadTexture("../assets/models/floor/stone.jpg");
 
 	// Setup shaders
 	ShaderManager *shaderManager = new ShaderManager("../assets/shaders/");

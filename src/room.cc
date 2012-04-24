@@ -20,18 +20,21 @@ Room::Room(int row, int col, Camera *camera):
 	y = row * ROOM_LENGTH;
 	x = col * ROOM_WIDTH;
 
+	float u = ROOM_WIDTH/3,
+		  v = ROOM_LENGTH/3;
+
 	float tmpVertexData[] = {0.0, 0.0, 0.0,
 							 0.0, 1.0, 0.0,
 							      0.0, 0.0,
 							 0.0, 0.0, ROOM_WIDTH,
 							 0.0, 1.0, 0.0,
-							      0.0, 1.0, // may need swapped
+							      0.0, v, // may need swapped
 							 ROOM_LENGTH, 0.0, ROOM_WIDTH,
 							 0.0, 1.0, 0.0,
-							      1.0, 1.0, // may need swapped
+							      u, v, // may need swapped
 							 ROOM_LENGTH, 0.0, 0.0,
 							 0.0, 1.0, 0.0,
-							      1.0, 0.0};
+							      u, 0.0};
 
 	modelMatrix = glm::mat4(1.0, 0.0, 0.0, 0.0,
 							0.0, 1.0, 0.0, 0.0,

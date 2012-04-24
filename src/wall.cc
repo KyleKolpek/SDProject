@@ -20,22 +20,22 @@ Wall::Wall(float x1, float y1,
 	offsetX(0),
 	offsetY(0)
 {
-	glm::vec3 a(x2-x1, 0.0, y2-y1),
-			  b(0.0, 1.0, 0.0);
 	glm::vec3 n = glm::cross(glm::vec3(0.0, 1.0, 0.0),
 							 glm::vec3(x2 - x1, 0.0, y2 - y1));
+	float u = 1.0,
+		  v = glm::length(glm::vec3(x2 - x1, 0.0, y2 - y1)) / height; 
 	float tmpVertexData[] = { x1, 0.0,  y1,
 							 n.x, n.y, n.z,
 							      0.0, 0.0,
 							  x1, 4.0,  y1,
 							 n.x, n.y, n.z,
-							      0.0, 1.0, // may need swapped
+							      0.0, u, // may need swapped
 							  x2, 4.0,  y2,
 							 n.x, n.y, n.z,
-							      1.0, 1.0, // may need swapped
+							      v, u, // may need swapped
 							  x2, 0.0,  y2,
 							 n.x, n.y, n.z,
-							      1.0, 0.0};
+							      v, 0.0};
 
     // Prepare vertex buffer
 	glGenBuffers(1, &vertexBuffer);
