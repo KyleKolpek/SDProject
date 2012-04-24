@@ -3,7 +3,7 @@
 
 // Adapted source for ShaderLoader from
 // http://www.opengl.org/sdk/docs/tutorials/ClockworkCoders/loading.php
-#include <stdgl.h>
+#include "stdgl.h"
 
 /***************************************************************************//**
  * A buffered reader.
