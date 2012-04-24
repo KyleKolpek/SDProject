@@ -108,7 +108,7 @@ int main()
 		*/
 		
 		//Call to actually display the things.
-		//test->draw();
+		test->draw();
 		dungeon->draw();
 		//wall1->draw();
 		//wall2->draw();
@@ -145,7 +145,7 @@ void init()
 						glm::vec3(0.0, 1.0, 0.0));
 	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
 
-	//test = new Character(&camera);
+	test = new Character(camera);
 	//wall1 = new Wall(-10, -10, 10, -10, 4, &camera);
 	//wall2 = new Wall(-10, 10, -10, -10, 4, &camera);
 	//room = new Room(0, 0, &camera);
@@ -163,7 +163,7 @@ void init()
 
 	// Setup shaders
 	ShaderManager *shaderManager = new ShaderManager("../assets/shaders/");
-	//test->setShaderManager(shaderManager);
+	test->setShaderManager(shaderManager);
 	//wall1->setShaderManager(shaderManager);
 	//wall2->setShaderManager(shaderManager);
 	//room->setShaderManager(shaderManager);
