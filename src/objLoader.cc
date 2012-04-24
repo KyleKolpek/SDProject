@@ -215,6 +215,7 @@ void ObjLoader::loadModelData(std::string filename)
 		for(size_t j = 0; j < data->faces[i].verts.size(); ++j)
 		{
 			//Add positions
+			std::cout << "Pos: ";
 			int index = data->faces[i].verts[j] - 1;
 			for(size_t k = 0; k < data->vertices[index].size(); ++k)
 			{
@@ -225,6 +226,7 @@ void ObjLoader::loadModelData(std::string filename)
 			std::cout << "\n";
 
 			//Add normals
+			std::cout << "Norm: ";
 			index = data->faces[i].normals[j] - 1;
 			for(size_t k = 0; k < data->normals[index].size(); ++k)
 			{
@@ -235,13 +237,15 @@ void ObjLoader::loadModelData(std::string filename)
 			std::cout << "\n";
 
 			//Add texture coordinates
+			std::cout << "Tex: ";
 			index = data->faces[i].textures[j] - 1;
 			for(size_t k = 0; k < data->texture[index].size(); ++k)
 			{
 				vertData[iCount] = data->texture[index][k];
-				std::cout << vertData[iCount] << "\n";
+				std::cout << vertData[iCount] << " ";
 				iCount++;
 			}	
+			std::cout << "\n";
 			//std::cout << "\n";
 		}
 	}
