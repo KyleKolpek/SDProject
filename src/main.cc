@@ -4,10 +4,8 @@
 #include <iomanip>
 #include <iostream>
 #include "shaderManager.h"
-#include "objLoader.h"
 #include "character.h"
 #include "camera.h"
-#include "testDrawable.h"
 #include "audioManager.h"
 #include "dungeon.h"
 #include "wall.h"

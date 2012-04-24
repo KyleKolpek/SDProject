@@ -2,7 +2,7 @@
 #include "SOIL/SOIL.h"
 #include "character.h"
 #include "camera.h"
-#include "objLoader.h"
+#include "kixor/objLoader.h"
 
 using namespace std;
 
@@ -16,6 +16,7 @@ Character::Character(Camera *camera):
 	texture(NULL),
 	camera(camera)
 {
+	/*
 	ObjLoader loader;
 	loader.loadModelData("../assets/models/Legoman/LegoMan.obj");
 	vertexData  = loader.getVertexData();
@@ -37,6 +38,7 @@ Character::Character(Camera *camera):
     glBufferData(GL_ARRAY_BUFFER, vertexCount * 8 * sizeof(float), vertexData,
         GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+	*/
 }
 
 Character::~Character()
