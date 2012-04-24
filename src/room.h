@@ -2,13 +2,15 @@
 #define ROOM_H
 
 #include <vector>
+#include <string>
 
 #include "drawable.h"
 #include "wall.h"
 #include "camera.h"
+#include "GLM/glm.hpp"
 
 #define ROOM_WIDTH 30
-#define ROOM_LENGTH 15
+#define ROOM_LENGTH 30
 #define ROOM_HEIGHT 4
 #define DOOR_WIDTH 2
 
@@ -85,6 +87,8 @@ public:
 		ROT_THREE
 	} orient;
 
+	static void loadTexture(std::string const &filename);
+	glm::mat4 getModelMatrix();
 private:
 	/***********************************************************************//**
 	 * Coordinates in x-y plane.
@@ -100,7 +104,11 @@ private:
 	 **************************************************************************/
 	std::vector<Wall> walls;
 
-	Camera *camera;	/** Pointer to the game camera. */
+	Camera *camera;	/**< Pointer to the game camera. */
+	GLuint vertexBuffer;
+	GLuint vertexCount;
+	glm::mat4 modelMatrix;
+	static GLuint texture;
 };
 
 #endif
