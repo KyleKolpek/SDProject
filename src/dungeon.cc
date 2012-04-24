@@ -63,10 +63,10 @@ Dungeon::~Dungeon()
 void Dungeon::generateDungeon()
 {
 	// fill in first room as a seed. Just place it in the middle.
-	int startI = numRows / 2;
-	int startJ = numCols / 2;
-	dungeon[startI][startJ] = new Room(startI, startJ, camera);
-	rooms.push_back(dungeon[startI][startJ]);
+	startRow = numRows - 1;
+	startCol = numCols / 2;
+	dungeon[startRow][startCol] = new Room(startRow, startCol, camera);
+	rooms.push_back(dungeon[startRow][startCol]);
 
 	
 	// After choosing whether to change i or j, we have to decide whether to 

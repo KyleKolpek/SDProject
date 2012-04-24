@@ -78,9 +78,10 @@ private:
 	 **************************************************************************/
 	void orientRooms();
 
-	int numRows;	/** The number of rows in our grid of rooms. */
-	int numCols;	/** The number of columns in our grid of rooms. */
-	int numRooms;	/** The number of rooms in our dungeon. */
+	int numRows;			/** The number of rows in our grid of rooms. */
+	int numCols;			/** The number of columns in our grid of rooms. */
+	int numRooms;			/** The number of rooms in our dungeon. */
+	int startRow, startCol;	/** The row and column that the game begins in. */
 
 	Camera *camera;	/** Pointer to the game camera. */
 };
