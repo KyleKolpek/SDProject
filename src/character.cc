@@ -16,13 +16,19 @@ Character::Character(Camera *camera):
 	texture(NULL),
 	camera(camera)
 {
+	
 	ObjLoader loader;
-	loader.loadModelData("../assets/models/Legoman/LegoMan.obj");
+	//loader.loadObjFile("../assets/models/Legoman/LegoMan.obj");
+	//loader.loadObjFile("../assets/models/human/human.obj");
+	loader.loadObjFile("../assets/models/dragon/dragon.obj");
+	loader.formatVertexData();
 	vertexData  = loader.getVertexData();
-	dataType    = loader.getType();
+	dataType    = loader.getVertexType();
 	vertexCount = loader.getVertexCount();
 	texture = SOIL_load_OGL_texture(
-		 "../assets/models/Legoman/Texture.png",
+		 //"../assets/models/Legoman/Texture.png",
+		 //"../assets/models/human/human.bmp",
+		 "../assets/models/dragon/dragoncolor.tga",
 		 SOIL_LOAD_AUTO,
 		 SOIL_CREATE_NEW_ID,
 		 SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y |
@@ -37,6 +43,7 @@ Character::Character(Camera *camera):
     glBufferData(GL_ARRAY_BUFFER, vertexCount * 8 * sizeof(float), vertexData,
         GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+	
 }
 
 Character::~Character()

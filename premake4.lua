@@ -18,7 +18,7 @@ solution "SDProject"
 	project "SDProject"
 		language "C++"
 		
-		files {"src/**.h", "src/**.c", "src/**.cc"}
+		files {"src/**.h", "src/**.c", "src/**.cc", "src/**.cpp"}
 		
 		targetdir "bin"
 		objdir "obj"

@@ -4,7 +4,6 @@
 #include <iomanip>
 #include <iostream>
 #include "shaderManager.h"
-#include "objLoader.h"
 #include "character.h"
 #include "camera.h"
 #include "audioManager.h"
