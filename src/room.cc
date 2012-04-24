@@ -34,6 +34,7 @@ void Room::placeWalls()
 		case TWOA:
 			doors.push_back(NORTH + orient);
 			doors.push_back(WEST + orient);
+			printf("TWOA: doors: %d %d\n", doors[0], doors[1]);
 			break;
 
 		case TWOB:
@@ -55,13 +56,13 @@ void Room::placeWalls()
 			break;
 	}
 
-	vector<bool> hasDoor(4, false);
+	vector<int> hasDoor(4, 0);
 
 	// now do each wall mod 4 (to fix going all the way around for some sides)
 	for(size_t i = 0; i < doors.size(); ++i)
 	{
 		doors[i] = doors[i] % 4;
-		hasDoor[i] = true;
+		hasDoor[doors[i]] = 1;
 	}
 
 	// Now traverse each wall and create the wall objects

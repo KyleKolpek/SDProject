@@ -235,13 +235,16 @@ void Dungeon::orientRooms()
 			// Three doors, just find the side without a door
 			case Room::THREE:
 				// north
-				if(i > 0 && dungeon[i-1][j] == NULL)
+				if(i == 0 || (i > 0 && dungeon[i-1][j] == NULL))
 					rooms[ind]->orient = Room::ROT_ONE;
 				// south
-				else if(i < numRows - 1 && dungeon[i+1][j] == NULL)
+				else if(i == numRows - 1 || 
+					(i < numRows - 1 && dungeon[i+1][j] == NULL))
+				{
 					rooms[ind]->orient = Room::ROT_THREE;
+				}
 				// east
-				else if(j > 0 && dungeon[i][j+1] == NULL)
+				else if(j == numCols - 1 || (j < numCols - 1 && dungeon[i][j+1] == NULL))
 					rooms[ind]->orient = Room::ROT_ZERO;
 				// west
 				else
