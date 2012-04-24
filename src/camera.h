@@ -6,16 +6,23 @@
 class Camera
 {
 public:
-	Camera();
+	Camera(glm::vec3 const &eye,
+		   glm::vec3 const &at,
+		   glm::vec3 const &up);
 	glm::mat4 getViewMatrix();
 	glm::mat4 getProjectionMatrix();
-	void lookAt(glm::vec3 const &eye,
-				glm::vec3 const &center,
-				glm::vec3 const &up);
+	void setAt(glm::vec3 const &at);
+	void setEye(glm::vec3 const &eye);
+	void setUp(glm::vec3 const &up);
+	void moveAt(glm::vec3 const &at);
+	void moveEye(glm::vec3 const &eye);
+	void moveUp(glm::vec3 const &up);
+	void moveCloser(float distance);
 	void perspective(float fov, float aspect, float zNear, float zFar);
 private:
-	void rotate(glm::vec3 axis, float radians);
-	void translate(glm::vec3 delta);
+	glm::vec3 eye;
+	glm::vec3 at;
+	glm::vec3 up;
 	glm::mat4 viewMatrix;
 	glm::mat4 projMatrix;
 };

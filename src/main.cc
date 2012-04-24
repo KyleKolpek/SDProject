@@ -16,7 +16,7 @@
 
 void init();
 
-Camera camera;
+Camera *camera;
 Character *test;
 Dungeon *dungeon;
 Wall *wall1, *wall2;
@@ -51,7 +51,6 @@ int main()
 	screen.Show(App);
 
 	init();
-	std::cout << dungeon->str() << std::endl;
 	while(App.IsOpened())
 	{
 		sf::Event Event;
@@ -111,7 +110,7 @@ int main()
 		*/
 		
 		//Call to actually display the things.
-		test->draw();
+		//test->draw();
 		dungeon->draw();
 		//wall1->draw();
 		//wall2->draw();
@@ -143,18 +142,22 @@ void init()
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	glViewport(0, 0, 800, 600);
+	camera = new Camera(glm::vec3(25.0, 50.0, 50.0),
+						glm::vec3(25.0,  0.0, 25.0),
+						glm::vec3(0.0, 1.0, 0.0));
+	camera->perspective(45.0, 4.0/3.0, 0.01, 100.0); 
 
-	test = new Character(&camera);
+	//test = new Character(&camera);
 	//wall1 = new Wall(-10, -10, 10, -10, 4, &camera);
 	//wall2 = new Wall(-10, 10, -10, -10, 4, &camera);
 	//room = new Room(0, 0, &camera);
-	//room->roomType = Room::TWOB;
+	//room->roomType = Room::FOUR;
 	//room->orient = Room::ROT_ZERO;
 	//room->placeWalls();
 
 	// create dungeon
-	dungeon = new Dungeon(3, 3, 6, &camera);
-	//std::cout << dungeon->str() << std::endl;
+	dungeon = new Dungeon(5, 5, 15, camera);
+	std::cout << dungeon->str() << std::endl;
 
 	// This could probably be done cleaner
 	Wall::loadTexture("../assets/models/wall/stoneWall.jpg");
@@ -162,14 +165,10 @@ void init()
 
 	// Setup shaders
 	ShaderManager *shaderManager = new ShaderManager("../assets/shaders/");
-	test->setShaderManager(shaderManager);
+	//test->setShaderManager(shaderManager);
 	//wall1->setShaderManager(shaderManager);
 	//wall2->setShaderManager(shaderManager);
 	//room->setShaderManager(shaderManager);
 	dungeon->setShaderManager(shaderManager);
-	camera.lookAt(glm::vec3(15.0, 35.0, 35.0),
-				  glm::vec3(15.0,  0.0, 15.0),
-				  glm::vec3(0.0, 1.0, 0.0));
-	camera.perspective(45.0, 4.0/3.0, 0.01, 100.0); 
 }
 
