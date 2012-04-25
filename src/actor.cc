@@ -22,15 +22,16 @@ Actor::Actor(Camera *camera):
 	ObjLoader loader;
 	//loader.loadObjFile("../assets/models/Legoman/LegoMan.obj");
 	//loader.loadObjFile("../assets/models/human/human.obj");
-	loader.loadObjFile("../assets/models/dragon/dragon.obj");
+	//loader.loadObjFile("../assets/models/dragon/dragon.obj");
+	loader.loadObjFile("../assets/models/knight/knight.obj");
 	loader.formatVertexData();
 	vertexData  = loader.getVertexData();
 	dataType    = loader.getVertexType();
 	vertexCount = loader.getVertexCount();
 	texture = SOIL_load_OGL_texture(
 		 //"../assets/models/Legoman/Texture.png",
-		 //"../assets/models/human/human.bmp",
-		 "../assets/models/dragon/dragoncolor.tga",
+		 "../assets/models/human/human.bmp",
+		 //"../assets/models/dragon/dragoncolor.tga",
 		 SOIL_LOAD_AUTO,
 		 SOIL_CREATE_NEW_ID,
 		 SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y |

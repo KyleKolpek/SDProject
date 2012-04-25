@@ -12,7 +12,7 @@
 #include "splashScreen.h"
 #include "room.h"
 
-void init();
+void init(unsigned int width, unsigned int height);
 
 Camera *camera;
 Actor *test;
@@ -26,11 +26,14 @@ int main()
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
-
+	
+	sf::VideoMode current = sf::VideoMode::GetDesktopMode();	
 	// Show splash screen
-	sf::RenderWindow App(sf::VideoMode(800, 600, 32), 
+	sf::RenderWindow App(current, 
 						"Delfino's Dungeon Extravaganza", 
-						sf::Style::Close, Settings);
+						sf::Style::Fullscreen,
+						//sf::Style::Close | sf::Style::Resize, 
+						Settings);
 
 	AudioManager ad;
 	ad.loadMusic("forest.ogg");
@@ -45,8 +48,9 @@ int main()
 	
 	// Show splash screen
 	screen.Show(App);
-
-	init();
+	
+	std::cout << current.Width << " " << current.Height << "\n";
+	init(current.Width, current.Height);
 	while(App.IsOpened())
 	{
 		sf::Event Event;
@@ -60,7 +64,12 @@ int main()
 			}
 			if(Event.Type == sf::Event::Resized)
 			{
+				std::cout << Event.Size.Width << " " << Event.Size.Height<< "\n";
 				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
+			}
+			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Escape))
+			{
+				App.Close();
 			}
 		}
 		
@@ -95,7 +104,7 @@ int main()
 	return EXIT_SUCCESS;
 }
 
-void init()
+void init(unsigned int width, unsigned int height)
 {
 	// Initialize glew -- should fix segfaults on linux machines
 #ifdef _NIX
@@ -114,7 +123,7 @@ void init()
 	glClearDepth(1.0f);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, width, height);
 	camera = new Camera(glm::vec3(75.0, 100.0, 250.0),
 						glm::vec3(75.0, 0.0, 125.0),
 						glm::vec3(0.0, 1.0, 0.0));
