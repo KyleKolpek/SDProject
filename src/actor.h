@@ -15,13 +15,25 @@ public:
 	Actor(Camera *camera);
 	~Actor();
 
+	// Inherited methods
 	virtual void draw();
 	virtual void update(float sec, sf::Input const &input);
+	
+	void setPosition(glm::vec3 const &position);
+	void setScale(float scale);
+	void setRotation(float degrees);
+
+	void move(glm::vec3 const &delta);
+	void scale(float factor);
+	void rotate(float degrees);
+
+	void setRadius(float radius);
 
 private:
-	int x;
-	int y;
-	int z;
+	glm::vec3 position;
+	float scaleFactor;
+	float rotation;
+	float radius;
 	int vertexCount;
 	int *indexData;
 	float *vertexData;
@@ -29,8 +41,9 @@ private:
 	GLuint dataType;
 	GLuint texture;
 	Camera *camera;
-
-	glm::mat4 getModelMatrix();
+	glm::mat4 modelMatrix;
+	
+	void createModelMatrix();
 };
 
 #endif

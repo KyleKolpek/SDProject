@@ -7,14 +7,16 @@
 using namespace std;
 
 Actor::Actor(Camera *camera):
-	x(0),
-	y(0),
-	z(0),
+	position(0.0),
+	scaleFactor(1.0),
+	rotation(0.0),
+	radius(1.0),
 	vertexCount(0),
 	vertexData(NULL),
 	vertexBuffer(NULL),
 	texture(NULL),
-	camera(camera)
+	camera(camera),
+	modelMatrix(1.0)
 {
 	
 	ObjLoader loader;
@@ -63,7 +65,7 @@ void Actor::draw()
 	GLint projLoc = glGetUniformLocation(program, "projection");
 	GLint texLoc = glGetUniformLocation(program, "texture");
 
-	glm::mat4 MV = camera->getViewMatrix() * getModelMatrix();
+	glm::mat4 MV = camera->getViewMatrix() * modelMatrix;
 	glm::mat4 proj = camera->getProjectionMatrix();
 
 	// TODO: Error check here.
@@ -153,10 +155,56 @@ void Actor::update(float sec, sf::Input const &input)
 {
 }
 
-glm::mat4 Actor::getModelMatrix()
+void Actor::setPosition(glm::vec3 const &position)
 {
-	return glm::mat4(1.0, 0.0, 0.0, 0.0,
-					 0.0, 1.0, 0.0, 0.0,
-					 0.0, 0.0, 1.0, 0.0,
-					   x,   y,   z, 1.0);
+	this->position = position;
+	createModelMatrix();
+}
+
+void Actor::setScale(float scale)
+{
+	this->scaleFactor = scale;
+	createModelMatrix();
+}
+
+void Actor::setRotation(float degrees)
+{
+	this->rotation = degrees;
+	createModelMatrix();
+}
+
+void Actor::move(glm::vec3 const &delta)
+{
+	this->position += delta;
+	createModelMatrix();
+}
+
+void Actor::scale(float factor)
+{
+	this->scaleFactor *= factor;
+	createModelMatrix();
+}
+
+void Actor::rotate(float degrees)
+{
+	this->rotation += degrees;
+	createModelMatrix();
+}
+
+void Actor::createModelMatrix()
+{
+	float theta = glm::radians(rotation);
+	glm::mat4 translationMat(1.0, 0.0, 0.0, 0.0,
+							 0.0, 1.0, 0.0, 0.0,
+							 0.0, 0.0, 1.0, 0.0,
+							position.x, position.y, position.z, 1.0);
+	glm::mat4 scaleMat(scaleFactor, 0.0, 0.0, 0.0,
+					   0.0, scaleFactor, 0.0, 0.0,
+					   0.0, 0.0, scaleFactor, 0.0,
+					   0.0, 0.0, 0.0, 1.0);
+	glm::mat4 rotateMat(glm::cos(theta), 0.0, glm::sin(theta), 0.0,
+						0.0, 1.0, 0.0, 0.0,
+						-glm::sin(theta), 0.0, glm::cos(theta), 0.0,
+						0.0, 0.0, 0.0, 1.0);
+	modelMatrix = translationMat * scaleMat * rotateMat;
 }
