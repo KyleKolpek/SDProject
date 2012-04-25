@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <iostream>
 #include "shaderManager.h"
-#include "character.h"
+#include "actor.h"
 #include "camera.h"
 #include "audioManager.h"
 #include "dungeon.h"
@@ -15,7 +15,7 @@
 void init();
 
 Camera *camera;
-Character *test;
+Actor *test;
 Dungeon *dungeon;
 Wall *wall1, *wall2;
 Room *room;
@@ -31,8 +31,6 @@ int main()
 	sf::RenderWindow App(sf::VideoMode(800, 600, 32), 
 						"Delfino's Dungeon Extravaganza", 
 						sf::Style::Close, Settings);
-
-	sf::Clock Clock;
 
 	AudioManager ad;
 	ad.loadMusic("forest.ogg");
@@ -60,33 +58,9 @@ int main()
 			{
 				App.Close();
 			}
-			
-			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Escape))
-			{
-				App.Close();
-			}
-
 			if(Event.Type == sf::Event::Resized)
 			{
 				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
-			}
-			
-			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Down))
-			{
-				ad.playSound("wind");
-			}
-			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Up))
-			{
-				ad.playSound("thunder");
-			}
-
-			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Left))
-			{
-				ad.playSound("huh");
-			}
-			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Right))
-			{
-				ad.playSound("doorSqueak");
 			}
 		}
 		
@@ -101,12 +75,12 @@ int main()
 		unsigned int mouseX = Input.GetMouseX();
 		unsigned int mouseY = Input.GetMouseY();
 		
-		camera->update( Clock, Input );
+		camera->update(App.GetFrameTime(), Input);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 		/*
-			Drawing goes below. Easily done in another function or the method
-			of render object! So that is pretty easy.
+			Drawing goes below.
 		*/
 		
 		//Call to actually display the things.
@@ -147,7 +121,7 @@ void init()
 						glm::vec3(0.0, 1.0, 0.0));
 	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
 
-	test = new Character(camera);
+	test = new Actor(camera);
 	//wall1 = new Wall(-10, -10, 10, -10, 4, &camera);
 	//wall2 = new Wall(-10, 10, -10, -10, 4, &camera);
 	//room = new Room(0, 0, &camera);
