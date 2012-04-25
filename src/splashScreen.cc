@@ -11,7 +11,9 @@ void SplashScreen::Show(sf::RenderWindow &window)
 		return;
 	}
 	sf::Sprite sprite(image);
-
+	sf::Vector2f pos = sprite.GetSize();
+	//Setting the splash screen in the middle of the screen.	
+	sprite.SetPosition((window.GetWidth()-pos.x)/2, (window.GetHeight()-pos.y)/2);
 	window.Draw(sprite);
 	window.Display();
 
