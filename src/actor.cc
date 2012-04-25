@@ -149,6 +149,10 @@ void Actor::draw()
 	glUseProgram(0);
 }
 
+void Actor::update(float sec, sf::Input const &input)
+{
+}
+
 glm::mat4 Actor::getModelMatrix()
 {
 	return glm::mat4(1.0, 0.0, 0.0, 0.0,
