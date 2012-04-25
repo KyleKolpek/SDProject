@@ -19,6 +19,9 @@ public:
 	virtual void draw();
 	virtual void update(float sec, sf::Input const &input);
 	
+	glm::vec3 getPosition();
+	float getRadius();
+
 	void setPosition(glm::vec3 const &position);
 	void setScale(float scale);
 	void setRotation(float degrees);
@@ -29,7 +32,7 @@ public:
 
 	void setRadius(float radius);
 
-private:
+protected:
 	glm::vec3 position;
 	float scaleFactor;
 	float rotation;

@@ -155,6 +155,16 @@ void Actor::update(float sec, sf::Input const &input)
 {
 }
 
+glm::vec3 Actor::getPosition()
+{
+	return position;
+}
+
+float Actor::getRadius()
+{
+	return radius;
+}
+
 void Actor::setPosition(glm::vec3 const &position)
 {
 	this->position = position;
