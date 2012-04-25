@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+#include "GLM/glm.hpp"
+
 #include "drawable.h"
 #include "room.h"
 #include "camera.h"
@@ -43,6 +45,13 @@ public:
 	void setShaderManager(ShaderManager *shaderManager);
 
 	/***********************************************************************//**
+	 * Get the starting position for players.
+	 * \param[out] startingPos
+	 *     A glm::vec3 with the entrance to the dungeon.
+	 **************************************************************************/
+	glm::vec3 getStartingPos();
+
+	/***********************************************************************//**
 	 * Create a string representation of the dungeon.
 	 * \param[out]
 	 *     std::string describing the placement and orientation of rooms in
@@ -78,9 +87,10 @@ private:
 	 **************************************************************************/
 	void orientRooms();
 
-	int numRows;	/** The number of rows in our grid of rooms. */
-	int numCols;	/** The number of columns in our grid of rooms. */
-	int numRooms;	/** The number of rooms in our dungeon. */
+	int numRows;			/** The number of rows in our grid of rooms. */
+	int numCols;			/** The number of columns in our grid of rooms. */
+	int numRooms;			/** The number of rooms in our dungeon. */
+	int startRow, startCol;	/** The row and column that the game begins in. */
 
 	Camera *camera;	/** Pointer to the game camera. */
 };

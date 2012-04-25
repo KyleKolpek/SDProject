@@ -20,18 +20,21 @@ Room::Room(int row, int col, Camera *camera):
 	y = row * ROOM_LENGTH;
 	x = col * ROOM_WIDTH;
 
+	float u = ROOM_WIDTH/3,
+		  v = ROOM_LENGTH/3;
+
 	float tmpVertexData[] = {0.0, 0.0, 0.0,
 							 0.0, 1.0, 0.0,
 							      0.0, 0.0,
 							 0.0, 0.0, ROOM_WIDTH,
 							 0.0, 1.0, 0.0,
-							      0.0, 1.0, // may need swapped
+							      0.0, v, // may need swapped
 							 ROOM_LENGTH, 0.0, ROOM_WIDTH,
 							 0.0, 1.0, 0.0,
-							      1.0, 1.0, // may need swapped
+							      u, v, // may need swapped
 							 ROOM_LENGTH, 0.0, 0.0,
 							 0.0, 1.0, 0.0,
-							      1.0, 0.0};
+							      u, 0.0};
 
 	modelMatrix = glm::mat4(1.0, 0.0, 0.0, 0.0,
 							0.0, 1.0, 0.0, 0.0,
@@ -46,7 +49,7 @@ Room::Room(int row, int col, Camera *camera):
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Room::placeWalls()
+void Room::placeWalls(int northDoor, int westDoor, int southDoor, int eastDoor)
 {
 	// First determine which walls need doors. Store a vector sides with doors.
 	#define NORTH 0
@@ -88,6 +91,12 @@ void Room::placeWalls()
 	}
 
 	vector<int> hasDoor(4, 0);
+
+	// User has option of manually placing doors.
+	hasDoor[NORTH] = northDoor;
+	hasDoor[WEST] = westDoor;
+	hasDoor[SOUTH] = southDoor;
+	hasDoor[EAST] = eastDoor;
 
 	// The points to place the beginning and end of doors. Since rooms are
 	// square we the same values can be used for either x or y.

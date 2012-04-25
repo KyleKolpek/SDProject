@@ -63,10 +63,10 @@ Dungeon::~Dungeon()
 void Dungeon::generateDungeon()
 {
 	// fill in first room as a seed. Just place it in the middle.
-	int startI = numRows / 2;
-	int startJ = numCols / 2;
-	dungeon[startI][startJ] = new Room(startI, startJ, camera);
-	rooms.push_back(dungeon[startI][startJ]);
+	startRow = numRows - 1;
+	startCol = numCols / 2;
+	dungeon[startRow][startCol] = new Room(startRow, startCol, camera);
+	rooms.push_back(dungeon[startRow][startCol]);
 
 	
 	// After choosing whether to change i or j, we have to decide whether to 
@@ -119,9 +119,12 @@ void Dungeon::generateDungeon()
 	assignRoomTypes();
 	orientRooms();
 
-	// have each room create its walls
-	for(size_t i = 0; i < rooms.size(); ++i)
-		rooms[i]->placeWalls();
+	// Seed room has a door manually placed on south wall.
+	rooms[0]->placeWalls(0,0,1,0);
+
+	// have each other room create its walls
+	for(size_t i = 1; i < rooms.size(); ++i)
+		rooms[i]->placeWalls(0,0,0,0); // no default walls
 }
 
 void Dungeon::assignRoomTypes()
@@ -257,6 +260,19 @@ void Dungeon::orientRooms()
 				break;
 		} // end switch(roomType)
 	} // end foreach room
+}
+
+glm::vec3 Dungeon::getStartingPos()
+{
+	float x, y;
+
+	// south wall
+	y = numRows * ROOM_LENGTH;
+
+	// middle of wall
+	x = (startCol * ROOM_WIDTH) + (ROOM_WIDTH / 2);
+
+	return glm::vec3(x, 0, y);
 }
 
 string Dungeon::str()

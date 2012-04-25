@@ -45,8 +45,11 @@ public:
 	 * Creates walls and doors.
 	 * Walls must be created AFTER roomType and orient have been assigned. Doors
 	 * are then created by actually generating two walls separated by a gap.
+	 * \param[in] wall
+	 *     For each wall, state whether to place a door. Even if 0, it may still
+	 *     place one if connectivity requires it.
 	 ***************************************************************************/
-	void placeWalls();
+	void placeWalls(int northDoor, int westDoor, int southDoor, int eastDoor);
 
 	/***********************************************************************//**
 	 * Coordinates in dungeon grid of rooms.
