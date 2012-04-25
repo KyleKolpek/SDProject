@@ -101,6 +101,8 @@ int main()
 		unsigned int mouseX = Input.GetMouseX();
 		unsigned int mouseY = Input.GetMouseY();
 		
+		camera->update( Clock, Input );
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		/*
 			Drawing goes below. Easily done in another function or the method
