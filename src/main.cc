@@ -122,6 +122,7 @@ void init()
 	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
 
 	test = new Actor(camera);
+	test->setRotation(180.0);
 	//wall1 = new Wall(-10, -10, 10, -10, 4, &camera);
 	//wall2 = new Wall(-10, 10, -10, -10, 4, &camera);
 	//room = new Room(0, 0, &camera);
@@ -131,9 +132,7 @@ void init()
 
 	// create dungeon
 	dungeon = new Dungeon(5, 5, 15, camera);
-	std::cout << dungeon->str() << std::endl;
-	glm::vec3 sp = dungeon->getStartingPos();
-	std::cout << "Starting Pos: " << sp.x << "," << sp.z << std::endl;
+	test->setPosition(dungeon->getStartingPos());
 
 	// This could probably be done cleaner
 	Wall::loadTexture("../assets/models/wall/stoneWall.jpg");
