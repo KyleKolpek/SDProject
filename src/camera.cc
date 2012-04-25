@@ -77,34 +77,44 @@ void Camera::perspective(float fov, float aspect, float zNear, float zFar)
 void Camera::update(float sec, sf::Input const &input)
 {
 	// ADD CAMERA MOVEMENT HERE
-	float speed = camSpeed * sec;
+	float cameraMoveDistance = camSpeed * sec;
 	
 	if( input.IsKeyDown(sf::Key::Left ) )
 	{
-		moveEye(glm::vec3( speed*(-1.0), 0.0, 0.0 ));
-		moveAt(glm::vec3( speed*(-1.0), 0.0, 0.0 ));
+		moveEye(glm::vec3( cameraMoveDistance*(-1.0), 0.0, 0.0 ));
+		moveAt(glm::vec3( cameraMoveDistance*(-1.0), 0.0, 0.0 ));
 	}
 	else if( input.IsKeyDown(sf::Key::Right) )
 	{
-		moveEye(glm::vec3( speed, 0.0, 0.0 ));
-		moveAt(glm::vec3( speed, 0.0, 0.0 ));
+		moveEye(glm::vec3( cameraMoveDistance, 0.0, 0.0 ));
+		moveAt(glm::vec3( cameraMoveDistance, 0.0, 0.0 ));
 	}
 	if( input.IsKeyDown(sf::Key::Up ))
 	{
-		moveEye(glm::vec3( 0.0, 0.0, speed*(-1.0) ));
-		moveAt(glm::vec3( 0.0, 0.0, speed*(-1.0) ));
+		moveEye(glm::vec3( 0.0, 0.0, cameraMoveDistance*(-1.0) ));
+		moveAt(glm::vec3( 0.0, 0.0, cameraMoveDistance*(-1.0) ));
 	}
 	else if( input.IsKeyDown(sf::Key::Down ))
 	{
-		moveEye(glm::vec3( 0.0, 0.0, speed ));
-		moveAt(glm::vec3( 0.0, 0.0, speed ));
+		moveEye(glm::vec3( 0.0, 0.0, cameraMoveDistance ));
+		moveAt(glm::vec3( 0.0, 0.0, cameraMoveDistance ));
 	}
 	if( input.IsKeyDown(sf::Key::PageUp) )
 	{
-		moveTowardsAt( speed );
+		moveTowardsAt( cameraMoveDistance );
 	}
 	else if( input.IsKeyDown(sf::Key::PageDown) )
 	{
-		moveTowardsAt( speed*(-1.0) );
+		moveTowardsAt( cameraMoveDistance*(-1.0) );
+	}
+
+	// TODO: play with rotation
+	if( input.IsKeyDown( sf::Key::LBracket ) )	// rotate camera clockwise
+	{
+		std::cout << "rotate left" << std::endl;
+	}
+	else if( input.IsKeyDown( sf::Key::RBracket ) ) // rotate camere counter-clockwise
+	{
+		std::cout << "rotate right" << std::endl;
 	}
 }
