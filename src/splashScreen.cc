@@ -30,7 +30,6 @@ void SplashScreen::Show(sf::RenderWindow &window)
 			{
 				exit(0);
 			}
-			window.Display();
 		}
 	}
 }
