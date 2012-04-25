@@ -1,6 +1,9 @@
 #include "camera.h"
 #include "GLM/gtc/matrix_transform.hpp"
 #include <iostream>
+#include <SFML/System.hpp>
+
+float Camera::camSpeed(50.0);
 
 Camera::Camera(glm::vec3 const &eye,
 			   glm::vec3 const &at,
@@ -71,35 +74,37 @@ void Camera::perspective(float fov, float aspect, float zNear, float zFar)
 	projMatrix = glm::perspective(fov, aspect, zNear, zFar);
 }
 
-void Camera::update(sf::Clock const &clock, sf::Input const &input)
+void Camera::update(float sec, sf::Input const &input)
 {
-	// ADD CAMERA MOVEMENT HER
+	// ADD CAMERA MOVEMENT HERE
+	float speed = camSpeed * sec;
+	
 	if( input.IsKeyDown(sf::Key::Left ) )
 	{
-		moveEye(glm::vec3( -1.0,0.0,0.0 ));
-		moveAt(glm::vec3( -1.0,0.0,0.0 ));
+		moveEye(glm::vec3( speed*(-1.0), 0.0, 0.0 ));
+		moveAt(glm::vec3( speed*(-1.0), 0.0, 0.0 ));
 	}
 	else if( input.IsKeyDown(sf::Key::Right) )
 	{
-		moveEye(glm::vec3( 1.0,0.0,0.0 ));
-		moveAt(glm::vec3( 1.0,0.0,0.0 ));
+		moveEye(glm::vec3( speed, 0.0, 0.0 ));
+		moveAt(glm::vec3( speed, 0.0, 0.0 ));
 	}
 	if( input.IsKeyDown(sf::Key::Up ))
 	{
-		moveEye(glm::vec3( 0.0,0.0,-1.0 ));
-		moveAt(glm::vec3( 0.0,0.0,-1.0 ));
+		moveEye(glm::vec3( 0.0, 0.0, speed*(-1.0) ));
+		moveAt(glm::vec3( 0.0, 0.0, speed*(-1.0) ));
 	}
 	else if( input.IsKeyDown(sf::Key::Down ))
 	{
-		moveEye(glm::vec3( 0.0,0.0,1.0 ));
-		moveAt(glm::vec3( 0.0,0.0,1.0 ));
+		moveEye(glm::vec3( 0.0, 0.0, speed ));
+		moveAt(glm::vec3( 0.0, 0.0, speed ));
 	}
 	if( input.IsKeyDown(sf::Key::PageUp) )
 	{
-		moveTowardsAt( 1.0 ); //TODO: Broken
+		moveTowardsAt( speed );
 	}
 	else if( input.IsKeyDown(sf::Key::PageDown) )
 	{
-		moveTowardsAt( -1.0 ); //TODO: Broken
+		moveTowardsAt( speed*(-1.0) );
 	}
 }

@@ -26,13 +26,14 @@ public:
 	void moveTowardsAt(float distance);
 
 	void perspective(float fov, float aspect, float zNear, float zFar);
-	void update(sf::Clock const &clock, sf::Input const &input);
+	void update(float sec, sf::Input const &input);
 private:
 	glm::vec3 eye;
 	glm::vec3 at;
 	glm::vec3 up;
 	glm::mat4 viewMatrix;
 	glm::mat4 projMatrix;
+	static float camSpeed; // The number of units to move the camera
 };
 
 #endif
