@@ -262,6 +262,19 @@ void Dungeon::orientRooms()
 	} // end foreach room
 }
 
+glm::vec3 Dungeon::getStartingPos()
+{
+	float x, y;
+
+	// south wall
+	y = startRow * (ROOM_LENGTH + 1);
+
+	// middle of wall
+	x = (startCol * ROOM_WIDTH) + (ROOM_WIDTH / 2);
+
+	return glm::vec3(x, 0, y);
+}
+
 string Dungeon::str()
 {
 	string ret = "Room Types:\n";

@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+#include "GLM/glm.hpp"
+
 #include "drawable.h"
 #include "room.h"
 #include "camera.h"
@@ -41,6 +43,13 @@ public:
 	void draw();
 
 	void setShaderManager(ShaderManager *shaderManager);
+
+	/***********************************************************************//**
+	 * Get the starting position for players.
+	 * \param[out] startingPos
+	 *     A glm::vec3 with the entrance to the dungeon.
+	 **************************************************************************/
+	glm::vec3 getStartingPos();
 
 	/***********************************************************************//**
 	 * Create a string representation of the dungeon.
