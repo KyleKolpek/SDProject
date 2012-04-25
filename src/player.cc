@@ -1,7 +1,7 @@
 #include "player.h"
 
 
-virtual void update(float sec, sf::Input const &input)
+void Player::update(float sec, sf::Input const &input)
 {
 	// Make him move
 }
