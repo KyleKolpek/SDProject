@@ -13,7 +13,7 @@ class Actor: public Drawable, public Updatable
 {
 public:
 	Actor(Camera *camera);
-	~Actor();
+	virtual ~Actor();
 
 	// Inherited methods
 	virtual void draw();
