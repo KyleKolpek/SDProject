@@ -60,9 +60,9 @@ void Camera::moveUp(glm::vec3 const &up)
 	viewMatrix = glm::lookAt(this->eye, this->at, this->up);
 }
 
-void Camera::moveCloser(float distance)
+void Camera::moveTowardsAt(float distance)
 {
-	this->at = glm::normalize(at - eye) * distance;
+	this->eye += glm::normalize(at - eye) * distance;
 	viewMatrix = glm::lookAt(this->eye, this->at, this->up);
 }
 
@@ -101,11 +101,11 @@ void Camera::update(sf::Clock const &clock, sf::Input const &input)
 	if( input.IsKeyDown(sf::Key::PageUp) )
 	{
 		std::cout << "zoom in" << std::endl;
-		moveCloser( 1.0 ); //TODO: Broken
+		moveTowardsAt( 1.0 ); //TODO: Broken
 	}
 	else if( input.IsKeyDown(sf::Key::PageDown) )
 	{
 		std::cout << "zoom out" << std::endl;
-		moveCloser( -1.0 ); //TODO: Broken
+		moveTowardsAt( -1.0 ); //TODO: Broken
 	}
 }
