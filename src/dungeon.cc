@@ -267,7 +267,7 @@ glm::vec3 Dungeon::getStartingPos()
 	float x, y;
 
 	// south wall
-	y = startRow * (ROOM_LENGTH + 1);
+	y = numRows * ROOM_LENGTH;
 
 	// middle of wall
 	x = (startCol * ROOM_WIDTH) + (ROOM_WIDTH / 2);
