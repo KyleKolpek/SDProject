@@ -46,6 +46,8 @@ Actor::Actor(Camera *camera):
         GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
+	// How fast the actor moves
+	moveSpeed = 15.0;
 }
 
 Actor::~Actor()

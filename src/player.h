@@ -2,17 +2,18 @@
 #define PLAYER_H
 
 #include "stdgl.h"
-#include <SFML/Window.hpp>
 #include "actor.h"
+
+class Camera;
 
 class Player: public Actor
 {
 public:
-	Player();
+	Player(Camera *camera);
 	~Player();
 	virtual void update(float sec, sf::Input const &input);
 
-protected:
-	float speed;
+//protected:
+
 };
 #endif

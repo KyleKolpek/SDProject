@@ -45,8 +45,8 @@ protected:
 	GLuint texture;
 	Camera *camera;
 	glm::mat4 modelMatrix;
-	
 	void createModelMatrix();
+	float moveSpeed;
 };
 
 #endif

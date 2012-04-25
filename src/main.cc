@@ -11,11 +11,12 @@
 #include "wall.h"
 #include "splashScreen.h"
 #include "room.h"
+#include "player.h"
 
 void init();
 
 Camera *camera;
-Actor *test;
+Player *test;
 Dungeon *dungeon;
 Wall *wall1, *wall2;
 Room *room;
@@ -65,14 +66,17 @@ int main()
 		}
 		
 		App.SetActive();
+
+		float secondsSinceLastFrame = App.GetFrameTime();
 		
 		/****   Free-form camera movement	*****************/
-		camera->update(App.GetFrameTime(), Input);
+		camera->update(secondsSinceLastFrame, Input);
 		/****	End	*****************************************/
 
-		
-		/****	Testing Character Movement	***************/
+		// TODO: separate frame times for actor and camera?
 
+		/****	Testing Character Movement	***************/
+		test->update(secondsSinceLastFrame, Input);	
 		/****	End	***************************************/
 
 
@@ -120,7 +124,7 @@ void init()
 						glm::vec3(0.0, 1.0, 0.0));
 	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
 
-	test = new Actor(camera);
+	test = new Player(camera);
 	test->setRotation(180.0);
 	//wall1 = new Wall(-10, -10, 10, -10, 4, &camera);
 	//wall2 = new Wall(-10, 10, -10, -10, 4, &camera);
