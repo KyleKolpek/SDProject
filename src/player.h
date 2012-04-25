@@ -1,6 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "stdgl.h"
+#include <SFML/Window.hpp>
+#include "actor.h"
+
 class Player: public Actor
 {
 public:

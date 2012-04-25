@@ -66,16 +66,15 @@ int main()
 		
 		App.SetActive();
 		
-		/*
-			Example of getting some values from the input object. Also pretty 
-			easy to get mouse below. 
-		*/
-		bool leftKeyDown = Input.IsKeyDown(sf::Key::Left);
-		bool rightButtonDown = Input.IsMouseButtonDown(sf::Mouse::Right);
-		unsigned int mouseX = Input.GetMouseX();
-		unsigned int mouseY = Input.GetMouseY();
-		
+		/****   Free-form camera movement	*****************/
 		camera->update(App.GetFrameTime(), Input);
+		/****	End	*****************************************/
+
+		
+		/****	Testing Character Movement	***************/
+
+		/****	End	***************************************/
+
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
