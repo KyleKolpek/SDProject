@@ -76,36 +76,30 @@ void Camera::update(sf::Clock const &clock, sf::Input const &input)
 	// ADD CAMERA MOVEMENT HER
 	if( input.IsKeyDown(sf::Key::Left ) )
 	{
-		std::cout << "move left" << std::endl;
 		moveEye(glm::vec3( -1.0,0.0,0.0 ));
 		moveAt(glm::vec3( -1.0,0.0,0.0 ));
 	}
 	else if( input.IsKeyDown(sf::Key::Right) )
 	{
-		std::cout << "move right" << std::endl;
 		moveEye(glm::vec3( 1.0,0.0,0.0 ));
 		moveAt(glm::vec3( 1.0,0.0,0.0 ));
 	}
 	if( input.IsKeyDown(sf::Key::Up ))
 	{
-		std::cout << "move up" << std::endl;
 		moveEye(glm::vec3( 0.0,0.0,-1.0 ));
 		moveAt(glm::vec3( 0.0,0.0,-1.0 ));
 	}
 	else if( input.IsKeyDown(sf::Key::Down ))
 	{
-		std::cout << "move down" << std::endl;
 		moveEye(glm::vec3( 0.0,0.0,1.0 ));
 		moveAt(glm::vec3( 0.0,0.0,1.0 ));
 	}
 	if( input.IsKeyDown(sf::Key::PageUp) )
 	{
-		std::cout << "zoom in" << std::endl;
 		moveCloser( 1.0 ); //TODO: Broken
 	}
 	else if( input.IsKeyDown(sf::Key::PageDown) )
 	{
-		std::cout << "zoom out" << std::endl;
 		moveCloser( -1.0 ); //TODO: Broken
 	}
 }
