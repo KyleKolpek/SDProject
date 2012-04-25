@@ -82,8 +82,6 @@ int main()
 		camera->update(secondsSinceLastFrame, Input);
 		/****	End	*****************************************/
 
-		// TODO: separate frame times for actor and camera?
-
 		/****	Testing Character Movement	***************/
 		test->update(secondsSinceLastFrame, Input);	
 		/****	End	***************************************/
