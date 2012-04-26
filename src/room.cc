@@ -111,12 +111,12 @@ void Room::placeWalls()
 	// Now traverse each wall and create the wall objects
 	if(hasDoor[NORTH])
 	{
-		walls.push_back(Wall(0, 0, doorStart, 0, ROOM_HEIGHT, camera));
-		walls.push_back(Wall(doorEnd, 0, ROOM_WIDTH, 0, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(doorStart, 0, 0, 0, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(ROOM_WIDTH, 0, doorEnd, 0, ROOM_HEIGHT, camera));
 	}
 	else
 	{
-		walls.push_back(Wall(0, 0, ROOM_WIDTH, 0, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(ROOM_WIDTH, 0, 0, 0, ROOM_HEIGHT, camera));
 	}
 
 	if(hasDoor[WEST])
@@ -144,15 +144,15 @@ void Room::placeWalls()
 
 	if(hasDoor[EAST])
 	{
-		walls.push_back(Wall(ROOM_WIDTH, 0, ROOM_WIDTH, doorStart,
+		walls.push_back(Wall(ROOM_WIDTH, doorStart, ROOM_WIDTH, 0,
 			ROOM_HEIGHT, camera));
-		walls.push_back(Wall(ROOM_WIDTH, doorEnd,
-			ROOM_WIDTH, ROOM_LENGTH, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(ROOM_WIDTH, ROOM_LENGTH, 
+			ROOM_WIDTH, doorEnd, ROOM_HEIGHT, camera));
 	}
 	else
 	{
-		walls.push_back(Wall(ROOM_WIDTH, 0,
-			ROOM_WIDTH, ROOM_LENGTH, ROOM_HEIGHT, camera));
+		walls.push_back(Wall(ROOM_WIDTH, ROOM_LENGTH,
+			ROOM_WIDTH, 0, ROOM_HEIGHT, camera));
 	}
 	
 	for(vector<Wall>::iterator it = walls.begin(); it < walls.end(); it++)
