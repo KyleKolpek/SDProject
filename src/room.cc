@@ -72,14 +72,19 @@ Room::Room(int row,
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// Create some objects.
-	for(int i = 0; i < 1; ++i)
+	for(int i = 0; i < 3; ++i)
 	{
 		string objName = "../assets/models/box/box.obj";
 		string texName = "../assets/models/box/box.jpg";
 		Actor *newObj = new Actor(camera, dungeon, objName, texName, objLoader);
 		int xPlace = rand() % ROOM_WIDTH;
 		int yPlace = rand() % ROOM_LENGTH;
-		while(objPresent[xPlace][yPlace])
+		//Make sure we get a valid location.
+		while(objPresent[xPlace][yPlace] || 
+				yPlace == 0 ||
+				yPlace == ROOM_LENGTH - 1 ||
+				xPlace == 0 ||
+				xPlace == ROOM_WIDTH - 1)
 		{
 			xPlace = rand() % ROOM_WIDTH;
 			yPlace = rand() % ROOM_LENGTH;

@@ -33,7 +33,7 @@ Game::Game():
 	camera = new Camera();
 
 	// Create Dungeon
-	dungeon = new Dungeon(5, 5, 25, camera, loader);
+	dungeon = new Dungeon(5, 5, 15, camera, loader);
 
 	// Create players
 	numPlayers = 2;
