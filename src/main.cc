@@ -28,12 +28,12 @@ int main()
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
 	
-	sf::VideoMode current = sf::VideoMode::GetDesktopMode();	
+	sf::VideoMode current = sf::VideoMode(800,600,32);//sf::VideoMode::GetDesktopMode();	
 	// Show splash screen
 	sf::RenderWindow App(current, 
 						"Delfino's Dungeon Extravaganza", 
-						sf::Style::Fullscreen,
-						//sf::Style::Close | sf::Style::Resize, 
+						//sf::Style::Fullscreen,
+						sf::Style::Close | sf::Style::Resize, 
 						Settings);
 
 	AudioManager ad;
