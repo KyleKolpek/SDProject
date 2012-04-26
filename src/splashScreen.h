@@ -17,7 +17,7 @@ public:
 	* \param[in] window
 	*     Pass in the window to draw to.
 	***************************************************************************/
-	void Show(sf::RenderWindow &window);
+	void Show(sf::RenderWindow &window, void (*init)(unsigned int, unsigned int));
 };
 
 #endif
