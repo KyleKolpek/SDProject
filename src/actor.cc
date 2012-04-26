@@ -12,6 +12,7 @@ using namespace std;
 
 Actor::Actor(Camera *camera, Dungeon *dungeon, string obj, string tex):
 	position(0.0),
+	moveSpeed(7.5),
 	scaleFactor(1.0),
 	rotation(0.0),
 	radius(0.5),
@@ -48,7 +49,6 @@ Actor::Actor(Camera *camera, Dungeon *dungeon, string obj, string tex):
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 	
 	// How fast the actor moves
-	moveSpeed = 15.0;
 }
 
 Actor::~Actor()
