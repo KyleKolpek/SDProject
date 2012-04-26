@@ -28,7 +28,7 @@ public:
 	 * \param[out] isColliding
 	 *     True if colliding with a wall.
 	 **************************************************************************/
-	virtual bool isCollidingWall(const glm::vec3 &next);
+	virtual glm::vec3 adjustForCollidingWithWalls(const glm::vec3 &delta);
 	
 	glm::vec3 getPosition();
 	float getRadius();
