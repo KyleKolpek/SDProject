@@ -9,12 +9,22 @@ using namespace std;
 Player::Player(Camera *camera, Dungeon *dungeon, string obj, string tex):
 	Actor(camera, dungeon, obj, tex)
 {
-	
+	activePlayer=true;
 }
 
 Player::~Player()
 {
 	// TODO: implement destructor
+}
+
+bool Player::isActive()
+{
+	return activePlayer;
+}
+
+void Player::setActive( bool set )
+{
+	activePlayer = set;
 }
 
 void Player::update(float sec, sf::Input const &input)
