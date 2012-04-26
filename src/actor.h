@@ -47,19 +47,19 @@ protected:
 							detection, etc. */
 	Room *currRoom;		/** Current room that Actor resides in. */
 	glm::vec3 position;
+	float moveSpeed;
 	float scaleFactor;
 	float rotation;
 	float radius;
 	int vertexCount;
-	int *indexData;
 	float *vertexData;
 	GLuint vertexBuffer;
 	GLuint dataType;
 	GLuint texture;
 	Camera *camera;
 	glm::mat4 modelMatrix;
+
 	void createModelMatrix();
-	float moveSpeed;
 };
 
 #endif

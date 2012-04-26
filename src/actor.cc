@@ -35,8 +35,9 @@ Actor::Actor(Camera *camera, Dungeon *dungeon):
 	vertexCount = loader.getVertexCount();
 	texture = SOIL_load_OGL_texture(
 		 //"../assets/models/Legoman/Texture.png",
-		 "../assets/models/human/human.bmp",
+		 //"../assets/models/human/human.bmp",
 		 //"../assets/models/dragon/dragoncolor.tga",
+		 "../assets/models/knight/knight.jpg",
 		 SOIL_LOAD_AUTO,
 		 SOIL_CREATE_NEW_ID,
 		 SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y |
@@ -59,7 +60,6 @@ Actor::Actor(Camera *camera, Dungeon *dungeon):
 Actor::~Actor()
 {
 	delete[] vertexData;
-	delete[] indexData;
 }
 
 void Actor::draw()
