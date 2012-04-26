@@ -56,7 +56,6 @@ Actor::Actor(Camera *camera, Dungeon *dungeon):
 Actor::~Actor()
 {
 	delete[] vertexData;
-	delete[] indexData;
 }
 
 void Actor::draw()

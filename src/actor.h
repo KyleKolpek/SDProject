@@ -37,19 +37,19 @@ protected:
 	Dungeon *dungeon;	/** Pointer to the game dungeon for collision 
 							detection, etc. */
 	glm::vec3 position;
+	float moveSpeed;
 	float scaleFactor;
 	float rotation;
 	float radius;
 	int vertexCount;
-	int *indexData;
 	float *vertexData;
 	GLuint vertexBuffer;
 	GLuint dataType;
 	GLuint texture;
 	Camera *camera;
 	glm::mat4 modelMatrix;
+
 	void createModelMatrix();
-	float moveSpeed;
 };
 
 #endif
