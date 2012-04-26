@@ -174,16 +174,34 @@ void Room::draw()
 	}
 
 	// Store a ShaderManager over a program
-	GLuint program = shaderManager->getProgram(2, "phongTex.vert", "phongTex.frag");
+	GLuint program = shaderManager->getProgram(2, "phongTex.vert",
+		"phongTexPtLights.frag");
 	glUseProgram(program);
 
 	GLint mvLoc = glGetUniformLocation(program, "modelView");
 	GLint nmvLoc = glGetUniformLocation(program, "normalModelView");
 	GLint projLoc = glGetUniformLocation(program, "projection");
 	GLint texLoc = glGetUniformLocation(program, "texture");
+	GLint lightLoc = glGetUniformLocation(program, "cameraSpaceLights");
+	GLint lightColorLoc = glGetUniformLocation(program, "lightColors");
+	GLint lightCntLoc = glGetUniformLocation(program, "lightCount");
+
+	
 
 	glm::mat4 MV = camera->getViewMatrix() * getModelMatrix();
 	glm::mat4 proj = camera->getProjectionMatrix();
+
+	if(lightLoc != -1 && lightColorLoc != -1 && lightCntLoc != -1)
+	{
+		glUniform3f(lightLoc, 0.0, 0.0, -5.0);
+		glUniform3f(lightColorLoc, 0.5, 0.0, 0.0);
+		glUniform1i(lightCntLoc, 1);
+	}
+	else
+	{
+		cerr << "Error: Cannot find modelView location" << endl;
+		return;
+	}
 
 	// TODO: Error check here.
 	if(mvLoc != -1)
