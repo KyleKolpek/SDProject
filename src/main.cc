@@ -16,10 +16,12 @@
 void init(unsigned int width, unsigned int height);
 
 Camera *camera;
-Player *test;
 Dungeon *dungeon;
 Wall *wall1, *wall2;
 Room *room;
+int numPlayers, currentPlayer;
+// Player *test;
+std::vector<Player*> players;
 
 int main()
 {
@@ -46,7 +48,8 @@ int main()
 	SplashScreen screen;
 	ad.playMusic("forest", true);
 	const sf::Input& Input = App.GetInput();
-	
+	bool tabPressNew = true;
+
 	// Show splash screen
 	screen.Show(App, init);
 	
@@ -79,14 +82,27 @@ int main()
 
 		float secondsSinceLastFrame = App.GetFrameTime();
 		
-		/****   Free-form camera movement	*****************/
+		/****   Free-form camera movement   ******************/
 		camera->update(secondsSinceLastFrame, Input);
-		/****	End	*****************************************/
+		/****	End	Free-form camera movement   **************/
 
-		/****	Testing Character Movement	***************/
-		test->update(secondsSinceLastFrame, Input);	
-		/****	End	***************************************/
+		/****   Testing Character Movement   *****************/
+		// test->update(secondsSinceLastFrame, Input);	
 
+		for( int p=0; p<numPlayers; p++ )
+		{
+			players.at(p)->update(secondsSinceLastFrame, Input);
+		}
+		/****   End	Character Movement      ******************/
+
+
+		// character switching
+		if( Input.IsKeyDown( sf::Key::Tab ) && tabPressNew )
+		{
+			players.at(currentPlayer++)->setInactive();
+			currentPlayer %= numPlayers;
+			players.at(currentPlayer)->setActive();
+		}
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -95,12 +111,17 @@ int main()
 		*/
 		
 		//Call to actually display the things.
-		test->draw();
+		//test->draw();
+		for( int p=0; p<numPlayers; p++ )
+		{
+			players.at(p)->draw();
+		}
 		dungeon->draw();
 		//wall1->draw();
 		//wall2->draw();
 		//room->draw();
 
+		tabPressNew = !(Input.IsKeyDown( sf::Key::Tab ));
 		App.Display();
 	}
 
@@ -133,12 +154,31 @@ void init(unsigned int width, unsigned int height)
 	// create dungeon
 	dungeon = new Dungeon(5, 5, 25, camera);
 
-	// Create player
+	// Create players
+	numPlayers = 4;
+	
 	std::string obj = "../assets/models/knight/knight.obj";
+	
+	/* make a single player unit
 	std::string tex = "../assets/models/knight/blue.png";
 	test = new Player(camera, dungeon, obj, tex);
 	test->setRotation(180.0);
 	test->setPosition(dungeon->getStartingPos());
+	 */
+	
+	/* make several player units */
+	std::string textures [4] = { "../assets/models/knight/blue.png",
+								"../assets/models/knight/yellow.png",
+								"../assets/models/knight/red.png",
+								"../assets/models/knight/green.png"};
+	for( int p=0; p<numPlayers; p++ )
+	{
+		players.push_back( new Player( camera, dungeon, obj, textures[p] ) );
+		players.at(p)->setRotation(180.0);
+		players.at(p)->setPosition(dungeon->getStartingPos());
+	}
+	currentPlayer=0;
+	players.at(currentPlayer)->setActive();
 
 	camera->setAt(dungeon->getStartingPos());
 	camera->setEye(dungeon->getStartingPos() + glm::vec3(0.0, 10.0, 10.0));
@@ -150,7 +190,12 @@ void init(unsigned int width, unsigned int height)
 
 	// Setup shaders
 	ShaderManager *shaderManager = new ShaderManager("../assets/shaders/");
-	test->setShaderManager(shaderManager);
+//	test->setShaderManager(shaderManager);
+	for( int p=0; p<numPlayers; p++ )
+	{
+		players.at(p)->setShaderManager(shaderManager); 
+	}
+
 	dungeon->setShaderManager(shaderManager);
-}
+} 
 
