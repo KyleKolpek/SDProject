@@ -10,7 +10,11 @@
 
 using namespace std;
 
-Actor::Actor(Camera *camera, Dungeon *dungeon, string obj, string tex):
+Actor::Actor(Camera *camera, 
+			Dungeon *dungeon, 
+			string obj, 
+			string tex,
+			ObjLoader *objLoader):
 	position(0.0),
 	moveSpeed(7.5),
 	scaleFactor(1.0),
@@ -24,15 +28,17 @@ Actor::Actor(Camera *camera, Dungeon *dungeon, string obj, string tex):
 	dungeon(dungeon),
 	modelMatrix(1.0),
 	maxMovement(12.5),
-	distanceMoved(0.0)
+	distanceMoved(0.0),
+	objLoader(objLoader),
+	modelMatrix(1.0)
 {
 	
-	ObjLoader loader;
-	loader.loadObjFile(obj);
-	loader.formatVertexData();
-	vertexData  = loader.getVertexData();
-	dataType    = loader.getVertexType();
-	vertexCount = loader.getVertexCount();
+	//ObjLoader loader;
+	//loader.loadObjFile(obj);
+	//loader.formatVertexData();
+	vertexData  = objLoader->getVertexData(obj);
+	dataType    = objLoader->getVertexType(obj);
+	vertexCount = objLoader->getVertexCount(obj);
 	texture = SOIL_load_OGL_texture(
 		 tex.c_str(),
 		 SOIL_LOAD_AUTO,
@@ -182,9 +188,6 @@ glm::vec3 Actor::adjustForCollidingWithWalls(const glm::vec3 &delta)
 	// this shouldn't happen!
 	if(currRoom == NULL)
 	{
-#ifdef DEBUG
-		printf("Not currently in a room!\n");
-#endif
 		return newD;
 	}
 

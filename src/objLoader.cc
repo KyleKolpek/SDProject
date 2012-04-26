@@ -1,7 +1,7 @@
 #include"objLoader.h"
 
 using namespace std;
-ObjLoader::ObjLoader()
+void ObjLoader::clear()
 {
 	vertices.clear();
 	normals.clear();
@@ -12,12 +12,22 @@ ObjLoader::ObjLoader()
 	faceT.clear();
 
 	vertexData = NULL;
-	vertexType = 0;
-	vertexCount = 0;
+	vertexType = NULL;
+	vertexCount = NULL;
+
+	name.clear();
 }
 
+ObjLoader::ObjLoader()
+{
+	clear();
+}
+
+
 void ObjLoader::loadObjFile(string filename)
-{	
+{
+	clear();
+	name = filename;
 	ifstream objFile(filename.c_str());
 	if(!objFile)
 	{
@@ -56,8 +66,6 @@ void ObjLoader::loadObjFile(string filename)
 			}
 			else if(type[0] == 'f')
 			{
-				if(faceV.empty())
-					cout << "FINALLY\n";
 				vector<int> Vs, Ns, Ts;
 				while(bufferReader.good())
 				{
@@ -103,21 +111,25 @@ void ObjLoader::loadObjFile(string filename)
 
 void ObjLoader::formatVertexData()
 {
+	vertexType = new GLuint;	
 	if(faceV[0].size() == 3)
 	{
 		//GL_TRIANGLES
-		vertexType = 3;
+		(*vertexType) = GL_TRIANGLES;
 	}
 	else
 	{
 		//GL_QUADS
-		vertexType = 4;
+		(*vertexType) = GL_QUADS;
 	}
 
+	vertexTypeMap[name] = vertexType;
 
-	vertexCount = faceV.size() * faceV[1].size();
+	vertexCount = new GLsizei;
+	(*vertexCount) = faceV.size() * faceV[1].size();
 	
-	vertexData = new float[vertexCount*8];
+	vertexCountMap[name] = vertexCount;
+	vertexData = new float[(*vertexCount)*8];
 	size_t iCount = 0;
 
 
@@ -142,20 +154,20 @@ void ObjLoader::formatVertexData()
 			iCount += 8;
 		}
 	}
-	cout << "Complete\n";
+	vertexDataMap[name] = vertexData;
 }
 
-float* ObjLoader::getVertexData()
+float* ObjLoader::getVertexData(string name)
 {
-	return vertexData;
+	return vertexDataMap[name];
 }
 
-GLuint ObjLoader::getVertexType()
+GLuint ObjLoader::getVertexType(string name)
 {
-	return vertexType;
+	return (*vertexTypeMap[name]);
 }
 
-GLsizei ObjLoader::getVertexCount()
+GLsizei ObjLoader::getVertexCount(string name)
 {
-	return vertexCount;
+	return (*vertexCountMap[name]);
 }

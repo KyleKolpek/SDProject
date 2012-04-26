@@ -9,7 +9,11 @@ class Camera;
 class Player: public Actor
 {
 public:
-	Player(Camera *camera, Dungeon *dungeon, std::string obj, std::string tex);
+	Player(Camera *camera, 
+		Dungeon *dungeon, 
+		std::string obj, 
+		std::string tex,
+		ObjLoader *objLoader);
 	~Player();
 	virtual void update(float sec, sf::Input const &input);
 	bool isActive();

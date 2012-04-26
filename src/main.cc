@@ -25,7 +25,7 @@ std::vector<Player*> players;
 
 int main()
 {
-	
+	srand(time(NULL));	
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
@@ -151,8 +151,17 @@ void init(unsigned int width, unsigned int height)
 	camera = new Camera();
 	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
 
+	//Loading objs.
+	ObjLoader *loader = new ObjLoader();
+	loader->loadObjFile("../assets/models/knight/knight.obj");
+	loader->formatVertexData();
+	loader->loadObjFile("../assets/models/box/box.obj");
+	loader->formatVertexData();
+	loader->loadObjFile("../assets/models/dragon/dragon.obj");
+	loader->formatVertexData();
+
 	// create dungeon
-	dungeon = new Dungeon(5, 5, 25, camera);
+	dungeon = new Dungeon(5, 5, 25, camera, loader);
 
 	// Create players
 	numPlayers = 4;
@@ -161,7 +170,7 @@ void init(unsigned int width, unsigned int height)
 	
 	/* make a single player unit
 	std::string tex = "../assets/models/knight/blue.png";
-	test = new Player(camera, dungeon, obj, tex);
+	test = new Player(camera, dungeon, obj, tex, loader);
 	test->setRotation(180.0);
 	test->setPosition(dungeon->getStartingPos());
 	 */

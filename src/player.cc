@@ -6,8 +6,12 @@
 
 using namespace std;
 
-Player::Player(Camera *camera, Dungeon *dungeon, string obj, string tex):
-	Actor(camera, dungeon, obj, tex)
+Player::Player(Camera *camera, 
+			Dungeon *dungeon, 
+			string obj, 
+			string tex,
+			ObjLoader *objLoader):
+	Actor(camera, dungeon, obj, tex, objLoader)
 {
 	activePlayer=false;
 	distanceMoved = 0.0;
