@@ -3,6 +3,7 @@
 #include "actor.h"
 #include "camera.h"
 #include "objLoader.h"
+#include "GLM/gtx/compatibility.hpp"
 
 using namespace std;
 
@@ -190,6 +191,11 @@ void Actor::setRotation(float degrees)
 void Actor::move(glm::vec3 const &delta)
 {
 	this->position += delta;
+
+	// Calculate the direction the player should face
+	float theta = glm::degrees(glm::atan2(-delta.x, delta.z));
+	setRotation(theta);
+
 	createModelMatrix();
 }
 

@@ -57,9 +57,6 @@ void Player::update(float sec, sf::Input const &input)
 	// Calculate the direction the player should face
 	glm::vec3 direction(glm::normalize(position - prevPos));
 
-	float theta = glm::degrees(glm::atan2(direction.y, direction.x)) - 90;
-	cout << "Delta: " << direction.x << "," << direction.y << ","<< direction.z
-	<< endl;
-	cout << "Rotation: " << theta << endl;
+	float theta = glm::degrees(glm::atan2(-direction.x, direction.z));
 	setRotation(theta);
 }
