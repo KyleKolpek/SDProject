@@ -45,4 +45,5 @@ void Player::update(float sec, sf::Input const &input)
 	move(delta);
 	camera->moveEye(delta);
 	camera->moveAt(delta);
+#endif
 }
