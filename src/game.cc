@@ -111,3 +111,8 @@ void Game::draw()
 		players.at(p)->draw();
 	}
 }
+
+float Game::getActivePlayerStamina()
+{
+	return players[currentPlayer]->getPercentMoved();
+}
