@@ -8,12 +8,16 @@
 #include "wall.h"
 #include "camera.h"
 #include "GLM/glm.hpp"
+#include "actor.h"
+#include "dungeon.h"
 
 #define ROOM_WIDTH 30
 #define ROOM_LENGTH 30
 #define ROOM_HEIGHT 4
 #define DOOR_WIDTH 2
 
+class Dungeon;
+class Actor;
 /**************************************************************************//**
  * A room in the dungeon.
  * Represents a room that may be traversed by the player. Room inherits from
@@ -32,7 +36,7 @@ public:
 	 * \param[in] *camera
 	 *     Pointer to the game camera.
 	 ***************************************************************************/
-	Room(int row, int col, Camera *camera);
+	Room(int row, int col, Camera *camera, Dungeon *dungeon);
 
 	/***********************************************************************//**
 	 * Draws room walls and other internal components.
@@ -114,6 +118,10 @@ private:
 	GLuint vertexCount;
 	glm::mat4 modelMatrix;
 	static GLuint texture;
+	std::vector<Actor*> objects;
+	std::vector<glm::vec3> lights;
+	bool objPresent[ROOM_WIDTH][ROOM_LENGTH];
+	Dungeon *dungeon;
 };
 
 #endif

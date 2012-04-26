@@ -56,8 +56,6 @@ void ObjLoader::loadObjFile(string filename)
 			}
 			else if(type[0] == 'f')
 			{
-				if(faceV.empty())
-					cout << "FINALLY\n";
 				vector<int> Vs, Ns, Ts;
 				while(bufferReader.good())
 				{
@@ -142,7 +140,6 @@ void ObjLoader::formatVertexData()
 			iCount += 8;
 		}
 	}
-	cout << "Complete\n";
 }
 
 float* ObjLoader::getVertexData()

@@ -10,6 +10,8 @@
 #include "room.h"
 #include "camera.h"
 
+class Room;
+
 /***************************************************************************//**
  * The setting of the game.
  * Generates a random dungeon by placing a number of rooms in a 2D grid.

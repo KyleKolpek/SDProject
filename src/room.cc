@@ -4,19 +4,30 @@
 
 #include "room.h"
 #include "SOIL/SOIL.h"
+#include <time.h>
+#include <cstdlib>
 
 using namespace std;
 
 GLuint Room::texture(NULL);
 
-Room::Room(int row, int col, Camera *camera):
+Room::Room(int row, int col, Camera *camera, Dungeon *dungeon):
 	row(row),
 	col(col),
 	camera(camera),
 	vertexBuffer(NULL),
 	vertexCount(4),
-	modelMatrix(1.0)
+	modelMatrix(1.0),
+	dungeon(dungeon)
 {
+
+	for(int i = 0; i < ROOM_WIDTH; ++i)
+	{
+		for(int j = 0; j < ROOM_LENGTH; ++j)
+		{
+			objPresent[i][j] = false;
+		}
+	}
 	y = row * ROOM_LENGTH;
 	x = col * ROOM_WIDTH;
 
@@ -47,6 +58,29 @@ Room::Room(int row, int col, Camera *camera):
 	glBufferData(GL_ARRAY_BUFFER, vertexCount * 8 * sizeof(float), tmpVertexData,
 		GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	// Create some objects.
+	for(int i = 0; i < 1; ++i)
+	{
+		string objName = "../assets/models/box/box.obj";
+		string texName = "../assets/models/box/box.jpg";
+		Actor *newObj = new Actor(camera, dungeon, objName, texName);
+		int xPlace = rand() % ROOM_WIDTH;
+		int yPlace = rand() % ROOM_LENGTH;
+		while(objPresent[xPlace][yPlace])
+		{
+			xPlace = rand() % ROOM_WIDTH;
+			yPlace = rand() % ROOM_LENGTH;
+		}	
+		float scale = (float)(rand() % 10 + 10)/10;
+		float rot = (float) (rand() % 90);
+		glm::vec3 pos(xPlace + this->x, 0, yPlace + this->y);
+		objPresent[xPlace][yPlace] = true;
+		newObj->setPosition(pos);
+		newObj->setScale(scale);
+		newObj->setRotation(rot);
+		objects.push_back(newObj);
+	}
 }
 
 void Room::placeWalls(int northDoor, int westDoor, int southDoor, int eastDoor)
@@ -279,6 +313,12 @@ void Room::draw()
 	for(vector<Wall>::iterator it = walls.begin(); it < walls.end(); it++)
 	{
 		(*it).draw();
+	}
+
+	for(size_t i = 0; i < objects.size(); ++i)
+	{
+		objects[i]->setShaderManager(shaderManager);
+		objects[i]->draw();
 	}
 }
 

@@ -23,7 +23,7 @@ Room *room;
 
 int main()
 {
-	
+	srand(time(NULL));	
 	sf::WindowSettings Settings;
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;

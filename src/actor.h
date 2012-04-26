@@ -10,6 +10,8 @@
 #include <string>
 
 class Camera;
+class Dungeon;
+class Room;
 
 class Actor: public Drawable, public Updatable
 {
