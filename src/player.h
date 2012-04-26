@@ -9,7 +9,7 @@ class Camera;
 class Player: public Actor
 {
 public:
-	Player(Camera *camera);
+	Player(Camera *camera, Dungeon *dungeon);
 	~Player();
 	virtual void update(float sec, sf::Input const &input);
 

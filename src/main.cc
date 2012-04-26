@@ -28,12 +28,12 @@ int main()
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
 	
-	sf::VideoMode current = sf::VideoMode::GetDesktopMode();	
+	sf::VideoMode current = sf::VideoMode(800,600,32);//sf::VideoMode::GetDesktopMode();	
 	// Show splash screen
 	sf::RenderWindow App(current, 
 						"Delfino's Dungeon Extravaganza", 
-						sf::Style::Fullscreen,
-						//sf::Style::Close | sf::Style::Resize, 
+						//sf::Style::Fullscreen,
+						sf::Style::Close | sf::Style::Resize, 
 						Settings);
 
 	AudioManager ad;
@@ -132,7 +132,7 @@ void init(unsigned int width, unsigned int height)
 						glm::vec3(0.0, 1.0, 0.0));
 	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
 
-	test = new Player(camera);
+	test = new Player(camera, dungeon);
 	test->setRotation(180.0);
 	//wall1 = new Wall(-10, -10, 10, -10, 4, &camera);
 	//wall2 = new Wall(-10, 10, -10, -10, 4, &camera);

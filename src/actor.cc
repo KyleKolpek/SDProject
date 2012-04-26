@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Actor::Actor(Camera *camera):
+Actor::Actor(Camera *camera, Dungeon *dungeon):
 	position(0.0),
 	scaleFactor(1.0),
 	rotation(0.0),
@@ -16,6 +16,7 @@ Actor::Actor(Camera *camera):
 	vertexBuffer(NULL),
 	texture(NULL),
 	camera(camera),
+	dungeon(dungeon),
 	modelMatrix(1.0)
 {
 	
