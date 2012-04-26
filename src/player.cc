@@ -46,17 +46,18 @@ void Player::update(float sec, sf::Input const &input)
 	{
 		delta.z -= 1;
 	}
-	if(glm::length(delta) == 0)         // movement delta = 0, so no movement
+	if(glm::length(delta) != 0)         // movement delta = 0, so no movement
 	{
-		return;
+		// Normalize delta so player moves at same speed as diagonal
+		delta = glm::normalize(delta) * playerMoveDistance;
+		
+		move(delta);
 	}
 
-	// Normalize delta so player moves at same speed as diagonal
-	delta = glm::normalize(delta) * playerMoveDistance;
-	
-	move(delta);
-	camera->moveEye(delta);
-	camera->moveAt(delta);
+
+	glm::vec3 cameraDelta((position - camera->getAt()) * 0.01f);
+	camera->moveEye(cameraDelta);
+	camera->moveAt(cameraDelta);
 
 #endif
 }
