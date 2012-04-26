@@ -130,11 +130,14 @@ void init(unsigned int width, unsigned int height)
 	camera = new Camera();
 	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
 
-	test = new Player(camera, dungeon);
-	test->setRotation(180.0);
-
 	// create dungeon
-	dungeon = new Dungeon(5, 5, 15, camera);
+	dungeon = new Dungeon(5, 5, 25, camera);
+
+	// Create player
+	std::string obj = "../assets/models/knight/knight.obj";
+	std::string tex = "../assets/models/knight/blue.png";
+	test = new Player(camera, dungeon, obj, tex);
+	test->setRotation(180.0);
 	test->setPosition(dungeon->getStartingPos());
 
 	camera->setAt(dungeon->getStartingPos());

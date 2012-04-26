@@ -166,6 +166,15 @@ void Wall::translate(float x, float y)
 							0.0, 0.0, 1.0, 0.0,
 							  x, 0.0,   y, 1.0);
 }
+glm::vec2 Wall::getStartPoint()
+{
+	return glm::vec2(x1, y1);
+}
+
+glm::vec2 Wall::getEndPoint()
+{
+	return glm::vec2(x2, y2);
+}
 
 void Wall::loadTexture(string const &filename)
 {
