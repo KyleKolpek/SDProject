@@ -10,6 +10,7 @@ Player::Player(Camera *camera, Dungeon *dungeon, string obj, string tex):
 	Actor(camera, dungeon, obj, tex)
 {
 	activePlayer=false;
+	distanceMoved = 0.0;
 }
 
 Player::~Player()
@@ -25,6 +26,7 @@ bool Player::isActive()
 void Player::setActive()
 {
 	activePlayer = true;
+	resetMovement();
 }
 
 void Player::setInactive()
@@ -63,12 +65,18 @@ void Player::update(float sec, sf::Input const &input)
 		{
 			delta.z -= 1;
 		}
-		if(glm::length(delta) != 0)         // movement delta = 0, so no movement
+
+		if( glm::length(delta) != 0 && canMove() )
 		{
 			// Normalize delta so player moves at same speed as diagonal
 			delta = glm::normalize(delta) * playerMoveDistance;
-			
 			move(delta);
+
+			distanceMoved += glm::length(delta);
+
+#ifdef DEBUG
+std::cout << "Moved: " << distanceMoved << " meters" << std::endl;
+#endif
 		}
 	
 		glm::vec3 cameraDelta((position - camera->getAt()) * 5.0f * sec) ;

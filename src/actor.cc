@@ -22,7 +22,9 @@ Actor::Actor(Camera *camera, Dungeon *dungeon, string obj, string tex):
 	texture(NULL),
 	camera(camera),
 	dungeon(dungeon),
-	modelMatrix(1.0)
+	modelMatrix(1.0),
+	maxMovement(12.5),
+	distanceMoved(0.0)
 {
 	
 	ObjLoader loader;
@@ -296,6 +298,21 @@ void Actor::rotate(float degrees)
 {
 	this->rotation += degrees;
 	createModelMatrix();
+}
+
+void Actor::resetMovement()
+{
+	distanceMoved=0.0;
+}
+
+void Actor::setMaxMovement( float newMaxMovement )
+{
+	maxMovement = newMaxMovement;
+}
+
+bool Actor::canMove()
+{
+	return distanceMoved < maxMovement;
 }
 
 void Actor::createModelMatrix()
