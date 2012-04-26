@@ -12,8 +12,10 @@ public:
 	Player(Camera *camera, Dungeon *dungeon, std::string obj, std::string tex);
 	~Player();
 	virtual void update(float sec, sf::Input const &input);
+	bool isActive();
+	void setActive( bool set );
 
-//protected:
-
+protected:
+	bool activePlayer;
 };
 #endif
