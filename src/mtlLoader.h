@@ -8,18 +8,6 @@
 #include<sstream>
 #include"GLM/glm.hpp"
 
-/*
-struct Mtl
-{
-	std::string texture = "";
-	float alpha = 1.0f;
-	float shininess = 0.0f;
-	float illum;
-	glm::vec3 specular(1.0f, 1.0f, 1.0f);
-	glm::vec3 ambient(0.2f, 0.2f, 0.2f);
-	glm::vec3 diffuse(0.8f, 0.8f, 0.8f);
-}
-*/
 
 /***************************************************************************//**
  * A loader for loading mtl files for materials for obj files.
