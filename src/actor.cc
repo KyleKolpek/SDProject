@@ -1,10 +1,12 @@
 #include <iostream>
+#include <cstdio>
 #include <cmath>
 #include "SOIL/SOIL.h"
 #include "actor.h"
 #include "camera.h"
 #include "objLoader.h"
 #include "GLM/glm.hpp"
+#include "GLM/gtx/compatibility.hpp"
 
 using namespace std;
 
@@ -12,7 +14,7 @@ Actor::Actor(Camera *camera, Dungeon *dungeon):
 	position(0.0),
 	scaleFactor(1.0),
 	rotation(0.0),
-	radius(1.0),
+	radius(0.75),
 	vertexCount(0),
 	vertexData(NULL),
 	vertexBuffer(NULL),
@@ -171,10 +173,13 @@ bool Actor::checkWallCollision(const glm::vec3 &next)
 	int col = position.x / ROOM_WIDTH;
 	currRoom = dungeon->getRoom(row, col);
 
+	// Player position
+	glm::vec2 C(position.x, position.z);
+
 	// this shouldn't happen!
 	if(currRoom == NULL)
 	{
-		std::cout << "Not currently in a room!" << std::endl;
+		printf("Not currently in a room!\n");
 		return false;
 	}
 
@@ -190,6 +195,40 @@ bool Actor::checkWallCollision(const glm::vec3 &next)
 		glm::vec2 B = wall->getEndPoint() 
 			+ glm::vec2(col * ROOM_WIDTH, row * ROOM_LENGTH);
 
+		glm::vec2 CtoA = C - A;
+		glm::vec2 BtoA = B - A;
+
+		float dot = glm::dot(CtoA, BtoA);
+		float len_sq = (BtoA.x * BtoA.x) + (BtoA.y * BtoA.y);
+		float param = dot / len_sq;
+
+		glm::vec2 closestPt;
+
+		if(param < 0)
+		{
+			closestPt = A;
+		}
+		else if(param > 1)
+		{
+			closestPt = B;
+		}
+		else
+		{
+			closestPt.x = (A.x + param * BtoA.x);
+			closestPt.y = (A.y + param * BtoA.y);
+		}
+
+		float distance = glm::distance(C, closestPt);
+		if(distance < radius)
+		{
+			printf("Collision in [%d][%d]: %f\n", row, col, distance);
+			printf("   A: <%f, %f>  B: <%f, %f>\n", A.x, A.y, B.x, B.y);
+			printf("   C: <%f, %f>  R: %f\n", C.x, C.y, radius);
+			return true;
+		}
+		
+
+		/*
 		// Player position
 		glm::vec2 C(position.x, position.z);
 
@@ -202,11 +241,12 @@ bool Actor::checkWallCollision(const glm::vec3 &next)
 
 		if(distance < this->radius)
 		{
-			std::cout << "Collision in [" << row << "][" << col << "]" <<  std::endl;
-			std::cout << "A: " << A.x << " " << A.y << " B: " 
-				<< B.x << " " << B.y << std::endl;
+			printf("Collision in [%d][%d]: %f\n", row, col, distance);
+			printf("   A: <%f, %f>  B: <%f, %f>\n", A.x, A.y, B.x, B.y);
+			printf("   C: <%f, %f>  R: %f\n", C.x, C.y, radius);
 			return true;
 		}
+		*/
 	}
 
 	// no collision
@@ -250,6 +290,11 @@ void Actor::move(glm::vec3 const &delta)
 	if(!checkWallCollision(newPos))
 	{
 		this->position = newPos;
+
+		// Calculate the direction the player should face
+		float theta = glm::degrees(glm::atan2(-delta.x, delta.z));
+		setRotation(theta);
+
 		createModelMatrix();
 	}
 }

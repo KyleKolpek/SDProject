@@ -1,7 +1,8 @@
 #include "splashScreen.h"
 #include <iostream>
 
-void SplashScreen::Show(sf::RenderWindow &window)
+void SplashScreen::Show(sf::RenderWindow &window,
+						void (*init)(unsigned int, unsigned int))
 {
 	sf::Image image;
 
@@ -19,6 +20,7 @@ void SplashScreen::Show(sf::RenderWindow &window)
 	sf::Event event;
 	window.Draw(sprite);
 	window.Display();
+	(*init)(window.GetWidth(), window.GetHeight());
 	while(window.IsOpened() && alpha != 0)
 	{
 		while(window.GetEvent(event))
