@@ -2,6 +2,9 @@
 #include "camera.h"
 #include <SFML/System.hpp>
 #include <iostream>
+#include "GLM/gtx/compatibility.hpp"
+
+using namespace std;
 
 Player::Player(Camera *camera, Dungeon *dungeon):
 	Actor(camera, dungeon)
@@ -41,9 +44,22 @@ void Player::update(float sec, sf::Input const &input)
 	{
 		return;
 	}
+
+	// Store the previous position for direction
+	glm::vec3 prevPos = position;
+
 	delta = glm::normalize(delta) * playerMoveDistance;
 	move(delta);
 	camera->moveEye(delta);
 	camera->moveAt(delta);
 #endif
+
+	// Calculate the direction the player should face
+	glm::vec3 direction(glm::normalize(position - prevPos));
+
+	float theta = glm::degrees(glm::atan2(direction.y, direction.x)) - 90;
+	cout << "Delta: " << direction.x << "," << direction.y << ","<< direction.z
+	<< endl;
+	cout << "Rotation: " << theta << endl;
+	setRotation(theta);
 }
