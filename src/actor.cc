@@ -21,12 +21,10 @@ Actor::Actor(Camera *camera,
 	rotation(0.0),
 	radius(0.5),
 	vertexCount(0),
-	vertexData(NULL),
 	vertexBuffer(NULL),
 	texture(NULL),
 	camera(camera),
 	dungeon(dungeon),
-	modelMatrix(1.0),
 	maxMovement(12.5),
 	distanceMoved(0.0),
 	objLoader(objLoader),
@@ -36,9 +34,9 @@ Actor::Actor(Camera *camera,
 	//ObjLoader loader;
 	//loader.loadObjFile(obj);
 	//loader.formatVertexData();
-	vertexData  = objLoader->getVertexData(obj);
-	dataType    = objLoader->getVertexType(obj);
-	vertexCount = objLoader->getVertexCount(obj);
+	vertexBuffer = objLoader->getVertexBuffer(obj);
+	dataType     = objLoader->getVertexType(obj);
+	vertexCount  = objLoader->getVertexCount(obj);
 	texture = SOIL_load_OGL_texture(
 		 tex.c_str(),
 		 SOIL_LOAD_AUTO,
@@ -46,28 +44,17 @@ Actor::Actor(Camera *camera,
 		 SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y |
 		 SOIL_FLAG_NTSC_SAFE_RGB |
 		 SOIL_FLAG_COMPRESS_TO_DXT);
-
-    // Prepare vertex buffer
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-
-    // Add vertedData to a buffer
-    glBufferData(GL_ARRAY_BUFFER, vertexCount * 8 * sizeof(float), vertexData,
-        GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-	
-	// How fast the actor moves
 }
 
 Actor::~Actor()
 {
-	delete[] vertexData;
 }
 
 void Actor::draw()
 {
 	// Store a ShaderManager over a program
-	GLuint program = shaderManager->getProgram(2, "phongTex.vert", "phongTex.frag");
+	GLuint program = shaderManager->getProgram(2, "phongTex.vert",
+		"phongTex.frag");
 	glUseProgram(program);
 
 	GLint mvLoc = glGetUniformLocation(program, "modelView");

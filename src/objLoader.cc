@@ -1,6 +1,12 @@
 #include"objLoader.h"
 
 using namespace std;
+
+ObjLoader::ObjLoader()
+{
+	clear();
+}
+
 void ObjLoader::clear()
 {
 	vertices.clear();
@@ -12,17 +18,11 @@ void ObjLoader::clear()
 	faceT.clear();
 
 	vertexData = NULL;
-	vertexType = NULL;
-	vertexCount = NULL;
+	vertexType = 0;
+	vertexCount = 0;
 
 	name.clear();
 }
-
-ObjLoader::ObjLoader()
-{
-	clear();
-}
-
 
 void ObjLoader::loadObjFile(string filename)
 {
@@ -107,29 +107,28 @@ void ObjLoader::loadObjFile(string filename)
 			}
 		}
 	}
+	formatVertexData();
 }
 
 void ObjLoader::formatVertexData()
 {
-	vertexType = new GLuint;	
 	if(faceV[0].size() == 3)
 	{
 		//GL_TRIANGLES
-		(*vertexType) = GL_TRIANGLES;
+		vertexType = GL_TRIANGLES;
 	}
 	else
 	{
 		//GL_QUADS
-		(*vertexType) = GL_QUADS;
+		vertexType = GL_QUADS;
 	}
 
 	vertexTypeMap[name] = vertexType;
 
-	vertexCount = new GLsizei;
-	(*vertexCount) = faceV.size() * faceV[1].size();
+	vertexCount = faceV.size() * faceV[1].size();
 	
 	vertexCountMap[name] = vertexCount;
-	vertexData = new float[(*vertexCount)*8];
+	vertexData = new float[vertexCount*8];
 	size_t iCount = 0;
 
 
@@ -154,20 +153,54 @@ void ObjLoader::formatVertexData()
 			iCount += 8;
 		}
 	}
-	vertexDataMap[name] = vertexData;
+
+	GLuint vertexBuffer;
+
+    // Prepare vertex buffer
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+
+    // Add vertedData to a buffer
+    glBufferData(GL_ARRAY_BUFFER, vertexCount * 8 * sizeof(float), vertexData,
+        GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	vertexBufferMap[name] = vertexBuffer;
+	delete[] vertexData;
 }
 
-float* ObjLoader::getVertexData(string name)
+GLuint ObjLoader::getVertexBuffer(string filename)
 {
-	return vertexDataMap[name];
+	if(vertexBufferMap.count(filename) != 0)
+	{
+		return vertexBufferMap[filename];
+	}
+	else
+	{
+		return 0;
+	}
 }
 
-GLuint ObjLoader::getVertexType(string name)
+GLuint ObjLoader::getVertexType(string filename)
 {
-	return (*vertexTypeMap[name]);
+	if(vertexTypeMap.count(filename) != 0)
+	{
+		return vertexTypeMap[filename];
+	}
+	else
+	{
+		return 0;
+	}
 }
 
-GLsizei ObjLoader::getVertexCount(string name)
+GLsizei ObjLoader::getVertexCount(string filename)
 {
-	return (*vertexCountMap[name]);
+	if(vertexCountMap.count(filename) != 0)
+	{
+		return vertexCountMap[filename];
+	}
+	else
+	{
+		return 0;
+	}
 }
