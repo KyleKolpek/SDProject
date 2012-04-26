@@ -180,7 +180,7 @@ void init(unsigned int width, unsigned int height)
 	dungeon = new Dungeon(5, 5, 25, camera, loader);
 
 	// Create players
-	numPlayers = 4;
+	numPlayers = 2;
 	
 	std::string obj = "../assets/models/knight/knight.obj";
 	
