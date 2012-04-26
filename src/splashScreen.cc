@@ -6,13 +6,13 @@ void SplashScreen::Show(sf::RenderWindow &window,
 {
 	sf::Image image, image2;
 
-	if(!image.LoadFromFile("../assets/splash/splash1.png"))
+	if(!image.LoadFromFile("../assets/splash/screen1.png"))
 	{
 		std::cout << "Failed to Load Splash Screen Image\n";
 		return;
 	}
 
-	if(!image2.LoadFromFile("../assets/splash/splash2.png"))
+	if(!image2.LoadFromFile("../assets/splash/screen2.png"))
 	{
 		std::cout << "Failed to load a splash screen image\n";
 		return;

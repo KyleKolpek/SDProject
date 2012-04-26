@@ -53,19 +53,24 @@ public:
 	void formatVertexData();
 
 	/***********************************************************************//**
- 	 * Returns the vertexData that contains vertex info as follows
-	 * (PositionX, PositionY, PositionZ, NormalX, NormalY, NormalZ, TexX, TexY).
+ 	 * Returns the vertexData that contains vertex info as a vertex buffer.
+	 * \params[in] name
+	 *     Name of the file that provided the data.
  	 **************************************************************************/
 	GLuint getVertexBuffer(std::string name);
 
 	/***********************************************************************//**
  	 * Returns the type of faces used in the model. Either GL_QUADS or
 	 * GL_TRIANGLES.
+	 * \params[in] name
+	 * 	   Name of the file the data was collected from.
  	 **************************************************************************/
 	GLuint getVertexType(std::string name);
 
 	/***********************************************************************//**
  	 * Returns how many vertices are in the vertexData array.
+	 * \params[in] name
+	 *     Name of the file the data was gathered from.
  	 **************************************************************************/
 	GLsizei getVertexCount(std::string name);
 
@@ -76,11 +81,15 @@ public:
 
 	/***********************************************************************//**
  	 * Loads a texture from a file.
+	 * \params[in] filename
+	 *     Name of texture fiel you want to load in.
  	 **************************************************************************/	
 	void loadTexture(std::string filename);
 
 	/***********************************************************************//**
  	 * Returns texture OpenGL context.
+	 * \params[in] filename
+	 *     The name of the file you want the texture data from.
  	 **************************************************************************/	
 	GLuint getTexture(std::string filename);
 private:
