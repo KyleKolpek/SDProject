@@ -6,8 +6,8 @@
 
 using namespace std;
 
-Player::Player(Camera *camera, Dungeon *dungeon):
-	Actor(camera, dungeon)
+Player::Player(Camera *camera, Dungeon *dungeon, string obj, string tex):
+	Actor(camera, dungeon, obj, tex)
 {
 	
 }
