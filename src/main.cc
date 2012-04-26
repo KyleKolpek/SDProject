@@ -109,7 +109,23 @@ int main()
 		/*
 			Drawing goes below.
 		*/
-		
+		glEnableClientState(GL_COLOR_ARRAY);
+		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+		glEnableClientState(GL_VERTEX_ARRAY);
+
+		sf::Image health(200, 10, sf::Color(255, 0, 0));
+		sf::Sprite sprite(health);
+		App.Draw(sprite);
+
+		sf::Image distance(200, 10, sf::Color(0, 0, 255));
+		sf::Sprite sprite2(distance);
+		sf::Vector2f vec(0, 10);
+		sprite2.SetPosition(vec);
+		App.Draw(sprite2);
+
+		glDisableClientState(GL_COLOR_ARRAY);
+		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+		glDisableClientState(GL_VERTEX_ARRAY);
 		//Call to actually display the things.
 		//test->draw();
 		for( int p=0; p<numPlayers; p++ )
@@ -182,7 +198,7 @@ void init(unsigned int width, unsigned int height)
 								"../assets/models/knight/green.png"};
 	for( int p=0; p<numPlayers; p++ )
 	{
-		players.push_back( new Player( camera, dungeon, obj, textures[p] ) );
+		players.push_back( new Player( camera, dungeon, obj, textures[p], loader ) );
 		players.at(p)->setRotation(180.0);
 		players.at(p)->setPosition(dungeon->getStartingPos());
 	}
