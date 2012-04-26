@@ -20,7 +20,9 @@ int main()
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
 	
-	sf::VideoMode current = sf::VideoMode(800,600,32);//sf::VideoMode::GetDesktopMode();	
+	sf::VideoMode current = sf::VideoMode(800,600,32);//
+	current = sf::VideoMode::GetDesktopMode();	
+
 	// Show splash screen
 	sf::RenderWindow App(current, 
 						"Dungeon Extravaganza", 
@@ -72,7 +74,6 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// This should be migrated to a HUD class at some point
-		/*
 		glEnableClientState(GL_COLOR_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnableClientState(GL_VERTEX_ARRAY);
@@ -87,7 +88,7 @@ int main()
 		sprite3.SetPosition(vec);
 		App.Draw(sprite3);
 
-		sf::Image distance((1-players[currentPlayer]->getPercentMoved())*200,
+		sf::Image distance((1-game->getActivePlayerStamina())*200,
 			20, sf::Color(0, 0, 255));
 		sf::Sprite sprite2(distance);
 		sprite2.SetPosition(vec);
@@ -97,7 +98,6 @@ int main()
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
 		// end HUD
-		*/
 
 		game->update(App.GetFrameTime(), input);
 		game->draw();

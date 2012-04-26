@@ -23,6 +23,8 @@ public:
 
 	void draw();
 
+	float getActivePlayerStamina();
+
 protected:
 	bool tabPressNew;
 	int numPlayers;

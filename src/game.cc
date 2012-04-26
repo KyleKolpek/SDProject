@@ -22,12 +22,19 @@ Game::Game():
 	loader->loadObjFile("../assets/models/knight/knight.obj");
 	loader->loadObjFile("../assets/models/box/box.obj");
 	loader->loadObjFile("../assets/models/dragon/dragon.obj");
+	
+	loader->loadTexture("../assets/models/knight/blue.png");
+	loader->loadTexture("../assets/models/knight/red.png");
+	loader->loadTexture("../assets/models/knight/yellow.png");
+	loader->loadTexture("../assets/models/knight/green.png");
+	loader->loadTexture("../assets/models/box/box.jpg");
+	loader->loadTexture("../assets/models/dragon/dragon.tga");
 
 	// Create Camera
 	camera = new Camera();
 
 	// Create Dungeon
-	dungeon = new Dungeon(5, 5, 25, camera, loader);
+	dungeon = new Dungeon(5, 5, 15, camera, loader);
 
 	// Create players
 	numPlayers = 2;
@@ -132,4 +139,9 @@ void Game::draw()
 	{
 		players.at(p)->draw();
 	}
+}
+
+float Game::getActivePlayerStamina()
+{
+	return players[currentPlayer]->getPercentMoved();
 }
