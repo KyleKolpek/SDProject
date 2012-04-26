@@ -152,7 +152,7 @@ void init(unsigned int width, unsigned int height)
 	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
 
 	// create dungeon
-	dungeon = new Dungeon(5, 5, 25, camera);
+	dungeon = new Dungeon(5, 5, 15, camera);
 
 	// Create players
 	numPlayers = 4;

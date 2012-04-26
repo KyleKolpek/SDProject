@@ -42,14 +42,18 @@ public:
 	void setShaderManager(ShaderManager *shaderManager);
 
 	/***********************************************************************//**
-	 * Creates walls and doors.
+	 * Creates door.
 	 * Walls must be created AFTER roomType and orient have been assigned. Doors
 	 * are then created by actually generating two walls separated by a gap.
 	 * \param[in] wall
-	 *     For each wall, state whether to place a door. Even if 0, it may still
-	 *     place one if connectivity requires it.
+	 *     For each wall, state whether to place a door.
 	 ***************************************************************************/
-	void placeWalls(int northDoor, int westDoor, int southDoor, int eastDoor);
+	void placeDoor(int northDoor, int westDoor, int southDoor, int eastDoor);
+
+	/***********************************************************************//**
+	 * Once doors have been placed, create the physical walls.
+	 **************************************************************************/
+	void placeWalls();
 
 	/***********************************************************************//**
 	 * Coordinates in dungeon grid of rooms.
@@ -59,36 +63,6 @@ public:
 	 * top-down perspective.
 	 **************************************************************************/
 	int row, col;
-
-	/***********************************************************************//**
-	 * Enum representing type of room.
-	 * Rooms are given a type based on the number of doors they contain. In the
-	 * following descriptions, the described placement of doors is assuming NO
-	 * rotation. We may also describe rotation in 90-degree increments which 
-	 * changes which walls have doors.
-	 **************************************************************************/
-	enum RoomType
-	{
-		ONE,	/** A single door on the north wall. */ 
-		TWOA,	/** Two adjacent doors placed on the north and west walls. */
-		TWOB,	/** Two opposite doors placed on the north and south walls. */
-		THREE,	/** Three doors placed on the north, west, and south walls. */
-		FOUR	/** Each wall has a door. */
-	} roomType;
-
-	/***********************************************************************//**
-	 * Enum representing orientation of rooms.
-	 * Each member represents how many 90-degree counter-clockwise increments to
-	 * rotate room while placing doors. For instance, roomType ONE with ROT_ONE
-	 * would place the door on the west wall instead of the north.
-	 **************************************************************************/
-	enum Orientation
-	{
-		ROT_ZERO,
-		ROT_ONE,
-		ROT_TWO,
-		ROT_THREE
-	} orient;
 
 	static void loadTexture(std::string const &filename);
 	glm::mat4 getModelMatrix();
@@ -114,6 +88,8 @@ private:
 	GLuint vertexCount;
 	glm::mat4 modelMatrix;
 	static GLuint texture;
+
+	std::vector<int> hasDoor;
 };
 
 #endif
