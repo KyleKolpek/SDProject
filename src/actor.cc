@@ -14,7 +14,7 @@ Actor::Actor(Camera *camera, Dungeon *dungeon):
 	position(0.0),
 	scaleFactor(1.0),
 	rotation(0.0),
-	radius(0.75),
+	radius(0.5),
 	vertexCount(0),
 	vertexData(NULL),
 	vertexBuffer(NULL),
@@ -164,17 +164,17 @@ void Actor::update(float sec, sf::Input const &input)
 }
 
 /*
- * Algorithm for intersection taken from http://stackoverflow.com/a/1090772
+ * Algorithm for intersection taken from http://www.allegro.cc/forums/thread/595918
  */
-bool Actor::checkWallCollision(const glm::vec3 &next)
+bool Actor::isCollidingWall(const glm::vec3 &next)
 {
 	// First, compute which room Actor is in.
-	int row = position.z / ROOM_LENGTH;
-	int col = position.x / ROOM_WIDTH;
+	int row = next.z / ROOM_LENGTH;
+	int col = next.x / ROOM_WIDTH;
 	currRoom = dungeon->getRoom(row, col);
 
-	// Player position
-	glm::vec2 C(position.x, position.z);
+	// Player next
+	glm::vec2 C(next.x, next.z);
 
 	// this shouldn't happen!
 	if(currRoom == NULL)
@@ -221,32 +221,9 @@ bool Actor::checkWallCollision(const glm::vec3 &next)
 		float distance = glm::distance(C, closestPt);
 		if(distance < radius)
 		{
-			printf("Collision in [%d][%d]: %f\n", row, col, distance);
-			printf("   A: <%f, %f>  B: <%f, %f>\n", A.x, A.y, B.x, B.y);
-			printf("   C: <%f, %f>  R: %f\n", C.x, C.y, radius);
+			// Collision!
 			return true;
 		}
-		
-
-		/*
-		// Player position
-		glm::vec2 C(position.x, position.z);
-
-		float areaTriangle = abs((B.x-A.x)*(C.y-A.y) - (C.x-A.x)*(B.y-A.y));
-		float lengthAB = sqrt((B.x-A.x)*(B.x-A.x) + (B.y-A.y)*(B.y-A.y));
-		float distance = areaTriangle / lengthAB;
-
-		std::cout << "A: " << A.x << " " << A.y << " B: " 
-			<< B.x << " " << B.y << std::endl;
-
-		if(distance < this->radius)
-		{
-			printf("Collision in [%d][%d]: %f\n", row, col, distance);
-			printf("   A: <%f, %f>  B: <%f, %f>\n", A.x, A.y, B.x, B.y);
-			printf("   C: <%f, %f>  R: %f\n", C.x, C.y, radius);
-			return true;
-		}
-		*/
 	}
 
 	// no collision
@@ -285,17 +262,19 @@ void Actor::move(glm::vec3 const &delta)
 {
 	glm::vec3 newPos = this->position + delta;
 	
+	bool coll = true;
 	// Move if there won't be a collision.
 	// TODO: Add sliding
-	if(!checkWallCollision(newPos))
+	if(!isCollidingWall(newPos))
 	{
-		this->position = newPos;
+		position = newPos;
 
 		// Calculate the direction the player should face
 		float theta = glm::degrees(glm::atan2(-delta.x, delta.z));
 		setRotation(theta);
-
 		createModelMatrix();
+
+		coll = false;;
 	}
 }
 

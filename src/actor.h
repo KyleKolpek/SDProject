@@ -21,13 +21,13 @@ public:
 	virtual void update(float sec, sf::Input const &input);
 
 	/***********************************************************************//**
-	 * Determine if Actor will collide with any walls after moving next amount.
+	 * Determine if Actor will collide with any walls after moving to 'next'.
 	 * \param[in] next
 	 *     vec3 of possibly colliding position.
 	 * \param[out] isColliding
 	 *     True if colliding with a wall.
 	 **************************************************************************/
-	virtual bool checkWallCollision(const glm::vec3 &next);
+	virtual bool isCollidingWall(const glm::vec3 &next);
 	
 	glm::vec3 getPosition();
 	float getRadius();
