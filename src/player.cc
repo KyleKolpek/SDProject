@@ -13,41 +13,50 @@ Player::Player(Camera *camera, Dungeon *dungeon):
 
 Player::~Player()
 {
-	
+	// TODO: implement destructor
 }
 
 void Player::update(float sec, sf::Input const &input)
 {
 #ifdef DEBUG
-	// Make him move
-	float playerMoveDistance = moveSpeed * sec;
-	glm::vec3 delta(0.0);
 
-	if( input.IsKeyDown( sf::Key::A ) ) //move left
+	// Use input sf::Input to move the player character
+	
+	// playerMoveDistance: calculate distance traveled by multiplying movement
+	//                     speed and the time since last frame
+	float playerMoveDistance = moveSpeed * sec;
+
+	// delta: starts at (0,0,0), changes in following if statements depending
+	//        on user input
+	glm::vec3 delta(0.0); 
+						
+	if( input.IsKeyDown( sf::Key::A ) ) // User presses a, wants to move left
 	{
-		delta.x = -1;
+		delta.x -= 1;
 	}
-	if( input.IsKeyDown( sf::Key::S ) ) //move down
+	if( input.IsKeyDown( sf::Key::S ) ) // user presses s, wants to move down
 	{
-		delta.z = 1;
+		delta.z += 1;
 	}
-	if( input.IsKeyDown( sf::Key::D ) ) //move right
+	if( input.IsKeyDown( sf::Key::D ) ) // user presses d, wants to move right
 	{
-		delta.x = 1;
+		delta.x += 1;
 	}
-	if( input.IsKeyDown( sf::Key::W ) ) //move up
+	if( input.IsKeyDown( sf::Key::W ) ) // user presses w, wants to move up
 	{
-		delta.z = -1;
+		delta.z -= 1;
 	}
-	if(glm::length(delta) == 0)
+	if(glm::length(delta) == 0)         // movement delta = 0, so no movement
 	{
 		return;
 	}
 
-
+	// Normalize delta so player moves at same speed as diagonal
 	delta = glm::normalize(delta) * playerMoveDistance;
+	
 	move(delta);
 	camera->moveEye(delta);
 	camera->moveAt(delta);
+
 #endif
 }

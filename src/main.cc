@@ -48,10 +48,10 @@ int main()
 	const sf::Input& Input = App.GetInput();
 	
 	// Show splash screen
-	screen.Show(App);
+	screen.Show(App, init);
 	
 	std::cout << current.Width << " " << current.Height << "\n";
-	init(current.Width, current.Height);
+	//init(current.Width, current.Height);
 	//screen.Show(App);
 	while(App.IsOpened())
 	{
