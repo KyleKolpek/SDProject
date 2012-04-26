@@ -272,3 +272,9 @@ Room* Dungeon::getRoom(int r, int c)
 	return dungeon[r][c];
 }
 
+void Dungeon::setLights(float const * const positions,
+						float const * const colors,
+						int const count)
+{
+	
+}
