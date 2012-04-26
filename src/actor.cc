@@ -10,7 +10,11 @@
 
 using namespace std;
 
-Actor::Actor(Camera *camera, Dungeon *dungeon, string obj, string tex):
+Actor::Actor(Camera *camera, 
+			Dungeon *dungeon, 
+			string obj, 
+			string tex,
+			ObjLoader *objLoader):
 	position(0.0),
 	moveSpeed(7.5),
 	scaleFactor(1.0),
@@ -22,15 +26,16 @@ Actor::Actor(Camera *camera, Dungeon *dungeon, string obj, string tex):
 	texture(NULL),
 	camera(camera),
 	dungeon(dungeon),
+	objLoader(objLoader),
 	modelMatrix(1.0)
 {
 	
-	ObjLoader loader;
-	loader.loadObjFile(obj);
-	loader.formatVertexData();
-	vertexData  = loader.getVertexData();
-	dataType    = loader.getVertexType();
-	vertexCount = loader.getVertexCount();
+	//ObjLoader loader;
+	//loader.loadObjFile(obj);
+	//loader.formatVertexData();
+	vertexData  = objLoader->getVertexData(obj);
+	dataType    = objLoader->getVertexType(obj);
+	vertexCount = objLoader->getVertexCount(obj);
 	texture = SOIL_load_OGL_texture(
 		 tex.c_str(),
 		 SOIL_LOAD_AUTO,

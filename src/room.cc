@@ -11,14 +11,19 @@ using namespace std;
 
 GLuint Room::texture(NULL);
 
-Room::Room(int row, int col, Camera *camera, Dungeon *dungeon):
+Room::Room(int row, 
+		int col, 
+		Camera *camera, 
+		Dungeon *dungeon,
+		ObjLoader *objLoader):
 	row(row),
 	col(col),
 	camera(camera),
 	vertexBuffer(NULL),
 	vertexCount(4),
 	modelMatrix(1.0),
-	dungeon(dungeon)
+	dungeon(dungeon),
+	objLoader(objLoader)
 {
 
 	for(int i = 0; i < ROOM_WIDTH; ++i)
@@ -64,7 +69,7 @@ Room::Room(int row, int col, Camera *camera, Dungeon *dungeon):
 	{
 		string objName = "../assets/models/box/box.obj";
 		string texName = "../assets/models/box/box.jpg";
-		Actor *newObj = new Actor(camera, dungeon, objName, texName);
+		Actor *newObj = new Actor(camera, dungeon, objName, texName, objLoader);
 		int xPlace = rand() % ROOM_WIDTH;
 		int yPlace = rand() % ROOM_LENGTH;
 		while(objPresent[xPlace][yPlace])

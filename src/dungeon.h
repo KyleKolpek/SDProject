@@ -11,7 +11,7 @@
 #include "camera.h"
 
 class Room;
-
+class ObjLoader;
 /***************************************************************************//**
  * The setting of the game.
  * Generates a random dungeon by placing a number of rooms in a 2D grid.
@@ -30,7 +30,8 @@ public:
 	 * \param[in] *camera
 	 *     A pointer to the game camera.
 	 **************************************************************************/
-	Dungeon(int rows, int cols, int rooms, Camera *camera);
+	Dungeon(int rows, int cols, int rooms, Camera *camera, 
+		ObjLoader *objLoader);
 
 	/***********************************************************************//**
 	 * Dungeon destructor.
@@ -100,6 +101,7 @@ private:
 	int startRow, startCol;	/** The row and column that the game begins in. */
 
 	Camera *camera;	/** Pointer to the game camera. */
+	ObjLoader *objLoader;
 };
 
 #endif

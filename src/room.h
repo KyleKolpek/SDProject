@@ -18,6 +18,7 @@
 
 class Dungeon;
 class Actor;
+class ObjLoader;
 /**************************************************************************//**
  * A room in the dungeon.
  * Represents a room that may be traversed by the player. Room inherits from
@@ -36,7 +37,8 @@ public:
 	 * \param[in] *camera
 	 *     Pointer to the game camera.
 	 ***************************************************************************/
-	Room(int row, int col, Camera *camera, Dungeon *dungeon);
+	Room(int row, int col, Camera *camera, Dungeon *dungeon, 
+		ObjLoader *objLoader);
 
 	/***********************************************************************//**
 	 * Draws room walls and other internal components.
@@ -122,6 +124,7 @@ private:
 	std::vector<glm::vec3> lights;
 	bool objPresent[ROOM_WIDTH][ROOM_LENGTH];
 	Dungeon *dungeon;
+	ObjLoader *objLoader;
 };
 
 #endif

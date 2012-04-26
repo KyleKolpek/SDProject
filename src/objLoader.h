@@ -2,6 +2,7 @@
 #define OBJLOADER_H
 
 #include<vector>
+#include<map>
 #include<string>
 #include<sstream>
 #include<fstream>
@@ -55,19 +56,23 @@ public:
  	 * Returns the vertexData that contains vertex info as follows
 	 * (PositionX, PositionY, PositionZ, NormalX, NormalY, NormalZ, TexX, TexY).
  	 **************************************************************************/
-	float* getVertexData();
+	float* getVertexData(std::string name);
 
 	/***********************************************************************//**
  	 * Returns the type of faces used in the model. Either GL_QUADS or
 	 * GL_TRIANGLES.
  	 **************************************************************************/
-	GLuint getVertexType();
+	GLuint getVertexType(std::string name);
 
 	/***********************************************************************//**
  	 * Returns how many vertices are in the vertexData array.
  	 **************************************************************************/
-	GLsizei getVertexCount();
-	
+	GLsizei getVertexCount(std::string name);
+
+	/***********************************************************************//**
+ 	 * Clears out the data.
+ 	 **************************************************************************/
+	void clear();
 private:
 	/***********************************************************************//**
  	 * Holds all the vertices found in the obj file.
@@ -107,12 +112,32 @@ private:
 	/***********************************************************************//**
  	 * Holds the type of faces used in the model.
  	 **************************************************************************/
-	GLuint vertexType;
+	GLuint *vertexType;
 
 	/***********************************************************************//**
  	 * Holds the number of vertices in the complete model.
  	 **************************************************************************/
-	GLsizei vertexCount;
+	GLsizei *vertexCount;
+
+	/***********************************************************************//**
+ 	 * Holds the name of the file.
+ 	 **************************************************************************/
+	std::string name;
+
+	/***********************************************************************//**
+ 	 * Holds the information for all loaded models.
+ 	 **************************************************************************/
+	std::map<std::string, float*> vertexDataMap;
+
+	/***********************************************************************//**
+ 	 * Holds all the type information for all loaded files.
+ 	 **************************************************************************/
+	std::map<std::string, GLuint*> vertexTypeMap;
+
+	/***********************************************************************//**
+ 	 * Holds all the count data for all files.
+ 	 **************************************************************************/
+	std::map<std::string, GLsizei*> vertexCountMap;
 };
 
 #endif

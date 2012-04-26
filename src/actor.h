@@ -8,6 +8,7 @@
 #include "dungeon.h"
 #include "GLM/glm.hpp"
 #include <string>
+#include "objLoader.h"
 
 class Camera;
 class Dungeon;
@@ -16,7 +17,11 @@ class Room;
 class Actor: public Drawable, public Updatable
 {
 public:
-	Actor(Camera *camera, Dungeon *dungeon, std::string obj, std::string tex);
+	Actor(Camera *camera, 
+		Dungeon *dungeon, 
+		std::string obj, 
+		std::string tex,
+		ObjLoader *objLoader);
 	virtual ~Actor();
 
 	// Inherited methods
@@ -61,7 +66,7 @@ protected:
 	GLuint texture;
 	Camera *camera;
 	glm::mat4 modelMatrix;
-
+	ObjLoader *objLoader;
 	void createModelMatrix();
 };
 

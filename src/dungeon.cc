@@ -24,13 +24,14 @@ void Dungeon::setShaderManager(ShaderManager *shaderManager)
 	}
 }
 
-Dungeon::Dungeon(int rows, int cols, int rooms, Camera *camera)
+Dungeon::Dungeon(int rows, int cols, int rooms, Camera *camera, 
+				ObjLoader *objLoader)
 {
 	numRows = rows;
 	numCols = cols;
 	numRooms = rooms;
 	this->camera = camera;
-
+	this->objLoader = objLoader;
 	// Allocate dungeon memory
 	dungeon = new Room**[numRows];
 	for(size_t i = 0; i < numRows; ++i)
@@ -65,7 +66,8 @@ void Dungeon::generateDungeon()
 	// fill in first room as a seed. Just place it in the middle.
 	startRow = numRows - 1;
 	startCol = numCols / 2;
-	dungeon[startRow][startCol] = new Room(startRow, startCol, camera, this);
+	dungeon[startRow][startCol] = new Room(startRow, startCol, camera, this, 
+											objLoader);
 	rooms.push_back(dungeon[startRow][startCol]);
 
 	
@@ -106,7 +108,7 @@ void Dungeon::generateDungeon()
 			// If we chose an empty location
 			if(dungeon[i][j] == NULL)
 			{
-				dungeon[i][j] = new Room(i, j, camera, this);
+				dungeon[i][j] = new Room(i, j, camera, this, objLoader);
 				rooms.push_back(dungeon[i][j]);
 				// move to next room
 				break;
