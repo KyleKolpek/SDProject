@@ -5,6 +5,15 @@
 
 float Camera::camSpeed(50.0);
 
+Camera::Camera():
+	eye(0.0, 0.0, -1.0),
+	at(0.0),
+	up(0.0, 1.0, 0.0),
+	viewMatrix(1.0),
+	projMatrix(1.0)
+{
+}
+
 Camera::Camera(glm::vec3 const &eye,
 			   glm::vec3 const &at,
 			   glm::vec3 const &up):

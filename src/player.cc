@@ -3,6 +3,8 @@
 #include <SFML/System.hpp>
 #include <iostream>
 
+using namespace std;
+
 Player::Player(Camera *camera, Dungeon *dungeon):
 	Actor(camera, dungeon)
 {
@@ -41,6 +43,8 @@ void Player::update(float sec, sf::Input const &input)
 	{
 		return;
 	}
+
+
 	delta = glm::normalize(delta) * playerMoveDistance;
 	move(delta);
 	camera->moveEye(delta);

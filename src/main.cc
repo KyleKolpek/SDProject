@@ -127,23 +127,19 @@ void init(unsigned int width, unsigned int height)
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	glViewport(0, 0, width, height);
-	camera = new Camera(glm::vec3(75.0, 100.0, 250.0),
-						glm::vec3(75.0, 0.0, 125.0),
-						glm::vec3(0.0, 1.0, 0.0));
+	camera = new Camera();
 	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
 
 	test = new Player(camera, dungeon);
 	test->setRotation(180.0);
-	//wall1 = new Wall(-10, -10, 10, -10, 4, &camera);
-	//wall2 = new Wall(-10, 10, -10, -10, 4, &camera);
-	//room = new Room(0, 0, &camera);
-	//room->roomType = Room::FOUR;
-	//room->orient = Room::ROT_ZERO;
-	//room->placeWalls();
 
 	// create dungeon
 	dungeon = new Dungeon(5, 5, 15, camera);
 	test->setPosition(dungeon->getStartingPos());
+
+	camera->setAt(dungeon->getStartingPos());
+	camera->setEye(dungeon->getStartingPos() + glm::vec3(0.0, 10.0, 10.0));
+	camera->setUp(glm::vec3(0.0, 1.0, 0.0));
 
 	// This could probably be done cleaner
 	Wall::loadTexture("../assets/models/wall/stoneWall.jpg");
@@ -152,9 +148,6 @@ void init(unsigned int width, unsigned int height)
 	// Setup shaders
 	ShaderManager *shaderManager = new ShaderManager("../assets/shaders/");
 	test->setShaderManager(shaderManager);
-	//wall1->setShaderManager(shaderManager);
-	//wall2->setShaderManager(shaderManager);
-	//room->setShaderManager(shaderManager);
 	dungeon->setShaderManager(shaderManager);
 }
 

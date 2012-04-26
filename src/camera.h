@@ -7,6 +7,7 @@
 class Camera: public Updatable
 {
 public:
+	Camera();
 	Camera(glm::vec3 const &eye,
 		   glm::vec3 const &at,
 		   glm::vec3 const &up);
@@ -27,6 +28,7 @@ public:
 
 	void perspective(float fov, float aspect, float zNear, float zFar);
 	void update(float sec, sf::Input const &input);
+
 private:
 	glm::vec3 eye;
 	glm::vec3 at;
