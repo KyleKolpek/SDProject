@@ -53,7 +53,8 @@ public:
 	void resetMovement();
 	void setMaxMovement( float newMaxMovement );
 	bool canMove();
-
+	
+	float getPercentMoved();
 protected:
 	Dungeon *dungeon;	/** Pointer to the game dungeon for collision 
 							detection, etc. */

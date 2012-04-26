@@ -113,13 +113,19 @@ int main()
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnableClientState(GL_VERTEX_ARRAY);
 
-		sf::Image health(200, 10, sf::Color(255, 0, 0));
+		sf::Image health(200, 20, sf::Color(255, 0, 0));
 		sf::Sprite sprite(health);
 		App.Draw(sprite);
 
-		sf::Image distance(200, 10, sf::Color(0, 0, 255));
+		sf::Image total(200, 20, sf::Color(0, 255, 255));
+		sf::Sprite sprite3(total);
+		sf::Vector2f vec(0, 20);
+		sprite3.SetPosition(vec);
+		App.Draw(sprite3);
+
+		sf::Image distance((1-players[currentPlayer]->getPercentMoved())*200, 
+							20, sf::Color(0, 0, 255));
 		sf::Sprite sprite2(distance);
-		sf::Vector2f vec(0, 10);
 		sprite2.SetPosition(vec);
 		App.Draw(sprite2);
 

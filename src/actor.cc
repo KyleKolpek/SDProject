@@ -63,6 +63,15 @@ Actor::~Actor()
 	delete[] vertexData;
 }
 
+float Actor::getPercentMoved()
+{
+	float ret = distanceMoved/maxMovement;
+	if(ret > 1.0f)
+	{
+		ret = 1.0f;
+	}
+	return ret;
+}
 void Actor::draw()
 {
 	// Store a ShaderManager over a program
