@@ -29,8 +29,6 @@ void Player::setActive( bool set )
 
 void Player::update(float sec, sf::Input const &input)
 {
-#ifdef DEBUG
-
 	// Use input sf::Input to move the player character
 	
 	// playerMoveDistance: calculate distance traveled by multiplying movement
@@ -68,6 +66,5 @@ void Player::update(float sec, sf::Input const &input)
 	glm::vec3 cameraDelta((position - camera->getAt()) * 5.0f * sec) ;
 	camera->moveEye(cameraDelta);
 	camera->moveAt(cameraDelta);
-#endif
 }
 
