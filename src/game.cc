@@ -21,6 +21,13 @@ Game::Game():
 	loader->loadObjFile("../assets/models/knight/knight.obj");
 	loader->loadObjFile("../assets/models/box/box.obj");
 	loader->loadObjFile("../assets/models/dragon/dragon.obj");
+	
+	loader->loadTexture("../assets/models/knight/blue.png");
+	loader->loadTexture("../assets/models/knight/red.png");
+	loader->loadTexture("../assets/models/knight/yellow.png");
+	loader->loadTexture("../assets/models/knight/green.png");
+	loader->loadTexture("../assets/models/box/box.jpg");
+	loader->loadTexture("../assets/models/dragon/dragon.tga");
 
 	// Create Camera
 	camera = new Camera();
