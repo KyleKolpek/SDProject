@@ -185,9 +185,6 @@ glm::vec3 Actor::adjustForCollidingWithWalls(const glm::vec3 &delta)
 	// this shouldn't happen!
 	if(currRoom == NULL)
 	{
-#ifdef DEBUG
-		printf("Not currently in a room!\n");
-#endif
 		return newD;
 	}
 

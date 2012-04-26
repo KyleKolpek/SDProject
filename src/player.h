@@ -17,7 +17,8 @@ public:
 	~Player();
 	virtual void update(float sec, sf::Input const &input);
 	bool isActive();
-	void setActive( bool set );
+	void setActive();
+	void setInactive();
 
 protected:
 	bool activePlayer;
