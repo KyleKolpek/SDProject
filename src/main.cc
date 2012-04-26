@@ -134,7 +134,9 @@ void init(unsigned int width, unsigned int height)
 	dungeon = new Dungeon(5, 5, 25, camera);
 
 	// Create player
-	test = new Player(camera, dungeon);
+	std::string obj = "../assets/models/knight/knight.obj";
+	std::string tex = "../assets/models/knight/blue.png";
+	test = new Player(camera, dungeon, obj, tex);
 	test->setRotation(180.0);
 	test->setPosition(dungeon->getStartingPos());
 

@@ -10,7 +10,7 @@
 
 using namespace std;
 
-Actor::Actor(Camera *camera, Dungeon *dungeon):
+Actor::Actor(Camera *camera, Dungeon *dungeon, string obj, string tex):
 	position(0.0),
 	scaleFactor(1.0),
 	rotation(0.0),
@@ -25,19 +25,13 @@ Actor::Actor(Camera *camera, Dungeon *dungeon):
 {
 	
 	ObjLoader loader;
-	//loader.loadObjFile("../assets/models/Legoman/LegoMan.obj");
-	//loader.loadObjFile("../assets/models/human/human.obj");
-	//loader.loadObjFile("../assets/models/dragon/dragon.obj");
-	loader.loadObjFile("../assets/models/knight/knight.obj");
+	loader.loadObjFile(obj);
 	loader.formatVertexData();
 	vertexData  = loader.getVertexData();
 	dataType    = loader.getVertexType();
 	vertexCount = loader.getVertexCount();
 	texture = SOIL_load_OGL_texture(
-		 //"../assets/models/Legoman/Texture.png",
-		 //"../assets/models/human/human.bmp",
-		 //"../assets/models/dragon/dragoncolor.tga",
-		 "../assets/models/knight/knight.jpg",
+		 tex.c_str(),
 		 SOIL_LOAD_AUTO,
 		 SOIL_CREATE_NEW_ID,
 		 SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y |
