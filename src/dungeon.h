@@ -59,20 +59,12 @@ public:
 	 **************************************************************************/
 	Room* getRoom(int r, int c);
 
-	/***********************************************************************//**
-	 * Create a string representation of the dungeon.
-	 * \param[out]
-	 *     std::string describing the placement and orientation of rooms in
-	 *     dungeon.
-	 ***********************************************************************//**
-	 * TODO: Add enemy and item placement to string representation.
-	 **************************************************************************/
-	std::string str();
-
 private:
 	Room ***dungeon;			/** 2D grid of Room pointers. 
 									NULL means no room is placed there. */
 	std::vector<Room*> rooms;	/** Store a list of rooms in dungeon. */
+
+	bool **visited;				/** Used in maze generation. */
 
 	/***********************************************************************//**
 	 * Randomly populate dungeon with rooms.
@@ -82,18 +74,20 @@ private:
 	void generateDungeon();
 
 	/***********************************************************************//**
-	 * Assign type information to rooms.
-	 * After rooms are placed in the grid, use this to determine what RoomType
-	 * each room requires. This corresponds to how many doors are needed.
+	 * Place doors to generate a random maze.
+	 * Use a backtracking algorithm to generate a random maze.
 	 **************************************************************************/
-	void assignRoomTypes();
+	void generateMaze();
 
 	/***********************************************************************//**
-	 * Determine orientation of each room.
-	 * After rooms are given types they need to be oriented. This determines 
-	 * which orientation (which walls to place doors on).
+	 * Return a vector of cell's unvisited neighbors.
 	 **************************************************************************/
-	void orientRooms();
+	std::vector<Room*> getLonelyNeighbors(Room *cell);
+
+	/***********************************************************************//**
+	 * Remove the wall (add a door) between two rooms.
+	 **************************************************************************/
+	void removeWall(Room *a, Room *b);
 
 	int numRows;			/** The number of rows in our grid of rooms. */
 	int numCols;			/** The number of columns in our grid of rooms. */

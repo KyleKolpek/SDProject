@@ -1,4 +1,5 @@
 #include"objLoader.h"
+#include "SOIL/SOIL.h"
 
 using namespace std;
 
@@ -23,6 +24,21 @@ void ObjLoader::clear()
 
 	name.clear();
 }
+
+void ObjLoader::loadTexture(string filename)
+{
+	GLuint texture;
+	texture = SOIL_load_OGL_texture(
+		 filename.c_str(),
+		 SOIL_LOAD_AUTO,
+		 SOIL_CREATE_NEW_ID,
+		 SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y |
+		 SOIL_FLAG_NTSC_SAFE_RGB |
+		 SOIL_FLAG_COMPRESS_TO_DXT);
+
+	textureImgMap[filename] = texture;
+}
+
 
 void ObjLoader::loadObjFile(string filename)
 {
@@ -167,6 +183,18 @@ void ObjLoader::formatVertexData()
 
 	vertexBufferMap[name] = vertexBuffer;
 	delete[] vertexData;
+}
+
+GLuint ObjLoader::getTexture(string filename)
+{
+	if(textureImgMap.count(filename) != 0)
+	{
+		return textureImgMap[filename];
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 GLuint ObjLoader::getVertexBuffer(string filename)
