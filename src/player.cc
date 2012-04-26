@@ -55,7 +55,7 @@ void Player::update(float sec, sf::Input const &input)
 		move(delta);
 	}
 
-	glm::vec3 cameraDelta((position - camera->getAt()) * 0.05f);
+	glm::vec3 cameraDelta((position - camera->getAt()) * 5.0f * sec) ;
 	camera->moveEye(cameraDelta);
 	camera->moveAt(cameraDelta);
 #endif
