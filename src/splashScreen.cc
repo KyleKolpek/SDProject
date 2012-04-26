@@ -29,11 +29,7 @@ void SplashScreen::Show(sf::RenderWindow &window,
 	window.Display();
 
 	(*init)(window.GetWidth(), window.GetHeight());
-	
-	glEnableClientState(GL_COLOR_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	
+
 	sprite.SetImage(image2);
 	
 	window.Clear();
