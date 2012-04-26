@@ -19,46 +19,30 @@ void Player::update(float sec, sf::Input const &input)
 #ifdef DEBUG
 	// Make him move
 	float playerMoveDistance = moveSpeed * sec;
+	glm::vec3 delta(0.0);
 
 	if( input.IsKeyDown( sf::Key::A ) ) //move left
 	{
-		// move player and camera
-		move( glm::vec3( playerMoveDistance*(-1.0), 0.0, 0.0 ) );
-		camera->moveEye( glm::vec3( playerMoveDistance*(-1.0), 0.0, 0.0 ));
-		camera->setAt( this->position );
-
-		// rotate
-		setRotation(270.0);
+		delta.x = -1;
 	}
-	else if( input.IsKeyDown( sf::Key::S ) ) //move down
+	if( input.IsKeyDown( sf::Key::S ) ) //move down
 	{
-		// move player and camera
-		move( glm::vec3( 0.0, 0.0, playerMoveDistance ) );
-		camera->moveEye( glm::vec3( 0.0, 0.0, playerMoveDistance ));
-		camera->setAt( this->position );
-		
-		// rotate
-		setRotation(180.0);
+		delta.z = 1;
 	}
-	else if( input.IsKeyDown( sf::Key::D ) ) //move right
+	if( input.IsKeyDown( sf::Key::D ) ) //move right
 	{
-		// move player and camera
-		move( glm::vec3( playerMoveDistance, 0.0, 0.0 ) );
-		camera->moveEye( glm::vec3( playerMoveDistance, 0.0, 0.0 ));
-		camera->setAt( this->position );
-
-		// rotate
-		setRotation(90.0);
+		delta.x = 1;
 	}
-	else if( input.IsKeyDown( sf::Key::W ) ) //move up
+	if( input.IsKeyDown( sf::Key::W ) ) //move up
 	{
-		// move player and camera
-		move( glm::vec3( 0.0, 0.0, playerMoveDistance*(-1.0) ) );
-		camera->moveEye( glm::vec3( 0.0, 0.0, playerMoveDistance*(-1.0) ));
-		camera->setAt( this->position );
-
-		//rotate
-		setRotation(0.0);
+		delta.z = -1;
 	}
-#endif
+	if(glm::length(delta) == 0)
+	{
+		return;
+	}
+	delta = glm::normalize(delta) * playerMoveDistance;
+	move(delta);
+	camera->moveEye(delta);
+	camera->moveAt(delta);
 }
