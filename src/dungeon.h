@@ -52,6 +52,11 @@ public:
 	glm::vec3 getStartingPos();
 
 	/***********************************************************************//**
+	 * Return a pointer to the room at [r][c].
+	 **************************************************************************/
+	Room* getRoom(int r, int c);
+
+	/***********************************************************************//**
 	 * Create a string representation of the dungeon.
 	 * \param[out]
 	 *     std::string describing the placement and orientation of rooms in
