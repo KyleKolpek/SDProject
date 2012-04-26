@@ -59,9 +59,9 @@ public:
 	 **************************************************************************/
 	Room* getRoom(int r, int c);
 
-	void setLights(vector<glm::vec3> const &positions,
-				   vector<glm::vec3> const &colors,
-				   int count);
+	void setLights(float const * const positions,
+				   float const * const colors,
+				   int const count);
 
 private:
 	Room ***dungeon;			/** 2D grid of Room pointers. 

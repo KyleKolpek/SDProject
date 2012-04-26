@@ -59,7 +59,8 @@ void Wall::draw()
 	}
 
 	// Store a ShaderManager over a program
-	GLuint program = shaderManager->getProgram(2, "phongTex.vert", "phongTex.frag");
+	GLuint program = shaderManager->getProgram(2, "phongTex.vert",
+		"phongTexPtLights.frag");
 	glUseProgram(program);
 
 	GLint mvLoc = glGetUniformLocation(program, "modelView");

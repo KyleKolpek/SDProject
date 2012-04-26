@@ -4,6 +4,7 @@
 #include "dungeon.h"
 #include "actor.h"
 #include "objLoader.h"
+#include <iostream>
 
 using namespace std;
 
@@ -104,6 +105,27 @@ void Game::update(float sec, sf::Input const &input)
 
 void Game::draw()
 {
+	// Build arrays of light info
+	float positions[3 * players.size()];
+	float colors[3 * players.size()];
+	for(int i = 0; i < players.size(); ++i)
+	{
+		glm::vec4 pos = //players[i]->getModelMatrix() *
+						camera->getViewMatrix() *
+						glm::vec4(players[i]->getPosition(), 1.0);
+
+		// Set the light above each player
+		positions[i * 3]     = pos.x;
+		positions[i * 3 + 1] = pos.y + 2;
+		positions[i * 3 + 2] = pos.z;
+
+		// Set the color to orange
+		colors[i * 3]     = 0.5;
+		colors[i * 3 + 1] = 0.5;
+		colors[i * 3 + 2] = 0.5;
+	}
+
+	dungeon->setLights(positions, colors, players.size());
 	dungeon->draw();
 
 	for( int p=0; p<numPlayers; ++p )

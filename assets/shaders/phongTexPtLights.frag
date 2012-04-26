@@ -13,7 +13,7 @@ varying vec2 texCoord;
 
 vec3 calcSpecular(vec3 l, vec3 n, vec3 v, vec3 cL, vec3 cS, float p)
 {
-    vec3 r =  2.0 * n * dot(n, l) - l;
+    vec3 r =  reflect(l, n);
     return cL * cS * pow(max(0.0, dot(r, normalize(v))), p);
 }
 
@@ -28,19 +28,19 @@ void main(void)
 	vec3 lightDistance;
 	vec3 objectColor;
 	vec3 ambientColor   = vec3(0.3, 0.3, 0.3);
-	vec3 specularColor  = vec3(1.0, 1.0, 1.0);
+	vec3 specularColor  = vec3(0.3, 0.3, 0.3);
 	vec3 n              = normalize(normal);
 	vec3 outColor       = ambientColor * objectColor;
 
 	for(int i=0; i < lightCount; i++)
 	{
-		lightDistance = cameraSpaceLights[i] - cameraSpacePos;
+		lightDistance = cameraSpacePos - cameraSpaceLights[i];
 		lightDirection = normalize(lightDistance);
 		objectColor = texture2D(texture, texCoord).xyz;
 		outColor += (calcDiffuse(-lightDirection, n, lightColors[i],
 						objectColor) +
 					calcSpecular(-lightDirection, n, -cameraSpacePos,
-						lightColors[i], specularColor, 64.0)) *
+						lightColors[i], specularColor, 1.0)) *
 					(1 / pow(length(lightDistance/4), 2));
 	}
 
