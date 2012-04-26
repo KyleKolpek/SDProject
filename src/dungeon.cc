@@ -55,9 +55,9 @@ Dungeon::~Dungeon()
 
 	for(size_t r = 0; r < numRows; ++r)
 	{
-		delete dungeon[r];
+		delete [] dungeon[r];
 	}
-	delete dungeon;
+	delete [] dungeon;
 }
 
 void Dungeon::generateDungeon()
