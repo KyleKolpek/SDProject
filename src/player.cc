@@ -3,8 +3,8 @@
 #include <SFML/System.hpp>
 #include <iostream>
 
-Player::Player(Camera *camera):
-	Actor(camera)
+Player::Player(Camera *camera, Dungeon *dungeon):
+	Actor(camera, dungeon)
 {
 	
 }
