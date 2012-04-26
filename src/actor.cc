@@ -158,7 +158,8 @@ void Actor::update(float sec, sf::Input const &input)
 }
 
 /*
- * Algorithm for intersection taken from http://www.allegro.cc/forums/thread/595918
+ * Algorithm for intersection taken from
+ * http://www.gamedev.net/topic/533967-collision-response-calc-sliding-plane/
  */
 glm::vec3 Actor::adjustForCollidingWithWalls(const glm::vec3 &delta)
 {
