@@ -72,7 +72,7 @@ Room::Room(int row,
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// Create some objects.
-	for(int i = 0; i < 3; ++i)
+	for(int i = 0; i < 20; ++i)
 	{
 		string objName = "../assets/models/box/box.obj";
 		string texName = "../assets/models/box/box.jpg";
@@ -89,7 +89,7 @@ Room::Room(int row,
 			xPlace = rand() % ROOM_WIDTH;
 			yPlace = rand() % ROOM_LENGTH;
 		}	
-		float scale = (float)(rand() % 10 + 10)/10;
+		float scale = (float)(rand() % 20 + 10)/10;
 		float rot = (float) (rand() % 90);
 		glm::vec3 pos(xPlace + this->x, 0, yPlace + this->y);
 		objPresent[xPlace][yPlace] = true;

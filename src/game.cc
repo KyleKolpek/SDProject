@@ -56,7 +56,7 @@ Game::Game():
 	players.at(currentPlayer)->setActive();
 
 	// set up camera
-	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
+	camera->perspective(45.0, 16.0/9.0, 0.01, 200.0); 
 	camera->setAt(dungeon->getStartingPos());
 	camera->setEye(dungeon->getStartingPos() + glm::vec3(0.0, 10.0, 10.0));
 	camera->setUp(glm::vec3(0.0, 1.0, 0.0));
@@ -119,17 +119,18 @@ void Game::draw()
 	{
 		glm::vec4 pos = //players[i]->getModelMatrix() *
 						camera->getViewMatrix() *
-						glm::vec4(players[i]->getPosition(), 1.0);
+						glm::vec4(players[i]->getPosition() + 
+								  glm::vec3(0.0, 4.0, 0.0), 1.0);
 
 		// Set the light above each player
 		positions[i * 3]     = pos.x;
-		positions[i * 3 + 1] = pos.y + 2;
+		positions[i * 3 + 1] = pos.y;
 		positions[i * 3 + 2] = pos.z;
 
 		// Set the color to orange
-		colors[i * 3]     = 0.5;
-		colors[i * 3 + 1] = 0.5;
-		colors[i * 3 + 2] = 0.5;
+		colors[i * 3]     = 0.2;
+		colors[i * 3 + 1] = 0.2;
+		colors[i * 3 + 2] = 0.2;
 	}
 
 	dungeon->setLights(positions, colors, players.size());

@@ -1,6 +1,7 @@
 #version 120
 
 uniform sampler2D texture;
+uniform float coefficient;
 uniform int lightCount;
 
 // Could probably stand to combine these into a struct
@@ -27,8 +28,8 @@ void main(void)
 	vec3 lightDirection;
 	vec3 lightDistance;
 	vec3 objectColor;
-	vec3 ambientColor   = vec3(0.3, 0.3, 0.3);
-	vec3 specularColor  = vec3(0.3, 0.3, 0.3);
+	vec3 ambientColor   = vec3(0.005, 0.005, 0.005);
+	vec3 specularColor  = vec3(0.0, 0.0, 0.0);
 	vec3 n              = normalize(normal);
 	vec3 outColor       = ambientColor * objectColor;
 
@@ -37,11 +38,12 @@ void main(void)
 		lightDistance = cameraSpacePos - cameraSpaceLights[i];
 		lightDirection = normalize(lightDistance);
 		objectColor = texture2D(texture, texCoord).xyz;
-		outColor += (calcDiffuse(-lightDirection, n, lightColors[i],
+		outColor += (ambientColor * objectColor +
+					calcDiffuse(-lightDirection, n, lightColors[i],
 						objectColor) +
 					calcSpecular(-lightDirection, n, -cameraSpacePos,
 						lightColors[i], specularColor, 1.0)) *
-					(1 / pow(length(lightDistance/4), 2));
+					(1 / pow(length(lightDistance/8), 2));
 	}
 
     gl_FragColor = vec4(outColor, 1.0);

@@ -20,8 +20,8 @@ int main()
 	Settings.DepthBits = 24;
 	Settings.StencilBits = 8;
 	
-	sf::VideoMode current = sf::VideoMode(800,600,32);//
-	current = sf::VideoMode::GetDesktopMode();	
+	//sf::VideoMode current = sf::VideoMode(800,600,32);//
+	sf::VideoMode current = sf::VideoMode::GetDesktopMode();	
 
 	// Show splash screen
 	sf::RenderWindow App(current, 

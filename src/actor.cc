@@ -54,7 +54,7 @@ void Actor::draw()
 {
 	// Store a ShaderManager over a program
 	GLuint program = shaderManager->getProgram(2, "phongTex.vert",
-		"phongTex.frag");
+		"phongTexPtLights.frag");
 	glUseProgram(program);
 
 	GLint mvLoc = glGetUniformLocation(program, "modelView");
