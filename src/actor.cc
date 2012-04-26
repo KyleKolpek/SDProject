@@ -27,8 +27,7 @@ Actor::Actor(Camera *camera,
 	dungeon(dungeon),
 	maxMovement(12.5),
 	distanceMoved(0.0),
-	objLoader(objLoader),
-	modelMatrix(1.0)
+	objLoader(objLoader)
 {
 	
 	//ObjLoader loader;
