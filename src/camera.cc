@@ -78,6 +78,21 @@ void Camera::moveTowardsAt(float distance)
 	viewMatrix = glm::lookAt(this->eye, this->at, this->up);
 }
 
+glm::vec3 Camera::getAt()
+{
+	return at;
+}
+
+glm::vec3 Camera::getEye()
+{
+	return eye;
+}
+
+glm::vec3 Camera::getUp()
+{
+	return up;
+}
+
 void Camera::perspective(float fov, float aspect, float zNear, float zFar)
 {
 	projMatrix = glm::perspective(fov, aspect, zNear, zFar);

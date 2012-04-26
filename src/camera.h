@@ -26,6 +26,11 @@ public:
 	void moveUp(glm::vec3 const &up);
 	void moveTowardsAt(float distance);
 
+	// Getters
+	glm::vec3 getAt();
+	glm::vec3 getEye();
+	glm::vec3 getUp();
+
 	void perspective(float fov, float aspect, float zNear, float zFar);
 	void update(float sec, sf::Input const &input);
 
