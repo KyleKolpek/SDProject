@@ -7,13 +7,14 @@
 #include "updatable.h"
 #include "dungeon.h"
 #include "GLM/glm.hpp"
+#include <string>
 
 class Camera;
 
 class Actor: public Drawable, public Updatable
 {
 public:
-	Actor(Camera *camera, Dungeon *dungeon);
+	Actor(Camera *camera, Dungeon *dungeon, std::string obj, std::string tex);
 	virtual ~Actor();
 
 	// Inherited methods

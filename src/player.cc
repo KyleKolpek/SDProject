@@ -6,10 +6,10 @@
 
 using namespace std;
 
-Player::Player(Camera *camera, Dungeon *dungeon):
-	Actor(camera, dungeon)
+Player::Player(Camera *camera, Dungeon *dungeon, string obj, string tex):
+	Actor(camera, dungeon, obj, tex)
 {
-	
+	activePlayer=true;
 }
 
 Player::~Player()
@@ -17,10 +17,18 @@ Player::~Player()
 	// TODO: implement destructor
 }
 
+bool Player::isActive()
+{
+	return activePlayer;
+}
+
+void Player::setActive( bool set )
+{
+	activePlayer = set;
+}
+
 void Player::update(float sec, sf::Input const &input)
 {
-#ifdef DEBUG
-
 	// Use input sf::Input to move the player character
 	
 	// playerMoveDistance: calculate distance traveled by multiplying movement
@@ -55,9 +63,8 @@ void Player::update(float sec, sf::Input const &input)
 		move(delta);
 	}
 
-	glm::vec3 cameraDelta((position - camera->getAt()) * 0.01f);
+	glm::vec3 cameraDelta((position - camera->getAt()) * 5.0f * sec) ;
 	camera->moveEye(cameraDelta);
 	camera->moveAt(cameraDelta);
-#endif
 }
 
