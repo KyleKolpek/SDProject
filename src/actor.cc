@@ -27,6 +27,7 @@ Actor::Actor(Camera *camera,
 	dungeon(dungeon),
 	maxMovement(30),
 	distanceMoved(0.0),
+	modelMatrix(1.0),
 	objLoader(objLoader)
 {
 	
@@ -34,7 +35,6 @@ Actor::Actor(Camera *camera,
 	dataType     = objLoader->getVertexType(obj);
 	vertexCount  = objLoader->getVertexCount(obj);
 	texture		 = objLoader->getTexture(tex);
-	
 }
 
 Actor::~Actor()
@@ -321,4 +321,9 @@ void Actor::createModelMatrix()
 						-glm::sin(theta), 0.0, glm::cos(theta), 0.0,
 						0.0, 0.0, 0.0, 1.0);
 	modelMatrix = translationMat * scaleMat * rotateMat;
+}
+
+glm::mat4 Actor::getModelMatrix()
+{
+	return modelMatrix;
 }

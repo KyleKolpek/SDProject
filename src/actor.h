@@ -38,6 +38,7 @@ public:
 	virtual glm::vec3 adjustForCollidingWithWalls(const glm::vec3 &delta);
 	
 	glm::vec3 getPosition();
+	glm::mat4 getModelMatrix();
 	float getRadius();
 
 	void setPosition(glm::vec3 const &position);

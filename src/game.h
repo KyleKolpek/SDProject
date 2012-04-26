@@ -3,6 +3,7 @@
 
 #include "stdgl.h"
 #include <SFML/Window.hpp>
+#include <vector>
 #include "player.h"
 
 class Camera;
@@ -32,6 +33,7 @@ protected:
 	Dungeon *dungeon;
 	ObjLoader *loader;
 	std::vector<Player*> players;
+
 
 };
 

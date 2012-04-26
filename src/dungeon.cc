@@ -272,3 +272,30 @@ Room* Dungeon::getRoom(int r, int c)
 	return dungeon[r][c];
 }
 
+void Dungeon::setLights(float const * const positions,
+						float const * const colors,
+						int const count)
+{
+	// Store a ShaderManager over a program
+	GLuint program = shaderManager->getProgram(2, "phongTex.vert",
+		"phongTexPtLights.frag");
+	glUseProgram(program);
+
+	GLint lightLoc = glGetUniformLocation(program, "cameraSpaceLights");
+	GLint lightColorLoc = glGetUniformLocation(program, "lightColors");
+	GLint lightCntLoc = glGetUniformLocation(program, "lightCount");
+
+	if(lightLoc != -1 && lightColorLoc != -1 && lightCntLoc != -1)
+	{
+		glUniform3fv(lightLoc, count, positions);
+		glUniform3fv(lightColorLoc, count, colors);
+		glUniform1i(lightCntLoc, count);
+	}
+	else
+	{
+		cerr << "Error: Cannot find point light locations" << endl;
+		return;
+	}
+	
+	glUseProgram(0);
+}

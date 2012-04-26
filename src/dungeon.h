@@ -59,6 +59,10 @@ public:
 	 **************************************************************************/
 	Room* getRoom(int r, int c);
 
+	void setLights(float const * const positions,
+				   float const * const colors,
+				   int const count);
+
 private:
 	Room ***dungeon;			/** 2D grid of Room pointers. 
 									NULL means no room is placed there. */

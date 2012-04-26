@@ -179,7 +179,8 @@ void Room::draw()
 	}
 
 	// Store a ShaderManager over a program
-	GLuint program = shaderManager->getProgram(2, "phongTex.vert", "phongTex.frag");
+	GLuint program = shaderManager->getProgram(2, "phongTex.vert",
+		"phongTexPtLights.frag");
 	glUseProgram(program);
 
 	GLint mvLoc = glGetUniformLocation(program, "modelView");
@@ -189,6 +190,7 @@ void Room::draw()
 
 	glm::mat4 MV = camera->getViewMatrix() * getModelMatrix();
 	glm::mat4 proj = camera->getProjectionMatrix();
+
 
 	// TODO: Error check here.
 	if(mvLoc != -1)
