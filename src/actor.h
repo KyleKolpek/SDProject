@@ -50,6 +50,10 @@ public:
 
 	void setRadius(float radius);
 
+	void resetMovement();
+	void setMaxMovement( float newMaxMovement );
+	bool canMove();
+
 protected:
 	Dungeon *dungeon;	/** Pointer to the game dungeon for collision 
 							detection, etc. */
@@ -68,6 +72,9 @@ protected:
 	glm::mat4 modelMatrix;
 	ObjLoader *objLoader;
 	void createModelMatrix();
+
+	float maxMovement;
+	float distanceMoved;
 };
 
 #endif
