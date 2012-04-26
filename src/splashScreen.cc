@@ -36,7 +36,9 @@ void SplashScreen::Show(sf::RenderWindow &window,
 	{
 		while(window.GetEvent(event))
 		{
-			if(event.Type == sf::Event::KeyPressed && event.Key.Code == sf::Key::Escape)
+			if((event.Type == sf::Event::KeyPressed &&
+				event.Key.Code == sf::Key::Escape) ||
+				(event.Type == sf::Event::Closed))
 			{
 				window.Close();
 				exit(0);
@@ -46,12 +48,6 @@ void SplashScreen::Show(sf::RenderWindow &window,
 			{
 				return;		
 			}
-			else if(event.Type == sf::Event::Closed)
-			{
-				window.Close();
-				exit(0);
-			}
-		
 		}
 	}
 }
