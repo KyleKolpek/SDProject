@@ -275,6 +275,17 @@ glm::vec3 Dungeon::getStartingPos()
 	return glm::vec3(x, 0, y);
 }
 
+Room* Dungeon::getRoom(int r, int c)
+{
+	// Check for an invalid request
+	if(r < 0 || r >= numRows || c < 0 || c >= numCols)
+	{
+		return NULL;
+	}
+
+	return dungeon[r][c];
+}
+
 string Dungeon::str()
 {
 	string ret = "Room Types:\n";
@@ -339,14 +350,3 @@ string Dungeon::str()
 	
 	return ret;
 }
-/* DEBUG
-int main()
-{
-	srand(time(NULL));
-	Dungeon d(4, 4, 5);
-
-	cout << d.str() << endl;
-
-	return 0;
-}
-*/

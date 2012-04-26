@@ -3,8 +3,8 @@
 #include <SFML/System.hpp>
 #include <iostream>
 
-Player::Player(Camera *camera):
-	Actor(camera)
+Player::Player(Camera *camera, Dungeon *dungeon):
+	Actor(camera, dungeon)
 {
 	
 }
@@ -16,6 +16,7 @@ Player::~Player()
 
 void Player::update(float sec, sf::Input const &input)
 {
+#ifdef DEBUG
 	// Make him move
 	float playerMoveDistance = moveSpeed * sec;
 	glm::vec3 delta(0.0);
@@ -44,4 +45,5 @@ void Player::update(float sec, sf::Input const &input)
 	move(delta);
 	camera->moveEye(delta);
 	camera->moveAt(delta);
+#endif
 }

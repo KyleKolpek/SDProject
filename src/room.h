@@ -92,6 +92,15 @@ public:
 
 	static void loadTexture(std::string const &filename);
 	glm::mat4 getModelMatrix();
+
+	/***********************************************************************//**
+	 * List of walls that have been placed in room.
+	 * Each room has a list of walls that is traversed in draw(). Doors are
+	 * represented via two walls with a gap between them. These are public
+	 * to allow for easy access by Actor during collision detection.
+	 **************************************************************************/
+	std::vector<Wall> walls;
+
 private:
 	/***********************************************************************//**
 	 * Coordinates in x-y plane.
@@ -99,13 +108,6 @@ private:
 	 * can be derived from ROOM_WIDTH and ROOM_HEIGHT.
 	 **************************************************************************/
 	float x, y;
-
-	/***********************************************************************//**
-	 * List of walls that have been placed in room.
-	 * Each room has a list of walls that is traversed in draw(). Doors are
-	 * represented via two walls with a gap between them.
-	 **************************************************************************/
-	std::vector<Wall> walls;
 
 	Camera *camera;	/**< Pointer to the game camera. */
 	GLuint vertexBuffer;

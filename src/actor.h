@@ -5,6 +5,7 @@
 #include <SFML/Window.hpp>
 #include "drawable.h"
 #include "updatable.h"
+#include "dungeon.h"
 #include "GLM/glm.hpp"
 
 class Camera;
@@ -12,7 +13,7 @@ class Camera;
 class Actor: public Drawable, public Updatable
 {
 public:
-	Actor(Camera *camera);
+	Actor(Camera *camera, Dungeon *dungeon);
 	virtual ~Actor();
 
 	// Inherited methods
@@ -33,6 +34,8 @@ public:
 	void setRadius(float radius);
 
 protected:
+	Dungeon *dungeon;	/** Pointer to the game dungeon for collision 
+							detection, etc. */
 	glm::vec3 position;
 	float scaleFactor;
 	float rotation;
