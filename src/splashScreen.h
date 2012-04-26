@@ -14,8 +14,10 @@ class SplashScreen
 public:
 	/***********************************************************************//**
 	* Actually displays the splash screen.
-	* \param[in] window
+	* \params[in] window
 	*     Pass in the window to draw to.
+	* \params[in] init
+	*     A function pointer to a function that loads the game.
 	***************************************************************************/
 	void Show(sf::RenderWindow &window, void (*init)(unsigned int, unsigned int));
 };
