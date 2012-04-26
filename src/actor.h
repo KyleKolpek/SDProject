@@ -19,6 +19,15 @@ public:
 	// Inherited methods
 	virtual void draw();
 	virtual void update(float sec, sf::Input const &input);
+
+	/***********************************************************************//**
+	 * Determine if Actor will collide with any walls after moving next amount.
+	 * \param[in] next
+	 *     vec3 of possibly colliding position.
+	 * \param[out] isColliding
+	 *     True if colliding with a wall.
+	 **************************************************************************/
+	virtual bool checkWallCollision(const glm::vec3 &next);
 	
 	glm::vec3 getPosition();
 	float getRadius();
@@ -36,6 +45,7 @@ public:
 protected:
 	Dungeon *dungeon;	/** Pointer to the game dungeon for collision 
 							detection, etc. */
+	Room *currRoom;		/** Current room that Actor resides in. */
 	glm::vec3 position;
 	float scaleFactor;
 	float rotation;

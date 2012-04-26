@@ -22,6 +22,7 @@ void Player::update(float sec, sf::Input const &input)
 #ifdef DEBUG
 	// Make him move
 	float playerMoveDistance = moveSpeed * sec;
+
 	glm::vec3 delta(0.0);
 
 	if( input.IsKeyDown( sf::Key::A ) ) //move left
@@ -49,7 +50,9 @@ void Player::update(float sec, sf::Input const &input)
 	glm::vec3 prevPos = position;
 
 	delta = glm::normalize(delta) * playerMoveDistance;
+
 	move(delta);
+
 	camera->moveEye(delta);
 	camera->moveAt(delta);
 #endif
@@ -63,3 +66,4 @@ void Player::update(float sec, sf::Input const &input)
 	cout << "Rotation: " << theta << endl;
 	setRotation(theta);
 }
+

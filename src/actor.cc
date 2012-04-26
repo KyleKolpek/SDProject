@@ -1,8 +1,10 @@
 #include <iostream>
+#include <cmath>
 #include "SOIL/SOIL.h"
 #include "actor.h"
 #include "camera.h"
 #include "objLoader.h"
+#include "GLM/glm.hpp"
 
 using namespace std;
 
@@ -159,6 +161,58 @@ void Actor::update(float sec, sf::Input const &input)
 {
 }
 
+/*
+ * Algorithm for intersection taken from http://stackoverflow.com/a/1090772
+ */
+bool Actor::checkWallCollision(const glm::vec3 &next)
+{
+	// First, compute which room Actor is in.
+	int row = position.z / ROOM_LENGTH;
+	int col = position.x / ROOM_WIDTH;
+	currRoom = dungeon->getRoom(row, col);
+
+	// this shouldn't happen!
+	if(currRoom == NULL)
+	{
+		std::cout << "Not currently in a room!" << std::endl;
+		return false;
+	}
+
+	// check collision against each wall in currRoom
+	for(size_t i = 0; i < currRoom->walls.size(); ++i)
+	{
+		// grab the wall to save some typing
+		Wall *wall = &(currRoom->walls[i]);
+
+		// Start and end points of wall
+		glm::vec2 A = wall->getStartPoint() 
+			+ glm::vec2(col * ROOM_WIDTH, row * ROOM_LENGTH);
+		glm::vec2 B = wall->getEndPoint() 
+			+ glm::vec2(col * ROOM_WIDTH, row * ROOM_LENGTH);
+
+		// Player position
+		glm::vec2 C(position.x, position.z);
+
+		float areaTriangle = abs((B.x-A.x)*(C.y-A.y) - (C.x-A.x)*(B.y-A.y));
+		float lengthAB = sqrt((B.x-A.x)*(B.x-A.x) + (B.y-A.y)*(B.y-A.y));
+		float distance = areaTriangle / lengthAB;
+
+		std::cout << "A: " << A.x << " " << A.y << " B: " 
+			<< B.x << " " << B.y << std::endl;
+
+		if(distance < this->radius)
+		{
+			std::cout << "Collision in [" << row << "][" << col << "]" <<  std::endl;
+			std::cout << "A: " << A.x << " " << A.y << " B: " 
+				<< B.x << " " << B.y << std::endl;
+			return true;
+		}
+	}
+
+	// no collision
+	return false;
+}
+
 glm::vec3 Actor::getPosition()
 {
 	return position;
@@ -189,8 +243,15 @@ void Actor::setRotation(float degrees)
 
 void Actor::move(glm::vec3 const &delta)
 {
-	this->position += delta;
-	createModelMatrix();
+	glm::vec3 newPos = this->position + delta;
+	
+	// Move if there won't be a collision.
+	// TODO: Add sliding
+	if(!checkWallCollision(newPos))
+	{
+		this->position = newPos;
+		createModelMatrix();
+	}
 }
 
 void Actor::scale(float factor)

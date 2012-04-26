@@ -46,6 +46,12 @@ public:
 
 	void translate(float x, float y);
 
+	/***********************************************************************//**
+	 * Return vectors for the (local) start and ending points of the wall.
+	 **************************************************************************/
+	glm::vec2 getStartPoint();
+	glm::vec2 getEndPoint();
+
 	static void loadTexture(std::string const &filename);
 
 private:
