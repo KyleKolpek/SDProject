@@ -156,7 +156,7 @@ void Actor::update(float sec, sf::Input const &input)
  * Algorithm for intersection taken from
  * http://www.gamedev.net/topic/533967-collision-response-calc-sliding-plane/
  */
-glm::vec3 Actor::adjustForCollidingWithWalls(const glm::vec3 &delta)
+glm::vec3 Actor::adjustForCollisions(const glm::vec3 &delta)
 {
 	// adjusted delta
 	glm::vec3 newD = delta;
@@ -234,6 +234,23 @@ glm::vec3 Actor::adjustForCollidingWithWalls(const glm::vec3 &delta)
 		}
 	}
 
+	// Now check for collision with objects in room.
+	for(size_t i = 0; i < currRoom->objects.size(); ++i)
+	{
+		Actor *obj = currRoom->objects[i];
+
+		// compute the radial distance between the object and the actor.
+		float distance = glm::distance(obj->getPosition(), next);
+
+		// If the distance is less than the sum of their radii, there is a
+		// collision. For now, just stop movement.
+		if(distance < obj->getRadius() + this->radius)	
+		{
+			newD.x = 0;
+			newD.z = 0;
+		}
+	}
+
 	return newD;
 }
 
@@ -269,7 +286,7 @@ void Actor::setRotation(float degrees)
 void Actor::move(glm::vec3 const &delta)
 {
 	// Move if there won't be a collision.
-	position += adjustForCollidingWithWalls(delta);
+	position += adjustForCollisions(delta);
 	//position += delta;
 
 	// Calculate the direction the player should face

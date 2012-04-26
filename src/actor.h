@@ -37,14 +37,15 @@ public:
 	virtual void update(float sec, sf::Input const &input);
 
 	/***********************************************************************//**
-	 * Determine if Actor will collide with any walls after moving by 'delta'.
+	 * Determine if Actor will collide with any walls or objects after moving by
+	 * 'delta'.
 	 * \param[in] delta
 	 *     vec3 of possibly colliding position.
 	 * \return
 	 *     The delta that the actor is actually capable of moving
 	 *     post-collision.
 	 **************************************************************************/
-	virtual glm::vec3 adjustForCollidingWithWalls(const glm::vec3 &delta);
+	virtual glm::vec3 adjustForCollisions(const glm::vec3 &delta);
 	
 	/***********************************************************************//**
 	 * Retrieve the actor's position in world/dungeon space.

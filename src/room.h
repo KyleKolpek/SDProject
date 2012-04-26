@@ -81,6 +81,9 @@ public:
 	 **************************************************************************/
 	std::vector<Wall> walls;
 
+
+	std::vector<Actor*> objects;
+
 private:
 	/***********************************************************************//**
 	 * Coordinates in x-y plane.
@@ -94,7 +97,6 @@ private:
 	GLuint vertexCount;
 	glm::mat4 modelMatrix;
 	static GLuint texture;
-	std::vector<Actor*> objects;
 	std::vector<glm::vec3> lights;
 	bool objPresent[ROOM_WIDTH][ROOM_LENGTH];
 	Dungeon *dungeon;
