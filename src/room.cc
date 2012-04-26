@@ -11,6 +11,11 @@ using namespace std;
 
 GLuint Room::texture(NULL);
 
+#define NORTH 0
+#define WEST 1
+#define SOUTH 2
+#define EAST 3
+
 Room::Room(int row, 
 		int col, 
 		Camera *camera, 
@@ -25,7 +30,6 @@ Room::Room(int row,
 	dungeon(dungeon),
 	objLoader(objLoader)
 {
-
 	for(int i = 0; i < ROOM_WIDTH; ++i)
 	{
 		for(int j = 0; j < ROOM_LENGTH; ++j)
@@ -33,6 +37,9 @@ Room::Room(int row,
 			objPresent[i][j] = false;
 		}
 	}
+	// Initialize hasDoor
+	hasDoor = vector<int>(4, 0);
+
 	y = row * ROOM_LENGTH;
 	x = col * ROOM_WIDTH;
 
@@ -88,67 +95,13 @@ Room::Room(int row,
 	}
 }
 
-void Room::placeWalls(int northDoor, int westDoor, int southDoor, int eastDoor)
+void Room::placeWalls()
 {
-	// First determine which walls need doors. Store a vector sides with doors.
-	#define NORTH 0
-	#define WEST 1
-	#define SOUTH 2
-	#define EAST 3
-
-	vector<int> doors;
-
-	switch(roomType)
-	{
-		case ONE:
-			doors.push_back(orient);
-			break;
-
-		case TWOA:
-			doors.push_back(NORTH + orient);
-			doors.push_back(WEST + orient);
-			printf("TWOA: doors: %d %d\n", doors[0], doors[1]);
-			break;
-
-		case TWOB:
-			doors.push_back(NORTH + orient);
-			doors.push_back(SOUTH + orient);
-			break;
-
-		case THREE:
-			doors.push_back(NORTH + orient);
-			doors.push_back(WEST + orient);
-			doors.push_back(SOUTH + orient);
-			break;
-
-		case FOUR:
-			doors.push_back(NORTH);
-			doors.push_back(WEST);
-			doors.push_back(SOUTH);
-			doors.push_back(EAST);
-			break;
-	}
-
-	vector<int> hasDoor(4, 0);
-
-	// User has option of manually placing doors.
-	hasDoor[NORTH] = northDoor;
-	hasDoor[WEST] = westDoor;
-	hasDoor[SOUTH] = southDoor;
-	hasDoor[EAST] = eastDoor;
-
 	// The points to place the beginning and end of doors. Since rooms are
 	// square we the same values can be used for either x or y.
 	// Center them in walls.
 	float doorStart = (ROOM_WIDTH / 2) - (DOOR_WIDTH / 2);
 	float doorEnd = (ROOM_WIDTH / 2) + (DOOR_WIDTH / 2);
-
-	// now do each wall mod 4 (to fix going all the way around for some sides)
-	for(size_t i = 0; i < doors.size(); ++i)
-	{
-		doors[i] = doors[i] % 4;
-		hasDoor[doors[i]] = 1;
-	}
 
 	// Now traverse each wall and create the wall objects
 	if(hasDoor[NORTH])
@@ -201,14 +154,14 @@ void Room::placeWalls(int northDoor, int westDoor, int southDoor, int eastDoor)
 	{
 		(*it).translate(col * ROOM_WIDTH, row * ROOM_LENGTH);
 	}
-	
-	/* DEBUG
-	printf("type: %d orient: %d\n", roomType, orient);
-	for(size_t i = 0; i < doors.size(); ++i)
-		printf("%d ", doors[i]);
-	printf("\n");
-	*/
-	
+}
+
+void Room::placeDoor(int n, int w, int s, int e)
+{
+	hasDoor[NORTH] += n;
+	hasDoor[SOUTH] += s;
+	hasDoor[EAST] += e;
+	hasDoor[WEST] += w;
 }
 
 void Room::draw()

@@ -187,7 +187,7 @@ void init(unsigned int width, unsigned int height)
 	loader->loadTexture("../assets/models/dragon/dragon.tga");
 
 	// create dungeon
-	dungeon = new Dungeon(5, 5, 25, camera, loader);
+	dungeon = new Dungeon(5, 5, 15, camera, loader);
 
 	// Create players
 	numPlayers = 2;
