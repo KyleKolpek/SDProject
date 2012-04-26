@@ -41,7 +41,7 @@ void main(void)
 						objectColor) +
 					calcSpecular(-lightDirection, n, -cameraSpacePos,
 						lightColors[i], specularColor, 64.0)) *
-					(1 / pow(length(lightDistance), 2));
+					(1 / pow(length(lightDistance/4), 2));
 	}
 
     gl_FragColor = vec4(outColor, 1.0);
