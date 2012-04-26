@@ -58,6 +58,10 @@ void Wall::draw()
 		return;
 	}
 
+	// Enable backface culling
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
 	// Store a ShaderManager over a program
 	GLuint program = shaderManager->getProgram(2, "phongTex.vert",
 		"phongTexPtLights.frag");
@@ -152,6 +156,8 @@ void Wall::draw()
 	glDisableVertexAttribArray(vertexNormalLoc);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glUseProgram(0);
+
+	glDisable(GL_CULL_FACE);
 }
 
 glm::mat4 Wall::getModelMatrix()
