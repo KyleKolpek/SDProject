@@ -256,6 +256,7 @@ void Actor::setPosition(glm::vec3 const &position)
 void Actor::setScale(float scale)
 {
 	this->scaleFactor = scale;
+	this->radius = 0.5 * scale; //TODO: fix magic numbers
 	createModelMatrix();
 }
 
@@ -268,7 +269,6 @@ void Actor::setRotation(float degrees)
 void Actor::move(glm::vec3 const &delta)
 {
 	// Move if there won't be a collision.
-	// TODO: Add sliding
 	position += adjustForCollidingWithWalls(delta);
 	//position += delta;
 
