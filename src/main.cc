@@ -130,11 +130,12 @@ void init(unsigned int width, unsigned int height)
 	camera = new Camera();
 	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
 
+	// create dungeon
+	dungeon = new Dungeon(5, 5, 25, camera);
+
+	// Create player
 	test = new Player(camera, dungeon);
 	test->setRotation(180.0);
-
-	// create dungeon
-	dungeon = new Dungeon(5, 5, 15, camera);
 	test->setPosition(dungeon->getStartingPos());
 
 	camera->setAt(dungeon->getStartingPos());
