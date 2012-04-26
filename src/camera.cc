@@ -102,7 +102,6 @@ void Camera::update(float sec, sf::Input const &input)
 {
 	// ADD CAMERA MOVEMENT HERE
 	float cameraMoveDistance = camSpeed * sec;
-#ifdef DEBUG
 	
 	if( input.IsKeyDown(sf::Key::Left ) )
 	{
@@ -132,6 +131,4 @@ void Camera::update(float sec, sf::Input const &input)
 	{
 		moveTowardsAt( cameraMoveDistance*(-1.0) );
 	}
-#endif
-
 }
