@@ -3,7 +3,7 @@
 #include <iostream>
 #include <SFML/System.hpp>
 
-float Camera::camSpeed(50.0);
+float Camera::camSpeed(25.0);
 
 Camera::Camera():
 	eye(0.0, 0.0, -1.0),
