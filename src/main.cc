@@ -3,25 +3,15 @@
 #include <SFML/Audio.hpp>
 #include <iomanip>
 #include <iostream>
-#include "shaderManager.h"
-#include "actor.h"
-#include "camera.h"
 #include "audioManager.h"
-#include "dungeon.h"
-#include "wall.h"
 #include "splashScreen.h"
-#include "room.h"
-#include "player.h"
+#include "game.h"
+
+using namespace std;
+
+Game *game;
 
 void init(unsigned int width, unsigned int height);
-
-Camera *camera;
-Dungeon *dungeon;
-Wall *wall1, *wall2;
-Room *room;
-int numPlayers, currentPlayer;
-// Player *test;
-std::vector<Player*> players;
 
 int main()
 {
@@ -35,9 +25,9 @@ int main()
 
 	// Show splash screen
 	sf::RenderWindow App(current, 
-						"Delfino's Dungeon Extravaganza", 
-						sf::Style::Fullscreen,
-						//sf::Style::Close | sf::Style::Resize, 
+						"Dungeon Extravaganza", 
+						//sf::Style::Fullscreen,
+						sf::Style::Close | sf::Style::Resize, 
 						Settings);
 
 	AudioManager ad;
@@ -49,13 +39,12 @@ int main()
 	
 	SplashScreen screen;
 	ad.playMusic("forest", true);
-	const sf::Input& Input = App.GetInput();
-	bool tabPressNew = true;
+	const sf::Input& input = App.GetInput();
 
 	// Show splash screen
 	screen.Show(App, init);
 	
-	std::cout << current.Width << " " << current.Height << "\n";
+	cout << current.Width << " " << current.Height << endl;
 	//init(current.Width, current.Height);
 	//screen.Show(App);
 	while(App.IsOpened())
@@ -71,46 +60,20 @@ int main()
 			}
 			if(Event.Type == sf::Event::Resized)
 			{
-				std::cout << Event.Size.Width << " " << Event.Size.Height<< "\n";
+				cout << Event.Size.Width << " " << Event.Size.Height << endl;
 				glViewport(0, 0, Event.Size.Width, Event.Size.Height);
 			}
-			if((Event.Type == sf::Event::KeyPressed) && (Event.Key.Code == sf::Key::Escape))
+			if((Event.Type == sf::Event::KeyPressed) &&
+				(Event.Key.Code == sf::Key::Escape))
 			{
 				App.Close();
 			}
 		}
 		
 		App.SetActive();
-
-		float secondsSinceLastFrame = App.GetFrameTime();
-		
-		/****   Free-form camera movement   ******************/
-		camera->update(secondsSinceLastFrame, Input);
-		/****	End	Free-form camera movement   **************/
-
-		/****   Testing Character Movement   *****************/
-		// test->update(secondsSinceLastFrame, Input);	
-
-		for( int p=0; p<numPlayers; p++ )
-		{
-			players.at(p)->update(secondsSinceLastFrame, Input);
-		}
-		/****   End	Character Movement      ******************/
-
-
-		// character switching
-		if( Input.IsKeyDown( sf::Key::Tab ) && tabPressNew )
-		{
-			players.at(currentPlayer++)->setInactive();
-			currentPlayer %= numPlayers;
-			players.at(currentPlayer)->setActive();
-		}
-
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		/*
-			Drawing goes below.
-		*/
+		// This should be migrated to a HUD class at some point
 		glEnableClientState(GL_COLOR_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glEnableClientState(GL_VERTEX_ARRAY);
@@ -125,8 +88,8 @@ int main()
 		sprite3.SetPosition(vec);
 		App.Draw(sprite3);
 
-		sf::Image distance((1-players[currentPlayer]->getPercentMoved())*200, 
-							20, sf::Color(0, 0, 255));
+		sf::Image distance((1-game->getActivePlayerStamina())*200,
+			20, sf::Color(0, 0, 255));
 		sf::Sprite sprite2(distance);
 		sprite2.SetPosition(vec);
 		App.Draw(sprite2);
@@ -134,21 +97,14 @@ int main()
 		glDisableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisableClientState(GL_VERTEX_ARRAY);
-		//Call to actually display the things.
-		//test->draw();
-		for( int p=0; p<numPlayers; p++ )
-		{
-			players.at(p)->draw();
-		}
-		dungeon->draw();
-		//wall1->draw();
-		//wall2->draw();
-		//room->draw();
+		// end HUD
 
-		tabPressNew = !(Input.IsKeyDown( sf::Key::Tab ));
+		game->update(App.GetFrameTime(), input);
+		game->draw();
 		App.Display();
 	}
 
+	delete game;
 	return EXIT_SUCCESS;
 }
 
@@ -172,67 +128,7 @@ void init(unsigned int width, unsigned int height)
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	glViewport(0, 0, width, height);
-	camera = new Camera();
-	camera->perspective(45.0, 4.0/3.0, 0.01, 200.0); 
 
-	//Loading objs.
-	ObjLoader *loader = new ObjLoader();
-	loader->loadObjFile("../assets/models/knight/knight.obj");
-	loader->loadObjFile("../assets/models/box/box.obj");
-	loader->loadObjFile("../assets/models/dragon/dragon.obj");
-	
-	loader->loadTexture("../assets/models/knight/blue.png");
-	loader->loadTexture("../assets/models/knight/green.png");
-	loader->loadTexture("../assets/models/knight/red.png");
-	loader->loadTexture("../assets/models/knight/yellow.png");
-	loader->loadTexture("../assets/models/box/box.jpg");
-	loader->loadTexture("../assets/models/dragon/dragon.tga");
-
-	// create dungeon
-	dungeon = new Dungeon(5, 5, 25, camera, loader);
-
-	// Create players
-	numPlayers = 2;
-	
-	std::string obj = "../assets/models/knight/knight.obj";
-	
-	/* make a single player unit
-	std::string tex = "../assets/models/knight/blue.png";
-	test = new Player(camera, dungeon, obj, tex, loader);
-	test->setRotation(180.0);
-	test->setPosition(dungeon->getStartingPos());
-	 */
-	
-	/* make several player units */
-	std::string textures [4] = { "../assets/models/knight/blue.png",
-								"../assets/models/knight/yellow.png",
-								"../assets/models/knight/red.png",
-								"../assets/models/knight/green.png"};
-	for( int p=0; p<numPlayers; p++ )
-	{
-		players.push_back( new Player( camera, dungeon, obj, textures[p], loader ) );
-		players.at(p)->setRotation(180.0);
-		players.at(p)->setPosition(dungeon->getStartingPos());
-	}
-	currentPlayer=0;
-	players.at(currentPlayer)->setActive();
-
-	camera->setAt(dungeon->getStartingPos());
-	camera->setEye(dungeon->getStartingPos() + glm::vec3(0.0, 10.0, 10.0));
-	camera->setUp(glm::vec3(0.0, 1.0, 0.0));
-
-	// This could probably be done cleaner
-	Wall::loadTexture("../assets/models/wall/stoneWall.jpg");
-	Room::loadTexture("../assets/models/floor/stone.jpg");
-
-	// Setup shaders
-	ShaderManager *shaderManager = new ShaderManager("../assets/shaders/");
-//	test->setShaderManager(shaderManager);
-	for( int p=0; p<numPlayers; p++ )
-	{
-		players.at(p)->setShaderManager(shaderManager); 
-	}
-
-	dungeon->setShaderManager(shaderManager);
+	game = new Game();
 } 
 
