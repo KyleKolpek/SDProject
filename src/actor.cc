@@ -166,8 +166,14 @@ void Actor::update(float sec, sf::Input const &input)
 /*
  * Algorithm for intersection taken from http://www.allegro.cc/forums/thread/595918
  */
-bool Actor::isCollidingWall(const glm::vec3 &next)
+glm::vec3 Actor::adjustForCollidingWithWalls(const glm::vec3 &delta)
 {
+	// adjusted delta
+	glm::vec3 newD = delta;
+
+	// compute next position
+	glm::vec3 next = position + delta;
+
 	// First, compute which room Actor is in.
 	int row = next.z / ROOM_LENGTH;
 	int col = next.x / ROOM_WIDTH;
@@ -179,8 +185,10 @@ bool Actor::isCollidingWall(const glm::vec3 &next)
 	// this shouldn't happen!
 	if(currRoom == NULL)
 	{
+#ifdef DEBUG
 		printf("Not currently in a room!\n");
-		return false;
+#endif
+		return newD;
 	}
 
 	// check collision against each wall in currRoom
@@ -222,12 +230,24 @@ bool Actor::isCollidingWall(const glm::vec3 &next)
 		if(distance < radius)
 		{
 			// Collision!
-			return true;
+			// Use this to enable sliding: delta -= norm * dot(delta, norm)
+			glm::vec2 d(newD.x, newD.z); // 2D delta
+			glm::vec2 collideVec = B - A;
+
+			glm::vec2 norm(-collideVec.y, collideVec.x);
+			norm = glm::normalize(norm);
+			
+			d -= norm * glm::dot(norm, d);
+
+			// Store the new values in return
+			newD.x = d.x;
+			newD.z = d.y;
+
+			break;
 		}
 	}
 
-	// no collision
-	return false;
+	return newD;
 }
 
 glm::vec3 Actor::getPosition()
@@ -260,22 +280,15 @@ void Actor::setRotation(float degrees)
 
 void Actor::move(glm::vec3 const &delta)
 {
-	glm::vec3 newPos = this->position + delta;
-	
-	bool coll = true;
 	// Move if there won't be a collision.
 	// TODO: Add sliding
-	if(!isCollidingWall(newPos))
-	{
-		position = newPos;
+	position += adjustForCollidingWithWalls(delta);
+	//position += delta;
 
-		// Calculate the direction the player should face
-		float theta = glm::degrees(glm::atan2(-delta.x, delta.z));
-		setRotation(theta);
-		createModelMatrix();
-
-		coll = false;;
-	}
+	// Calculate the direction the player should face
+	float theta = glm::degrees(glm::atan2(-delta.x, delta.z));
+	setRotation(theta);
+	createModelMatrix();
 }
 
 void Actor::scale(float factor)
