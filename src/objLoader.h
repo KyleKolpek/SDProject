@@ -56,7 +56,7 @@ public:
  	 * Returns the vertexData that contains vertex info as follows
 	 * (PositionX, PositionY, PositionZ, NormalX, NormalY, NormalZ, TexX, TexY).
  	 **************************************************************************/
-	float* getVertexData(std::string name);
+	GLuint getVertexBuffer(std::string name);
 
 	/***********************************************************************//**
  	 * Returns the type of faces used in the model. Either GL_QUADS or
@@ -112,12 +112,12 @@ private:
 	/***********************************************************************//**
  	 * Holds the type of faces used in the model.
  	 **************************************************************************/
-	GLuint *vertexType;
+	GLuint vertexType;
 
 	/***********************************************************************//**
  	 * Holds the number of vertices in the complete model.
  	 **************************************************************************/
-	GLsizei *vertexCount;
+	GLsizei vertexCount;
 
 	/***********************************************************************//**
  	 * Holds the name of the file.
@@ -127,17 +127,17 @@ private:
 	/***********************************************************************//**
  	 * Holds the information for all loaded models.
  	 **************************************************************************/
-	std::map<std::string, float*> vertexDataMap;
+	std::map<std::string, GLuint> vertexBufferMap;
 
 	/***********************************************************************//**
  	 * Holds all the type information for all loaded files.
  	 **************************************************************************/
-	std::map<std::string, GLuint*> vertexTypeMap;
+	std::map<std::string, GLuint> vertexTypeMap;
 
 	/***********************************************************************//**
  	 * Holds all the count data for all files.
  	 **************************************************************************/
-	std::map<std::string, GLsizei*> vertexCountMap;
+	std::map<std::string, GLsizei> vertexCountMap;
 };
 
 #endif

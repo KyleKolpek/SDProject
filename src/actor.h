@@ -65,7 +65,6 @@ protected:
 	float rotation;
 	float radius;
 	int vertexCount;
-	float *vertexData;
 	GLuint vertexBuffer;
 	GLuint dataType;
 	GLuint texture;

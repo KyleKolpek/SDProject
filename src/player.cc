@@ -79,7 +79,7 @@ void Player::update(float sec, sf::Input const &input)
 			distanceMoved += glm::length(delta);
 
 #ifdef DEBUG
-std::cout << "Moved: " << distanceMoved << " meters" << std::endl;
+	//std::cout << "Moved: " << distanceMoved << " meters" << std::endl;
 #endif
 		}
 	

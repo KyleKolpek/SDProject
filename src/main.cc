@@ -176,11 +176,8 @@ void init(unsigned int width, unsigned int height)
 	//Loading objs.
 	ObjLoader *loader = new ObjLoader();
 	loader->loadObjFile("../assets/models/knight/knight.obj");
-	loader->formatVertexData();
 	loader->loadObjFile("../assets/models/box/box.obj");
-	loader->formatVertexData();
 	loader->loadObjFile("../assets/models/dragon/dragon.obj");
-	loader->formatVertexData();
 
 	// create dungeon
 	dungeon = new Dungeon(5, 5, 25, camera, loader);
