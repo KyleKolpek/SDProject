@@ -182,7 +182,7 @@ void init(unsigned int width, unsigned int height)
 								"../assets/models/knight/green.png"};
 	for( int p=0; p<numPlayers; p++ )
 	{
-		players.push_back( new Player( camera, dungeon, obj, textures[p] ) );
+		players.push_back( new Player( camera, dungeon, obj, textures[p], loader ) );
 		players.at(p)->setRotation(180.0);
 		players.at(p)->setPosition(dungeon->getStartingPos());
 	}
