@@ -13,14 +13,14 @@ void SplashScreen::Show(sf::RenderWindow &window)
 	sf::Sprite sprite(image);
 	sf::Vector2f pos = sprite.GetSize();
 	//Setting the splash screen in the middle of the screen.	
-	sprite.SetPosition((window.GetWidth()-pos.x)/2, (window.GetHeight()-pos.y)/2);
+	sprite.Resize(window.GetWidth(), window.GetHeight());
+	
+	float alpha = 255.0f;
+	sf::Event event;
 	window.Draw(sprite);
 	window.Display();
-
-	sf::Event event;
-	while(true)
+	while(window.IsOpened() && alpha != 0)
 	{
-		window.Display();
 		while(window.GetEvent(event))
 		{
 			if(event.Type == sf::Event::KeyPressed ||
@@ -30,8 +30,10 @@ void SplashScreen::Show(sf::RenderWindow &window)
 			}
 			else if(event.Type == sf::Event::Closed)
 			{
+				window.Close();
 				exit(0);
 			}
+		
 		}
 	}
 }

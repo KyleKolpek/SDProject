@@ -52,6 +52,7 @@ int main()
 	
 	std::cout << current.Width << " " << current.Height << "\n";
 	init(current.Width, current.Height);
+	//screen.Show(App);
 	while(App.IsOpened())
 	{
 		sf::Event Event;
