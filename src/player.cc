@@ -2,6 +2,7 @@
 #include "camera.h"
 #include <SFML/System.hpp>
 #include <iostream>
+#include "GLM/gtx/compatibility.hpp"
 
 using namespace std;
 
@@ -53,7 +54,6 @@ void Player::update(float sec, sf::Input const &input)
 		
 		move(delta);
 	}
-
 
 	glm::vec3 cameraDelta((position - camera->getAt()) * 0.01f);
 	camera->moveEye(cameraDelta);
