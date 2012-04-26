@@ -1,6 +1,7 @@
 // Adapted source for shaderLoader from
 // http://www.opengl.org/sdk/docs/tutorials/ClockworkCoders/loading.php
 #include <fstream>
+#include <iostream>
 #include "shaderLoader.h"
 
 using namespace std;
@@ -32,8 +33,11 @@ int ShaderLoader::loadShader(char const *const filename)
 
 	ifstream file;
 	file.open(filename, ios::in); // opens as ASCII!
+
+	// Check for file opening success
 	if(!file)
 	{
+		cerr << "Error opening file '" << filename << "'" << endl;
 		return -1;
 	}
 

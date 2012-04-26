@@ -1,7 +1,8 @@
 #ifndef DRAWABLE_H
 #define DRAWABLE_H
 
-#include <stdgl.h>
+#include "stdgl.h"
+#include "shaderManager.h"
 
 /***************************************************************************//**
  * Allows an object to be drawn using OpenGL.
@@ -14,27 +15,29 @@ public:
 	/***********************************************************************//**
 	 * Virtual destructor.
 	 **************************************************************************/
-    virtual ~Drawable();
+	virtual ~Drawable();
 
 	/***********************************************************************//**
 	 * Draws the object.
 	 * Requires an OpenGL context to be initialized and draws using the shaders
 	 * contained in program.
 	 **************************************************************************/
-    virtual void draw() = 0;
+	virtual void draw() = 0;
 
 	/***********************************************************************//**
-	 * Sets the program to be used for drawing.
-	 * Stores the program passed in as a parameter in the program member
+	 * Sets the shader manager to be used to create/retrieve programs.
+	 * Stores the shaderManager passed in as a parameter in the shaderManager
 	 * variable.
+	 * \param[in] shaderManager
+	 *     The ShaderManager to be stored.
 	 **************************************************************************/
-    virtual void setProgram(GLuint program);
+	virtual void setShaderManager(ShaderManager *shaderManager);
 
 protected:
 	/***********************************************************************//**
-	 * Stores the shader program.
+	 * Stores the ShaderManager that will be used to query programs.
 	 **************************************************************************/
-    GLuint program;
+	 ShaderManager *shaderManager;
 };
 
 #endif

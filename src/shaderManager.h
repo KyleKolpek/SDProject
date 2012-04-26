@@ -32,13 +32,6 @@ public:
 	ShaderManager(std::string shaderDir);
 
 	/***********************************************************************//**
-	 * Copy constructor. 
-	 * \param[in] shaderManager
-	 *     The shader manager that is to be deep copied.
-	 **************************************************************************/
-	ShaderManager(ShaderManager const &shaderManager);
-
-	/***********************************************************************//**
 	 * Creates a program based off the names of shaders passed in. 
 	 * \param[in] shaderFileCount
 	 *     The number of shader files to be used in a program.

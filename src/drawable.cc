@@ -4,7 +4,7 @@ Drawable::~Drawable()
 {
 }
 
-void Drawable::setProgram(GLuint program)
+void Drawable::setShaderManager(ShaderManager *shaderManager)
 {
-    this->program = program;
+    this->shaderManager = shaderManager;
 }

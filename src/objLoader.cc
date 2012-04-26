@@ -1,184 +1,161 @@
-#include "objLoader.h"
+#include"objLoader.h"
 
-//Default Constructor
-//It doesn't actually need to create a new instance.
+using namespace std;
 ObjLoader::ObjLoader()
 {
-	data = new ObjInfo;	
+	vertices.clear();
+	normals.clear();
+	texCoords.clear();
+
+	faceV.clear();
+	faceN.clear();
+	faceT.clear();
+
+	vertexData = NULL;
+	vertexType = 0;
+	vertexCount = 0;
 }
 
-//Default Destructor
-ObjLoader::~ObjLoader()
-{
-	delete data;
-}
-
-//Load function
-//Doesn't load the textures.
-void ObjLoader::load(std::string filename)
-{
-	//Delete old data and create a new one.
-	delete data;
-	data = new ObjInfo();
-	//Open file
-	std::ifstream objFile(filename.c_str());
-	std::string buffer;
-
-	//Loop through all the lines in the file.
+void ObjLoader::loadObjFile(string filename)
+{	
+	ifstream objFile(filename.c_str());
+	if(!objFile)
+	{
+		return;
+	}
+	
 	while(objFile.good())
 	{
-		//Grab a whole line.
+		string buffer;
 		getline(objFile, buffer);
-		
-		//Set it into a stringstream for parsing.
-		std::stringstream bufferReader(buffer);
-		
-		//Some temp values for holding data. 
-		std::string type;
-		std::vector<float> info;
-		std::vector<int> faceInfo;
-		Face face;
-
-		//Get the type
-		bufferReader >> type;
-		//If it's "v" then it decribes vertex info.
-		if(type[0] == 'v')
+		stringstream bufferReader(buffer);
+		while(bufferReader.good())
 		{
-			//Grab the rest of the data from the line.
-			while(bufferReader.good())
+			string type;
+			bufferReader >> type;
+			if(type[0] == 'v')
 			{
-				float holder;
-				bufferReader >> holder;
-				info.push_back(holder);
-			}
-
-			/*
-			* Find out what kind of vertex data it is.
-			* if size is 1 then it's just v and therefore position info
-			* if the second letter is "t" then it's a texture coordinate
-			* if it's "n" then we have normal information.
-			*/
-			if(type.size() == 1)
-			{
-				data->vertices.push_back(info);
-			}
-			else if(type[1] == 't')
-			{
-				data->texture.push_back(info);
-			}
-			else if(type[1] == 'n')
-			{
-				data->normals.push_back(info);
-			}
-		}
-
-		//If the first letter is "f" then we are talking about face values.
-		else if(type[0] == 'f')
-		{
-			//Parse out face information.
-			while(bufferReader.good())
-			{
-				//Some data temp data holders.
-				int index[3];
-				std::string holder;
-				bufferReader >> holder;
-				
-				//Go through and grab the data.
-				for(int i = 0; i < 2; ++i)
+				if(type.size() == 1)
 				{
-					int place;
-					std::string num;
-					place = holder.find('/');
-					num = holder.substr(0, place);
-					holder = holder.substr(place + 1);
-					index[i] = atoi(num.c_str());
+					vector3 holds;
+					bufferReader >> holds.x >> holds.y >> holds.z;
+					vertices.push_back(holds);
 				}
-
-				//Last one is when there are no more slashes avaliable. 
-				index[2] = atoi(holder.c_str());
-
-				//Add the temp data to a more permanent home.
-				face.verts.push_back(index[0]);
-				face.normals.push_back(index[1]);
-				face.textures.push_back(index[2]);
-				face.hasTex = true;
-				face.hasNorm = true;
+				else if(type[1] == 'n')
+				{
+					vector3 holds;
+					bufferReader >> holds.x >> holds.y >> holds.z;
+					normals.push_back(holds);
+				}
+				else if(type[1] == 't')
+				{
+					vector2 holds;
+					bufferReader >> holds.x >> holds.y; 
+					texCoords.push_back(holds);
+				}
 			}
-			//Add temp data to a more permanent location.
-			data->faces.push_back(face);
+			else if(type[0] == 'f')
+			{
+				if(faceV.empty())
+					cout << "FINALLY\n";
+				vector<int> Vs, Ns, Ts;
+				while(bufferReader.good())
+				{
+					string vertex;
+					bufferReader >> vertex;
+					if(vertex.find("/") != string::npos)
+					{
+						
+						int V, N, T;
+						int pos = vertex.find("/");
+						V = atoi(vertex.substr(0,pos).c_str());
+						vertex = vertex.substr(pos+1);
+						pos = vertex.find("/");
+						T = atoi(vertex.substr(0,pos).c_str());
+						vertex = vertex.substr(pos+1);
+						pos = vertex.find("/");
+						N = atoi(vertex.substr(0,pos).c_str());
+						vertex = vertex.substr(pos+1);
+						
+						Vs.push_back(V);
+						Ns.push_back(N);
+						Ts.push_back(T);
+					}
+					
+				}
+	
+				faceV.push_back(Vs);
+				faceN.push_back(Ns);
+				faceT.push_back(Ts);
 
+				if(faceV[faceV.size()-1].size() != Vs.size())
+				{
+					cout << "sizes not equal!" << endl;
+				}
+			}
+			else
+			{
+				//Some other form of tag.
+			}
 		}
-	}	
+	}
 }
 
-/*
-* Loads a the obj at filename, and returns
-* vertexData, indexData and type.
-* vertexData is in the following format:
-* {pos1x, pos1y, pos1z, norm1x, norm1y, norm1z, tex1x, tex1y, ...,
-* posNx, posNy, posNz, normNx, normNy, normNz, texNx, texNy}
-*/
-void ObjLoader::getData(std::string filename, 
-						float* vertexData, 
-						int* indexData,
-						GLuint type)
+void ObjLoader::formatVertexData()
 {
-	//Load the data.
-	load(filename);
-	size_t size = 0;
-
-	//Figure out the size needed and what kind of shapes it uses
-	//to draw the model.
-	if(data->faces[0].verts.size() == 3)
+	if(faceV[0].size() == 3)
 	{
-		type = GL_TRIANGLES;
-		size = data->faces.size() * 3;
+		//GL_TRIANGLES
+		vertexType = 3;
 	}
 	else
 	{
-		type = GL_QUADS;
-		size = data->faces.size() * 4;
+		//GL_QUADS
+		vertexType = 4;
 	}
+
+
+	vertexCount = faceV.size() * faceV[1].size();
 	
-	//Temporary data holders.
-	float* vertData = new float[size * 8];
-	int* indxData = new int[data->faces.size()];
+	vertexData = new float[vertexCount*8];
 	size_t iCount = 0;
-	
-	//Go through everyface and added all the data in order.
-	for(size_t i = 0; i < data->faces.size(); ++i)
+
+
+	for(size_t i = 0; i < faceV.size(); ++i)
 	{
-		//Add positions
-		for(size_t j = 0; j < data->faces[i].verts.size(); ++j)
+		for(size_t j = 0; j < faceV[i].size(); ++j)
 		{
-			for(size_t k = 0; k < data->vertices[data->faces[i].verts[j] -1].size(); ++k)
-			{
-				vertData[iCount] = data->vertices[data->faces[i].verts[j] - 1][k];
-				iCount++;
-			}
+			int V = faceV[i][j]-1;
+			vertexData[iCount] = vertices[V].x;
+			vertexData[iCount+1] = vertices[V].y;
+			vertexData[iCount+2] = vertices[V].z;
+			
+			int N = faceN[i][j]-1;
+			vertexData[iCount+3] = normals[N].x;
+			vertexData[iCount+4] = normals[N].y;
+			vertexData[iCount+5] = normals[N].z;
+
+			int T = faceT[i][j]-1;
+			vertexData[iCount+6] = texCoords[T].x;
+			vertexData[iCount+7] = texCoords[T].y;
+		
+			iCount += 8;
 		}
-		//Add normals
-		for(size_t j = 0; j < data->faces[i].normals.size(); ++j)
-		{
-			for(size_t k = 0; k < data->normals[data->faces[i].normals[j] - 1].size(); ++k)
-			{
-				vertData[iCount] = data->normals[data->faces[i].normals[j] - 1][k];
-				iCount++;
-			}
-		}
-		//Add texture coordinates
-		for(size_t j = 0; j < data->faces[i].textures.size(); ++j)
-		{
-			for(size_t k = 0; k < data->texture[data->faces[i].textures[j] - 1].size(); ++k)
-			{
-				vertData[iCount] = data->texture[data->faces[i].textures[j] - 1][k];
-				iCount++;
-			}	
-		}
-		indxData[i] = i;
-	}	
-	
-	//Returns
-	vertexData = vertData;
-	indexData = indxData;
+	}
+	cout << "Complete\n";
+}
+
+float* ObjLoader::getVertexData()
+{
+	return vertexData;
+}
+
+GLuint ObjLoader::getVertexType()
+{
+	return vertexType;
+}
+
+GLsizei ObjLoader::getVertexCount()
+{
+	return vertexCount;
 }

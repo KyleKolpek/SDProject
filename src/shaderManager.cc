@@ -13,10 +13,6 @@ ShaderManager::ShaderManager(string shaderDir):
 {
 }
 
-ShaderManager::ShaderManager(ShaderManager const &shaderManager)
-{
-}
-
 GLuint ShaderManager::getProgram(int shaderFileCount, ...)
 {
 	// Set up the parameter list
@@ -50,16 +46,11 @@ GLuint ShaderManager::getProgram(int shaderFileCount, va_list shaderFileNames)
 	// If the key already exists in the map, return the value
 	if(programMap.count(key) != 0)
 	{
-#ifdef DEBUG_SHADERS
-		cout << "Key '" << key << "' found." << endl;
-#endif
 		return programMap[key];
 	}
+
 #ifdef DEBUG_SHADERS
-	else
-	{
-		cout << "Key '" << key << "' not found." << endl;
-	}
+	cout << "Key '" << key << "' not found." << endl;
 #endif
 
 	// Otherwise create the program and add it to the map
@@ -71,9 +62,13 @@ GLuint ShaderManager::getProgram(int shaderFileCount, va_list shaderFileNames)
 		// Determine the shader type
 		// TODO: confirm that the .vert or .frag is at the end of the string
 		GLenum shaderType = 
+#ifdef GL_VERTEX_SHADER
 		(name.find(".vert") != string::npos) ?  GL_VERTEX_SHADER :
+#endif
+#ifdef  GL_FRAGMENT_SHADER
 		(name.find(".frag") != string::npos) ?  GL_FRAGMENT_SHADER :
-#ifdef GL_GEOMETRY_SHADER
+#endif
+#ifdef  GL_GEOMETRY_SHADER
 		(name.find(".geom") != string::npos) ?  GL_GEOMETRY_SHADER :
 #endif
 		0;
@@ -82,7 +77,7 @@ GLuint ShaderManager::getProgram(int shaderFileCount, va_list shaderFileNames)
 		{
 			return 0;
 		}
-		
+
 		// Load the source
 		shaders[i] = glCreateShader(shaderType);
 		ShaderLoader loader((shaderDir + "/" + name).c_str());
@@ -160,6 +155,9 @@ GLuint ShaderManager::getProgram(int shaderFileCount, va_list shaderFileNames)
 
 	// Add the program to the map
 	programMap[key] = program;
+
+	// NOTE: May not be needed
+	glUseProgram(0);
 
 	return program;
 }

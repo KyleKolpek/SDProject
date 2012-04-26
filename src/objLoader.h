@@ -1,98 +1,118 @@
-#ifndef OBJLOADER
-#define OBJLOADER
+#ifndef OBJLOADER_H
+#define OBJLOADER_H
 
-#include<iostream>
-#include<fstream>
-#include<string>
 #include<vector>
+#include<string>
 #include<sstream>
+#include<fstream>
+#include<iostream>
 #include<cstdlib>
-#ifndef SHADERMANAGER
-#include"stdgl.h"
-#endif
+
+#include "stdgl.h"
 
 /***************************************************************************//**
-* Holds information for each face.
-* Holds the f value information for the obj file to compile the complete
-* vertex info for returning.
-******************************************************************************/
-
-struct Face
-{
-	std::vector<int> verts;
-	std::vector<int> normals;
-	std::vector<int> textures;
-	
-	bool hasTex;
-	bool hasNorm;
-};
-
-/***************************************************************************//**
-* Holds information for each vertex, normal, and texture.
-* Holds the actual values for position, normals, and texture coordinates from
-* the obj file.
-******************************************************************************/
-
-struct ObjInfo
-{
-	std::vector<std::vector<float> > vertices;
-	std::vector<std::vector<float> > normals;
-	std::vector<std::vector<float> > texture;
-	std::vector<Face> faces;
-};
-
-/***************************************************************************//**
- * Loads information from Wavefront obj files.
- * Gets obj file and parsers out the needed information to be able to display
- * correct model on screen using OpenGL. To use all you have to do is create an
- * instance of ObjLoader and call the method getData(..) with appropriate params
- * and it will return the information.
+ * Struct to hold data that has x, y, and z components
  ******************************************************************************/
+struct vector3
+{
+	float x,y,z;
+};
 
+/***************************************************************************//**
+ * Struct to hold data that only has x, and y components.
+ ******************************************************************************/
+struct vector2
+{
+	float x, y;
+};
+
+/***************************************************************************//**
+ * Loader for model data.
+ * Loads data from a given obj file and formats it to something that can be
+ * used to render.
+ ******************************************************************************/
 class ObjLoader
 {
 public:
 	/***********************************************************************//**
-	 * Default Constructor.
-	 **************************************************************************/
+ 	 * Default Constructor.
+ 	 **************************************************************************/
 	ObjLoader();
 
 	/***********************************************************************//**
-	 * Default Destructor.
-	 **************************************************************************/
-	~ObjLoader();
+ 	 * Loads an Wavefront obj files into private data below.
+	 * \params[in] filename
+	 *     The name of the file you want to open with relative path.
+ 	 **************************************************************************/
+	void loadObjFile(std::string filename);
 
 	/***********************************************************************//**
-	 * Loads obj file and parses out the information.(Moved to private maybe?)
-	 * \param[in] filename
-	 *     The filename of the obj file to load.
-	 **************************************************************************/
-	void load(std::string filename);
+ 	 * Formats the obj file data into a vertexData array, size, and type.
+ 	 **************************************************************************/
+	void formatVertexData();
 
 	/***********************************************************************//**
-	 * Gets appropriated data, and returns the data with vertexData, indexData
-	 * and type.
-	 * \param[in] filename
-	 * 	  The filename of the obj file to load.
-	 * \param[out] vertexData
-	 *     The complete vertex data in the form of pos1, norm1, tex1, _ ,
-	 *     posN, normN, texN.
-	 * \param[out] indexData
-	 *     The index face data. Probably not necessary.
-	 * \param[out] type
-	 * 	  GL type that tells the receiver what kind of shape the model is made
-	 *    of.
-	 **************************************************************************/
-	void getData(std::string filename, 
-				float* vertexData, 
-				int* indexData,
-				GLuint type);
+ 	 * Returns the vertexData that contains vertex info as follows
+	 * (PositionX, PositionY, PositionZ, NormalX, NormalY, NormalZ, TexX, TexY).
+ 	 **************************************************************************/
+	float* getVertexData();
 
+	/***********************************************************************//**
+ 	 * Returns the type of faces used in the model. Either GL_QUADS or
+	 * GL_TRIANGLES.
+ 	 **************************************************************************/
+	GLuint getVertexType();
+
+	/***********************************************************************//**
+ 	 * Returns how many vertices are in the vertexData array.
+ 	 **************************************************************************/
+	GLsizei getVertexCount();
+	
 private:
 	/***********************************************************************//**
-	 * Holds the data from the obj for later conversion to output format.
-	 **************************************************************************/
-	ObjInfo* data;
-	
+ 	 * Holds all the vertices found in the obj file.
+ 	 **************************************************************************/
+	std::vector<vector3> vertices;
+
+	/***********************************************************************//**
+ 	 * Holds all the normals found in the obj file.
+ 	 **************************************************************************/
+	std::vector<vector3> normals;
+
+	/***********************************************************************//**
+ 	 * Holds all the texture coordinates found in the obj file.
+ 	 **************************************************************************/
+	std::vector<vector2> texCoords;
+
+	/***********************************************************************//**
+ 	 * Holds all the face vertices found in the file.
+ 	 **************************************************************************/
+	std::vector<std::vector<int> > faceV;
+
+	/***********************************************************************//**
+ 	 * Holds all the face normals found in the file.
+ 	 **************************************************************************/
+	std::vector<std::vector<int> > faceN;
+
+	/***********************************************************************//**
+ 	 * Holds all the face texture coordinates found in the file.
+ 	 **************************************************************************/
+	std::vector<std::vector<int> > faceT;
+
+	/***********************************************************************//**
+ 	 * Holds the formated data for drawing.
+ 	 **************************************************************************/
+	float* vertexData;
+
+	/***********************************************************************//**
+ 	 * Holds the type of faces used in the model.
+ 	 **************************************************************************/
+	GLuint vertexType;
+
+	/***********************************************************************//**
+ 	 * Holds the number of vertices in the complete model.
+ 	 **************************************************************************/
+	GLsizei vertexCount;
 };
-#endif 
+
+#endif

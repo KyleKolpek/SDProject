@@ -1,6 +1,9 @@
+#ifndef SHADERLOADER_H
+#define SHADERLOADER_H
+
 // Adapted source for ShaderLoader from
 // http://www.opengl.org/sdk/docs/tutorials/ClockworkCoders/loading.php
-#include <stdgl.h>
+#include "stdgl.h"
 
 /***************************************************************************//**
  * A buffered reader.
@@ -57,3 +60,5 @@ private:
 	 **************************************************************************/
 	void unloadShader();
 };
+
+#endif
