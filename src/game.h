@@ -48,6 +48,18 @@ public:
  	 **************************************************************************/
 	float getActivePlayerStamina();
 
+	/***********************************************************************//**
+	 * Initialize the specifics of the game, such as camera, dungeon and
+	 * players
+	 **************************************************************************/
+	void gameInit();
+
+	/***********************************************************************//**
+	 * Sets the number of players for the game. Should never be called in the
+	 * middle of a game.
+	 **************************************************************************/
+	void setNumPlayers(int newNumPlayers);
+
 protected:
 	/***********************************************************************//**
  	 * Flag for tab being pressed.

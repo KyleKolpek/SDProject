@@ -15,6 +15,11 @@ Game::Game():
 	camera(NULL),
 	dungeon(NULL)
 {
+
+}
+
+void Game::gameInit()
+{
 	setShaderManager(new ShaderManager("../assets/shaders/"));
 
 	//Loading objs.
@@ -37,7 +42,7 @@ Game::Game():
 	dungeon = new Dungeon(5, 5, 15, camera, loader);
 
 	// Create players
-	numPlayers = 2;
+//	numPlayers = 2;
 
 	// make several player units
 	string obj = "../assets/models/knight/knight.obj";
@@ -140,6 +145,11 @@ void Game::draw()
 	{
 		players.at(p)->draw();
 	}
+}
+
+void Game::setNumPlayers(int newNumPlayers)
+{
+	numPlayers = newNumPlayers;
 }
 
 float Game::getActivePlayerStamina()

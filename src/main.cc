@@ -130,5 +130,7 @@ void init(unsigned int width, unsigned int height)
 	glViewport(0, 0, width, height);
 
 	game = new Game();
+	game->setNumPlayers(3);
+	game->gameInit();
 } 
 
